@@ -26,9 +26,9 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `product_type` varchar(255) NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   `image_link` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`product_type`)
+  PRIMARY KEY (`category_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,10 +85,11 @@ CREATE TABLE `product` (
   `image_link` varchar(500) DEFAULT NULL,
   `description` text,
   `rating` decimal(3,2) DEFAULT NULL,
-  `category` varchar(255) DEFAULT NULL,
   `product_type` varchar(255) DEFAULT NULL,
+  `category_name` varchar(255) DEFAULT NULL,
   `tag_list` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_product_category` FOREIGN KEY(`category_name`) REFERENCES `category` (`category_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=878 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
