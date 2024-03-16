@@ -29,7 +29,7 @@ CREATE TABLE `category` (
   `category_name` varchar(255) NOT NULL,
   `image_link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`category_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `product` (
   `tag_list` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_product_category` FOREIGN KEY(`category_name`) REFERENCES `category` (`category_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=878 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=878 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,11 +114,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+
+	
 CREATE TABLE `cart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +163,7 @@ CREATE TABLE `shop_order` (
   PRIMARY KEY (`id`),
   KEY `FK_shop_order_cart` (`cart_id`),
   CONSTRAINT `FK_shop_order_cart` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +260,7 @@ CREATE TABLE `order_detail` (
   KEY `FK_productid` (`product_id`),
   CONSTRAINT `FK_orderid` FOREIGN KEY (`order_id`) REFERENCES `shop_order` (`id`),
   CONSTRAINT `FK_productid` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

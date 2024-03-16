@@ -33,5 +33,10 @@ public class TestController {
 		return productService.findProductsByCategoryName("foundation");
 	}
 	
+	@GetMapping("/register")
+	private String register() {
+		return "/security/register";
+	}
+	
 	
 }
