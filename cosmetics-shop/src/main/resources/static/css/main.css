@@ -1,0 +1,24 @@
+.bg-primary {
+    background-color: #ffc0cb !important; 
+}
+
+.border-primary {
+    border-color: #ffc0cb !important;
+}
+
+.link-primary {
+    color: #ffc0cb !important;
+}
+
+.btn-primary {
+    background-color: #ffc0cb !important;
+    border-color: darksalmon !important;
+}
+
+.text-bg-primary {
+    background-color: #ffc0cb !important;
+}
+
+.border-primary-subtle {
+    border-color: black !important;
+}
