@@ -1,22 +1,26 @@
 .bg-primary {
-    background-color: #ffc0cb !important; 
+    background-color: #f39aa9 !important; 
 }
 
 .border-primary {
-    border-color: #ffc0cb !important;
+    border-color: #f39aa9 !important;
 }
 
 .link-primary {
-    color: #ffc0cb !important;
+    color: #f39aa9 !important;
+}
+
+.link-primary:hover {
+    color: #91c2d2 !important;
 }
 
 .btn-primary {
-    background-color: #ffc0cb !important;
+    background-color: #f39aa9 !important;
     border-color: darksalmon !important;
 }
 
 .text-bg-primary {
-    background-color: #ffc0cb !important;
+    background-color: #f39aa9 !important;
 }
 
 .border-primary-subtle {
