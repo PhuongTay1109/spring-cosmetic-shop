@@ -11,6 +11,13 @@ import com.cosmetics.myshop.repository.ProductRepository;
 @Service
 public class ProductService {
 	
+//	public static void main(String[] args) {
+//		List<Product> list = productRepository.findAll();
+//		for (Product p : list ) {
+//			System.out.println(p.toString());
+//		}
+//	}
+	
 	@Autowired
 	ProductRepository productRepository;
 	

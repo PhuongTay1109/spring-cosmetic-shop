@@ -17,6 +17,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
+
 @Data
 @Entity
 public class User implements UserDetails{

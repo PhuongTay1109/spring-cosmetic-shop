@@ -1,5 +1,6 @@
 package com.cosmetics.myshop.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class TestController {
 	@ResponseBody
 	@GetMapping("/products")
 	public List<Product> getProducts() { 
-		return productService.findProductsByCategoryName("foundation");
+		return productService.findAllProducts();
 	}
 	
 	@GetMapping("/register")
