@@ -17,4 +17,5 @@ public class Category {
 	@Column( name = "image_link")
 	private String imageLink;
 
+	
 }
