@@ -36,7 +36,12 @@ public class TestController {
 	
 	@GetMapping("/register")
 	private String register() {
-		return "/security/register";
+		return "security/register";
+	}
+	
+	@GetMapping("/login")
+	private String login() {
+		return "/security/login";
 	}
 	
 	
