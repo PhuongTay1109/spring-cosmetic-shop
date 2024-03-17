@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="https://www.thymeleaf.org/">
+
+<head th:replace="fragments/commonFragments :: commonHead">
+    <title>Home page</title>
+</head>
+
+<body>
+	<header th:replace="fragments/userFragments :: userHeader"></header>
+
+	<section
+		class="bg-primary py-3 py-md-5 py-xl-8 d-flex justify-content-center align-items-center">
+		<div class="container">
+			Home page
+		</div>
+	</section>
+
+
+	<!-- Footer -->
+	<footer th:replace="fragments/commonFragments :: footer"></footer>
+</body>
+
+</html>

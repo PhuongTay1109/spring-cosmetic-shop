@@ -44,5 +44,10 @@ public class TestController {
 		return "/security/login";
 	}
 	
+	@GetMapping("/home")
+	private String home() {
+		return "/user/homepage";
+	}
+	
 	
 }

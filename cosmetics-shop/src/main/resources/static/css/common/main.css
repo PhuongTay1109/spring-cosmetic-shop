@@ -1,5 +1,5 @@
 .bg-primary {
-    background-color: #f39aa9 !important; 
+    background-color: #F6E7E5 !important; 
 }
 
 .border-primary {
@@ -7,7 +7,7 @@
 }
 
 .link-primary {
-    color: #f39aa9 !important;
+    color: #D49696 !important;
 }
 
 .link-primary:hover {
@@ -15,7 +15,7 @@
 }
 
 .btn-primary {
-    background-color: #f39aa9 !important;
+    background-color: #D49696 !important;
     border-color: darksalmon !important;
 }
 
@@ -25,4 +25,15 @@
 
 .border-primary-subtle {
     border-color: black !important;
+}
+
+
+.wrapper {
+    position: relative;
+}
+
+.wrapper #cart-number {
+    position: absolute;
+    top: -5px;
+    right: -8px;
 }
