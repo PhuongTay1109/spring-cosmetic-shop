@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.jwt.JwtEncodingException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.UserService;
@@ -65,9 +66,14 @@ public class SpringSecurityConfiguration {
 	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
+		//Turn off query "continue" after login
+		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+		 requestCache.setMatchingRequestParameterName(null);
 		return http
 				.csrf(csrf -> csrf.disable())
 //				.authenticationManager(authenticationManager())
+				.requestCache(cache -> cache.requestCache(null))
 				.authenticationProvider(authenticationProvider())
 				.authorizeHttpRequests(auth -> {
 					auth.requestMatchers("/auth/**","/login","/register"
