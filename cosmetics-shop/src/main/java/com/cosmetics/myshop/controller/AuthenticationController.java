@@ -28,6 +28,7 @@ public class AuthenticationController {
 		
 	@PostMapping("/login")
 	public String login(@RequestParam Map<String, String> body, RedirectAttributes attributes) {
+		System.out.println("login post");
 		return authenticationService.loginUser(body, attributes);
 //		return "home";
 	}

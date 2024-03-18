@@ -12,7 +12,7 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	private String login() {
-		System.out.println("Asdas");
+		System.out.println("Login page");
 		return "/security/login";
 	}
 }
