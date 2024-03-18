@@ -105,11 +105,13 @@ public class AuthenticationService {
 
 	public String loginUser(Map<String, String> body, RedirectAttributes attributes) {
 		try {
+			
 			Authentication authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
-			System.out.println("Login successfully");
+			System.out.println(authentication);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			return "redirect:/home";
+			System.out.println("Login successfully");
+			return "redirect:/";
 
 		} catch (Exception e) {
 		    // Handle other unexpected exceptions

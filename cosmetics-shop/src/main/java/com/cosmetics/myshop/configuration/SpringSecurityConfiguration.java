@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.jwt.JwtEncodingException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.UserService;
@@ -33,8 +34,10 @@ import com.nimbusds.jose.proc.SecurityContext;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
-	@Autowired
-	private UserService userService;
+	@Bean
+	UserDetailsService userDetailsService() {
+		return new UserService();
+	}
 	
 	@Autowired
 	RSAKeyProperties keys;
@@ -44,23 +47,41 @@ public class SpringSecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
+	
 	@Bean
-	AuthenticationManager authManager(UserDetailsService userDetailsService) {
+	AuthenticationManager authenticationManager() {
 		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-		daoProvider.setUserDetailsService(userService);
+		daoProvider.setUserDetailsService(userDetailsService());
 		daoProvider.setPasswordEncoder(passwordEncoder());
 		return new ProviderManager(daoProvider);
 	}
 	
 	@Bean
+	DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+		daoProvider.setUserDetailsService(userDetailsService());
+		daoProvider.setPasswordEncoder(passwordEncoder());
+		return daoProvider;
+	}
+	
+	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
+		//Turn off query "continue" after login
+		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+		 requestCache.setMatchingRequestParameterName(null);
 		return http
 				.csrf(csrf -> csrf.disable())
+//				.authenticationManager(authenticationManager())
+				.requestCache(cache -> cache.requestCache(null))
+				.authenticationProvider(authenticationProvider())
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/auth/**","/login","/register", "/css", "/img", "/js").permitAll();
+					auth.requestMatchers("/auth/**","/login","/register"
+							,"/css/**","/img/**","/js/**").permitAll();
 					auth.anyRequest().authenticated();
 				})
 				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/").permitAll())
+				.logout(logout -> logout.permitAll())
 				.build();
 	}
 //	@Bean
