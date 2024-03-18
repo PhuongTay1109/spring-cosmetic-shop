@@ -57,9 +57,10 @@ public class SpringSecurityConfiguration {
 		return http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/auth/**","/login","/register").permitAll();
+					auth.requestMatchers("/auth/**","/login","/register", "/css", "/img", "/js").permitAll();
 					auth.anyRequest().authenticated();
 				})
+				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/").permitAll())
 				.build();
 	}
 //	@Bean
