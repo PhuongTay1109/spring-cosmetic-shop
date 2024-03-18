@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.cosmetics.myshop.model.User;
+import com.cosmetics.myshop.service.UserService;
 import com.cosmetics.myshop.utils.RSAKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -31,6 +33,8 @@ import com.nimbusds.jose.proc.SecurityContext;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	RSAKeyProperties keys;
@@ -43,7 +47,7 @@ public class SpringSecurityConfiguration {
 	@Bean
 	AuthenticationManager authManager(UserDetailsService userDetailsService) {
 		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-		daoProvider.setUserDetailsService(userDetailsService);
+		daoProvider.setUserDetailsService(userService);
 		daoProvider.setPasswordEncoder(passwordEncoder());
 		return new ProviderManager(daoProvider);
 	}
@@ -53,11 +57,10 @@ public class SpringSecurityConfiguration {
 		return http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/auth/**").permitAll();
-					auth.anyRequest().permitAll();
+					auth.requestMatchers("/auth/**","/login","/register").permitAll();
+					auth.anyRequest().authenticated();
 				})
 				.build();
-				
 	}
 //	@Bean
 //	JwtDecoder jwtDecoder() {

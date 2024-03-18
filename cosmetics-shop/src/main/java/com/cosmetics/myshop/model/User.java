@@ -33,7 +33,8 @@ public class User implements UserDetails{
 	private String username;
 	private String password;
 	private String phone;
-	private String email;																		
+	private String email;
+	private String address;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -76,25 +77,25 @@ public class User implements UserDetails{
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

@@ -28,11 +28,14 @@ document.addEventListener("DOMContentLoaded", async function() {
 			console.log(data);
 			
 			if (!data.valid) {
-				document.querySelector('.firstName-error').innerHTML =  data.firstName;
-				document.querySelector('.lastName-error').innerHTML =  data.lastName;
-				document.querySelector('.password-error').innerHTML =  data.password;
-				document.querySelector('.username-error').innerHTML =  data.username;
-				document.querySelector('.phone-error').innerHTML =  data.phone;
+				document.querySelector('.firstName-error').innerHTML =  data.firstName.includes('!') ? data.firstName : '';
+				document.querySelector('.lastName-error').innerHTML =  data.lastName.includes('!') ? data.lastName : '';
+				document.querySelector('.password-error').innerHTML =  data.password.includes('!') ? data.password : '';
+				document.querySelector('.username-error').innerHTML =  data.username.includes('!') ? data.username : '';
+				document.querySelector('.phone-error').innerHTML =  data.phone.includes('!') ? data.phone : '';
+			} else {
+				alert("Register successfully");
+				location.assign('/login');
 			}
 				
 		} catch(e) {
