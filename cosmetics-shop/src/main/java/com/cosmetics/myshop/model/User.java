@@ -1,6 +1,8 @@
 package com.cosmetics.myshop.model;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +26,7 @@ public class User implements UserDetails{
 	private static final long serialVersionUID = 3062475691517407371L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private Integer userId;
 	
@@ -40,6 +42,17 @@ public class User implements UserDetails{
 			inverseJoinColumns = {@JoinColumn(name="role_id")}
 			)
 	Set<Role> authorities;
+	
+	public User() {
+		super();
+		this.authorities = new HashSet<>();
+	}
+	
+	public User(String username, String password, Set<Role> authorities) {
+		this.username=  username;
+		this.password = password;
+		this.authorities = authorities;
+	}
 	
 
 	@Override
