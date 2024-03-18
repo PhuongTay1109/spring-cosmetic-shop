@@ -2,19 +2,319 @@
 <html xmlns="https://www.thymeleaf.org/">
 
 <head th:replace="fragments/commonFragments :: commonHead">
-    <title>Home page</title>
+<title>Home page</title>
 </head>
 
 <body>
-	<header th:replace="fragments/userFragments :: userHeader"></header>
+	<header class="container"> Header </header>
 
-	<section
-		class="bg-primary py-3 py-md-5 py-xl-8 d-flex justify-content-center align-items-center">
-		<div class="container">
-			Home page
+	<section class="bg-primary">
+		<!-- Begin: Slider -->
+		<div id="carouselSlider" class="carousel carousel-dark slide"
+			data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="0" class="active" aria-current="true"
+					aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="2" aria-label="Slide 3"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="3" aria-label="Slide 4"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="4" aria-label="Slide 5"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="5" aria-label="Slide 6"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="6" aria-label="Slide 7"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="7" aria-label="Slide 8"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="8" aria-label="Slide 9"></button>
+				<button type="button" data-bs-target="#carouselSlider"
+					data-bs-slide-to="9" aria-label="Slide 10"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active" data-bs-interval="10000">
+					<img th:src="@{/image/category/blush.jpg}" class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Blush</h1>
+					</div>
+				</div>
+				<div class="carousel-item" data-bs-interval="2000">
+					<img th:src="@{/image/category/bronzer.jpg}" class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Bronzer</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/eyebrow.jpg}" class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Eyebrow</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/eyeliner.jpg}" class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Eyeliner</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/eyeshadow.jpg}"
+						class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Eyeshadow</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/foundation.jpg}"
+						class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Foundation</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/lipstick.jpg}" class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Lipstick</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/lip_liner.jpg}"
+						class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Lip liner</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/mascara.jpg}" class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Mascara</h1>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img th:src="@{/image/category/nail_polish.jpg}"
+						class="d-block w-100">
+					<div class="carousel-caption d-none d-md-block">
+						<h1 class="section-title text-uppercase display-2 mt-5 ">Nail polish</h1>
+					</div>
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button"
+				data-bs-target="#carouselSlider" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+				data-bs-target="#carouselSlider" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
 		</div>
-	</section>
+		<!-- End: Slider -->
 
+		<!-- Begin: Features -->
+		<section class="py-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 text-center">
+						<div class="py-5">
+							<i class="fas fa-shipping-fast"></i>
+							<h4 class="element-title text-capitalize my-3">Fast delivery</h4>
+							<p>Experience the lightning-fast delivery service of our
+								store, ensuring your orders reach you swiftly and efficiently.</p>
+						</div>
+					</div>
+					<div class="col-md-4 text-center">
+						<div class="py-5">
+							<i class="fa-solid fa-gift"></i>
+							<h4 class="element-title text-capitalize my-3">Special packaging</h4>
+							<p>Elevate your shopping experience with our store's special
+								packaging, meticulously crafted to add an extra touch of
+								elegance and care to your purchases.</p>
+						</div>
+					</div>
+					<div class="col-md-4 text-center">
+						<div class="py-5">
+							<i class="fa-solid fa-rotate"></i>
+							<h4 class="element-title text-capitalize my-3">Free returns</h4>
+							<p>Enjoy the peace of mind with our store's hassle-free
+								return policy, offering complimentary returns on all purchases
+								for your convenience.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End: Features -->
+
+		<section id="new-arrival" class="product-carousel position-relative open-up">
+			<div class="container">
+				<div class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
+			      <hr class="line flex-grow-1 mr-3" />
+			      <h2 class="text-uppercase mb-0">New Arrivals</h2>
+			      <hr class="line flex-grow-1 ml-3" />
+			    </div>
+
+				<div class="row">
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 1</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 2</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 3</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 4</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+				</div>
+
+				<div class="text-center mt-5">
+					<a href="#!" class="link-primary text-decoration-none"> 
+						View All Products 
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<section id="best-seller" class="product-carousel position-relative open-up" >
+			<div class="container">
+			    <div class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
+			      <hr class="line flex-grow-1 mr-3" />
+			      <h2 class="text-uppercase mb-0">Best sellers</h2>
+			      <hr class="line flex-grow-1 ml-3" />
+			    </div>
+			    
+			    <div class="row">
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 1</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 2</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 3</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-3 mb-4">
+					    <div class="card position-relative">
+					        <div class="position-absolute top-0 end-0 mt-2 me-2">
+							    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+							</div>
+							<div class="position-absolute top-0 end-0 mt-5 me-2">
+							    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+							</div>
+					        <img th:src="@{/image/homepage/product.jpg}" class="card-img-top"/>
+					        <div class="card-body">
+					            <h5 class="card-title">Product 4</h5>
+					            <p class="card-text">$19.99</p>
+					            <a href="#" class="btn btn-primary">Buy Now</a>
+					        </div>
+					    </div>
+					</div>
+				</div>
+
+				<div class="text-center mt-5 pb-5">
+					<a href="#!" class="link-primary text-decoration-none"> 
+						View All Products 
+					</a>
+				</div>
+			</div>
+		</section>
+	</section>
 
 	<!-- Footer -->
 	<footer th:replace="fragments/commonFragments :: footer"></footer>
