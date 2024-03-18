@@ -42,10 +42,10 @@ public class CosmeticsShopApplication {
 	            User admin = new User("admin", passwordEncoder.encode("123"), roles);
 	            userRepository.save(admin);
 	        }
-	        if (userRepository.findByUsername("user").isEmpty()) {
+	        if (userRepository.findByUsername("user1").isEmpty()) {
 	        	Set<Role> roles = new HashSet<>();
 	        	roles.add(roleRepository.findByAuthority("USER").orElseThrow());
-	        	User user = new User("username", passwordEncoder.encode("123"), roles);
+	        	User user = new User("user1", passwordEncoder.encode("123"), roles);
 	        	userRepository.save(user);
 	        }
 

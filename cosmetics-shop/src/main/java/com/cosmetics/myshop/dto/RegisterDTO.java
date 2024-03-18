@@ -18,7 +18,9 @@ public class RegisterDTO {
 				+ phone + ", username=" + username + ", address=" + address + ", password=" + password + ", isValid="
 				+ isValid + "]";
 	}
-	
+	public RegisterDTO() {
+		super();
+	}
 	
 	
 

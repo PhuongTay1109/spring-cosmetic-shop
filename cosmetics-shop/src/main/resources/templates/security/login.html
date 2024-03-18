@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org/">
 
 <head th:replace="fragments/commonFragments :: commonHead">
-    <title>Sign in</title>
+<title>Sign in</title>
 </head>
 
 <body>
@@ -20,20 +20,22 @@
 								<div class="col-12">
 									<div class="mb-4">
 										<h2 class="h3">Sign in</h2>
-										<h3 class="fs-6 fw-normal text-secondary m-0">
-											Please login into your account
-										</h3>
+										<h3 class="fs-6 fw-normal text-secondary m-0">Please
+											login into your account</h3>
 									</div>
 								</div>
 							</div>
-							
-							<form action="#!">
-								<div class="row gy-3 overflow-hidden">	
+							<div th:if="${error}" class="alert alert-danger">
+								<p th:text="${error}"></p>
+							</div>
+							<form action="/auth/login" th:method="post">
+
+								<div class="row gy-3 overflow-hidden">
 									<div class="col-12">
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="username"
-												id="username" placeholder="Username" required> 
-											<label for="username" class="form-label">Username</label>
+												id="username" placeholder="Username" required> <label
+												for="username" class="form-label">Username</label>
 										</div>
 									</div>
 									<div class="col-12">
@@ -46,41 +48,38 @@
 									<div class="row">
 										<div class="col-6">
 											<div class="form-check">
-												<input class="form-check-input" type="checkbox" value="" name="rememberMe"
-													id="rememberMe">
-												<label class="form-check-label text-secondary" for="rememberMe">
-													Remember me
-												</label>
+												<input class="form-check-input" type="checkbox" value=""
+													name="rememberMe" id="rememberMe"> <label
+													class="form-check-label text-secondary" for="rememberMe">
+													Remember me </label>
 											</div>
 										</div>
 										<div class="col-6 text-end">
 											<a href="#!" class="link-primary text-decoration-none">
-												Forgot password?
-											</a>
+												Forgot password? </a>
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="d-grid">
 											<button class="btn btn-primary btn-lg" type="submit">
-												Sign in
-											</button>
+												Sign in</button>
 										</div>
 									</div>
 								</div>
 							</form>
-							
+
 							<div class="row">
 								<div class="col-12">
 									<div
 										class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end mt-4">
 										<p class="m-0 text-secondary text-center">
-											Not a member? 
-											<a href="/register" class="link-primary text-decoration-none">Register</a>
+											Not a member? <a href="/register"
+												class="link-primary text-decoration-none">Register</a>
 										</p>
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-12">
 									<p class="mt-4 mb-4">OR CONTINUE WITH</p>
