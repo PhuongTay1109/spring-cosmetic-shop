@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/">
 
 <head th:replace="fragments/commonFragments :: commonHead">
-    <title>Register</title>
+<title>Register</title>
 </head>
 
 <body>
@@ -20,27 +20,30 @@
 								<div class="col-12">
 									<div class="mb-4">
 										<h2 class="h3">Registration</h2>
-										<h3 class="fs-6 fw-normal text-secondary m-0">
-											Enter your details to register
-										</h3>
+										<h3 class="fs-6 fw-normal text-secondary m-0">Enter your
+											details to register</h3>
 									</div>
 								</div>
 							</div>
-							
-							<form action="#!">
+
+							<form action="" id="register-form">
 								<div class="row gy-3 overflow-hidden">
+									
 									<div class="col-12 col-md-6">
+										<div class="firstName-error error" style="font-weight: 800;"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="firstName"
-												id="firstName" placeholder="First Name" required> 
-											<label for="firstName" class="form-label">First Name</label>
+												id="firstName" placeholder="First Name" required> <label
+												for="firstName" class="form-label">First Name</label>
 										</div>
 									</div>
+									
 									<div class="col-12 col-md-6">
+										<div class="lastName-error error" style="font-weight: 800;"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="lastName"
-												id="lastName" placeholder="Last Name" required>
-											 <label for="lastName" class="form-label">Last Name</label>
+												id="lastName" placeholder="Last Name" required> <label
+												for="lastName" class="form-label">Last Name</label>
 										</div>
 									</div>
 									<div class="col-12 col-md-6">
@@ -53,25 +56,27 @@
 									<div class="col-12 col-md-6">
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="phone"
-												id="phone" placeholder="Phone" required> 
-											<label for="phone" class="form-label">Phone</label>
+												id="phone" placeholder="Phone" required> <label
+												for="phone" class="form-label">Phone</label>
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="form-floating mb-3">
-											<input type="email" class="form-control" name="address"
-												id="address" placeholder="Address" required> 
-											<label for="address" class="form-label">Address</label>
+											<input type="text" class="form-control" name="address"
+												id="address" placeholder="Address" required> <label
+												for="address" class="form-label">Address</label>
 										</div>
 									</div>
 									<div class="col-12">
+										<div class="username-error error" style="font-weight: 800;"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="username"
-												id="username" placeholder="Username" required> 
-											<label for="username" class="form-label">Username</label>
+												id="username" placeholder="Username" required> <label
+												for="username" class="form-label">Username</label>
 										</div>
 									</div>
 									<div class="col-12">
+										<div class="password-error error" style="font-weight: 800;"></div>
 										<div class="form-floating mb-3">
 											<input type="password" class="form-control" name="password"
 												id="password" value="" placeholder="Password" required>
@@ -81,13 +86,12 @@
 									<div class="col-12">
 										<div class="d-grid">
 											<button class="btn btn-primary btn-lg" type="submit">
-												Sign up
-											</button>
+												Sign up</button>
 										</div>
 									</div>
 								</div>
 							</form>
-							
+
 							<div class="row">
 								<div class="col-12">
 									<div
@@ -99,7 +103,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-12">
 									<p class="mt-4 mb-4">OR CONTINUE WITH</p>
@@ -134,6 +138,7 @@
 
 	<!-- Footer -->
 	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<script type="text/javascript" th:src="@{js/register.js}"></script>
 </body>
 
 </html>
