@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DontDeleteMyTest {
 	
-	@GetMapping("/home")
+	@GetMapping("/")
 	private String home() {
 		return "/user/homepage";
 	}
