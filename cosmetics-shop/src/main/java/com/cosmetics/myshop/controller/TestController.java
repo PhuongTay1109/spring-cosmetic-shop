@@ -34,20 +34,5 @@ public class TestController {
 		return productService.findAllProducts();
 	}
 	
-	@GetMapping("/register")
-	private String register() {
-		return "security/register";
-	}
-	
-	@GetMapping("/login")
-	private String login() {
-		return "/security/login";
-	}
-	
-	@GetMapping("/home")
-	private String home() {
-		return "/user/homepage";
-	}
-	
 	
 }
