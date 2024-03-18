@@ -1,9 +1,7 @@
 package com.cosmetics.myshop.model;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import org.apache.el.parser.AstFalse;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
