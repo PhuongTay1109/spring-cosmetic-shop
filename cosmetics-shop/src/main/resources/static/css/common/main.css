@@ -37,3 +37,22 @@
     top: -5px;
     right: -8px;
 }
+
+.carousel-inner img {
+	display: block; 
+	max-width: 100%; 
+	max-height: 500px; 
+	object-fit: cover
+}
+
+.carousel-caption h1 {
+	 color:  #F6E7E5 !important;
+	 font-weight: bold;
+	 text-shadow: 2px 2px 8px #000;
+}
+
+.line {
+    border: none;
+    height: 4px; 
+    background-color: #D49696; 
+  }
