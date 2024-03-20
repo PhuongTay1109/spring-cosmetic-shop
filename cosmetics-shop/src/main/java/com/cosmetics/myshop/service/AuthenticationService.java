@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.cosmetics.myshop.dto.LoginDTO;
+import com.cosmetics.myshop.dto.LoginResponseDTO;
 import com.cosmetics.myshop.dto.RegisterDTO;
 import com.cosmetics.myshop.model.Role;
 import com.cosmetics.myshop.model.User;
@@ -36,6 +36,9 @@ public class AuthenticationService {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	JwtService jwtService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -105,18 +108,18 @@ public class AuthenticationService {
 
 	public String loginUser(Map<String, String> body, RedirectAttributes attributes) {
 		try {
-			
-			Authentication authentication = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
-			System.out.println(authentication);
+			System.out.println(body);
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
+			String token = jwtService.generateJwt(authentication);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			System.out.println("Login successfully");
+			System.out.println(token);
+			System.out.println("success");
 			return "redirect:/";
-
-		} catch (Exception e) {
-		    // Handle other unexpected exceptions
-		    attributes.addFlashAttribute("error", "Invalid username or password!");
-		    return "redirect:/login";
+		} catch(Exception e) {
+			System.out.println(e);
+			attributes.addFlashAttribute("error", "Invalid username or password");
+			return "redirect:/login";
 		}
 	}
 }
