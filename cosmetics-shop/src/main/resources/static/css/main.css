@@ -36,6 +36,7 @@
     position: absolute;
     top: -5px;
     right: -8px;
+    color: #D49696 !important;
 }
 
 .carousel-inner img {
@@ -55,4 +56,4 @@
     border: none;
     height: 4px; 
     background-color: #D49696; 
-  }
+ }

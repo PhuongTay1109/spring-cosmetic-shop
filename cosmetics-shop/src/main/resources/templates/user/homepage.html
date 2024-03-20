@@ -6,12 +6,7 @@
 </head>
 
 <body>
-	<header class="container">
-		Header
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" />
-		</form>
-	</header>
+	<header th:replace="fragments/userFragments :: userHeader"></header>
 
 
 	<section class="bg-primary">
@@ -155,13 +150,14 @@
 		</section>
 		<!-- End: Features -->
 
+		<!-- Begin: Sale off -->
 		<section id="new-arrival"
 			class="product-carousel position-relative open-up">
 			<div class="container">
 				<div
 					class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
 					<hr class="line flex-grow-1 mr-3" />
-					<h2 class="text-uppercase mb-0">New Arrivals</h2>
+					<h2 class="text-uppercase mb-0">Sale off</h2>
 					<hr class="line flex-grow-1 ml-3" />
 				</div>
 
@@ -174,7 +170,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 1</h5>
 								<p class="card-text">$19.99</p>
@@ -190,7 +186,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 2</h5>
 								<p class="card-text">$19.99</p>
@@ -206,7 +202,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 3</h5>
 								<p class="card-text">$19.99</p>
@@ -222,7 +218,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 4</h5>
 								<p class="card-text">$19.99</p>
@@ -238,7 +234,9 @@
 				</div>
 			</div>
 		</section>
+		<!-- Begin: Sale off -->
 
+		<!-- Begin: Best Sellers -->
 		<section id="best-seller"
 			class="product-carousel position-relative open-up">
 			<div class="container">
@@ -258,7 +256,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 1</h5>
 								<p class="card-text">$19.99</p>
@@ -274,7 +272,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 2</h5>
 								<p class="card-text">$19.99</p>
@@ -290,7 +288,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 3</h5>
 								<p class="card-text">$19.99</p>
@@ -306,7 +304,7 @@
 							<div class="position-absolute top-0 end-0 mt-5 me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 							</div>
-							<img th:src="@{/image/homepage/product.jpg}" class="card-img-top" />
+							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
 							<div class="card-body">
 								<h5 class="card-title">Product 4</h5>
 								<p class="card-text">$19.99</p>
@@ -322,7 +320,8 @@
 				</div>
 			</div>
 		</section>
-	</section>
+		<!-- End: Best Sellers -->
+	</section>	
 
 	<!-- Footer -->
 	<footer th:replace="fragments/commonFragments :: footer"></footer>
