@@ -1,5 +1,5 @@
 form = document.querySelector("#register-form")
-
+ 
 document.addEventListener("DOMContentLoaded", async function() {
     console.log(form)
     form.addEventListener('submit', async function (e) {
@@ -33,9 +33,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 				document.querySelector('.password-error').innerHTML =  data.password.includes('!') ? data.password : '';
 				document.querySelector('.username-error').innerHTML =  data.username.includes('!') ? data.username : '';
 				document.querySelector('.phone-error').innerHTML =  data.phone.includes('!') ? data.phone : '';
+				document.querySelector('.email-error').innerHTML =  data.email.includes('!') ? data.email : '';
 			} else {
-				alert("Register successfully");
-				location.assign('/login');
+				location.assign('/login?registered');
 			}
 				
 		} catch(e) {
@@ -49,4 +49,21 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         // Placeholder for the missing code block
     })
+    
+ 
 })
+
+ function hideAndShowPass() {
+        var passwordField = document.getElementById("password");
+        var eyeIcon = document.querySelector(".eye-icon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
+        }
+ }
