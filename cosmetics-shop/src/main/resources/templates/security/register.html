@@ -6,7 +6,7 @@
 </head>
 
 <body>
-	<header th:replace="fragments/securityFragments :: registerHeader"></header>
+	<header th:replace="~{fragments/securityFragments :: registerHeader}"></header>
 
 	<section
 		class="bg-primary py-3 py-md-5 py-xl-8 d-flex justify-content-center align-items-center">
@@ -138,7 +138,7 @@
 
 
 	<!-- Footer -->
-	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
 	<script type="text/javascript" th:src="@{js/register.js}"></script>
 </body>
 
