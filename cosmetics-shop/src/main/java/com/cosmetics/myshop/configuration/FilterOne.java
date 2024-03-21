@@ -42,7 +42,7 @@ public class FilterOne extends OncePerRequestFilter {
 		System.out.println("FIlter One: " + request.getRequestURI() );
 		if (requestMatcher.matches(request)) {
             // Process the request
-            System.out.println("Filter One processing request for pattern: " + request.getServletPath());
+//            System.out.println("Filter One processing request for pattern: " + request.getServletPath());
             // Continue the filter chain
             filterChain.doFilter(request, response);
         } else {

@@ -13,18 +13,23 @@
 		<!-- Begin: Slider -->
 		<div id="carouselSlider" class="carousel carousel-dark slide"
 			data-bs-ride="carousel">
-			<div class="carousel-indicators" >
-				<button type="button" aria-current="true" data-bs-target="#carouselSlider"
-					th:data-bs-slide-to="0" class="active"></button>
-				<button type="button" th:each="category, iter : ${categoryList}" th:if="${iter.index} >= 1" data-bs-target="#carouselSlider"
+			<div class="carousel-indicators">
+				<button type="button" aria-current="true"
+					data-bs-target="#carouselSlider" th:data-bs-slide-to="0"
+					class="active"></button>
+				<button type="button" th:each="category, iter : ${categoryList}"
+					th:if="${iter.index} >= 1" data-bs-target="#carouselSlider"
 					th:data-bs-slide-to="${iter.index}"></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item active" data-bs-interval="10000" th:each="category : ${categoryList}">
+				<div class="carousel-item" th:classappend="${categoryStat.index} == 0 ? active:''" data-bs-interval="10000"
+					th:each="category : ${categoryList}">
 					<img th:src="${category.imageLink}" class="d-block w-100">
 					<div class="carousel-caption d-none d-md-block">
-						<a th:href="@{/products?category_name={categoryName}(categoryName=${category.categoryName})}">
-							<h1 class="section-title text-uppercase display-2 mt-5 " th:text="${category.categoryName}"></h1>
+						<a class="text-decoration-none"
+							th:href="@{/products?category_name={categoryName}(categoryName=${category.categoryName})}">
+							<h1 class="section-title text-uppercase display-2 mt-5 "
+								th:text="${category.categoryName}"></h1>
 						</a>
 					</div>
 				</div>
@@ -249,7 +254,7 @@
 			</div>
 		</section>
 		<!-- End: Best Sellers -->
-	</section>	
+	</section>
 
 	<!-- Footer -->
 	<footer th:replace="fragments/commonFragments :: footer"></footer>
