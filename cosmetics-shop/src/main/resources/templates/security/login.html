@@ -27,9 +27,11 @@
 							</div>
 							
 							<div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
-							<div th:if="${param.logout}">You have been logged out.</div>
-							<div th:text=${erorr}></div>
-							<form th:action="@{/login}" method="post">
+							<div th:if="${param.logout}" class="alert alert-info">You have been logged out.</div>
+							<div th:if="${error}" class="alert alert-danger">
+								<th:block th:text="${error}"></th:block>
+							</div>
+							<form th:action="@{/auth/login}" method="post">
 
 								<div class="row gy-3 overflow-hidden">
 									<div class="col-12">

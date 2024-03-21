@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cosmetics.myshop.dto.LoginResponseDTO;
 import com.cosmetics.myshop.dto.RegisterDTO;
 import com.cosmetics.myshop.service.AuthenticationService;
 
@@ -25,12 +26,11 @@ public class AuthenticationController {
 	public RegisterDTO register(@RequestBody RegisterDTO body) {
 		return authenticationService.registerUser(body);	
 	}
-		
+	
 	@PostMapping("/login")
 	public String login(@RequestParam Map<String, String> body, RedirectAttributes attributes) {
-		System.out.println("login post");
+//		System.out.println("post ./auth/login");
 		return authenticationService.loginUser(body, attributes);
-//		return "home";
 	}
 
 

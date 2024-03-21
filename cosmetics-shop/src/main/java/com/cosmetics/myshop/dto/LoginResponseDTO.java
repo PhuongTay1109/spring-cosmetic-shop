@@ -1,5 +1,7 @@
 package com.cosmetics.myshop.dto;
 
+import com.cosmetics.myshop.model.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDTO {
-	private String username;
-	private String password;
+public class LoginResponseDTO {
+	private User user;
+	private String jwt;
 	
 }
