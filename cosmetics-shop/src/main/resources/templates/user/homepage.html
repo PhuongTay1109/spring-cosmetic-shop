@@ -13,91 +13,19 @@
 		<!-- Begin: Slider -->
 		<div id="carouselSlider" class="carousel carousel-dark slide"
 			data-bs-ride="carousel">
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="2" aria-label="Slide 3"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="3" aria-label="Slide 4"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="4" aria-label="Slide 5"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="5" aria-label="Slide 6"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="6" aria-label="Slide 7"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="7" aria-label="Slide 8"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="8" aria-label="Slide 9"></button>
-				<button type="button" data-bs-target="#carouselSlider"
-					data-bs-slide-to="9" aria-label="Slide 10"></button>
+			<div class="carousel-indicators" >
+				<button type="button" aria-current="true" data-bs-target="#carouselSlider"
+					th:data-bs-slide-to="0" class="active"></button>
+				<button type="button" th:each="category, iter : ${categoryList}" th:if="${iter.index} >= 1" data-bs-target="#carouselSlider"
+					th:data-bs-slide-to="${iter.index}"></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item active" data-bs-interval="10000">
-					<img th:src="@{/img/category/blush.jpg}" class="d-block w-100">
+				<div class="carousel-item active" data-bs-interval="10000" th:each="category : ${categoryList}">
+					<img th:src="${category.imageLink}" class="d-block w-100">
 					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Blush</h1>
-					</div>
-				</div>
-				<div class="carousel-item" data-bs-interval="2000">
-					<img th:src="@{/img/category/bronzer.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Bronzer</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/eyebrow.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Eyebrow</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/eyeliner.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Eyeliner</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/eyeshadow.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Eyeshadow</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/foundation.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Foundation</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/lipstick.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Lipstick</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/lip_liner.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Lip
-							liner</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/mascara.jpg}" class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Mascara</h1>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img th:src="@{/img/category/nail_polish.jpg}"
-						class="d-block w-100">
-					<div class="carousel-caption d-none d-md-block">
-						<h1 class="section-title text-uppercase display-2 mt-5 ">Nail
-							polish</h1>
+						<a th:href="@{/products?category_name={categoryName}(categoryName=${category.categoryName})}">
+							<h1 class="section-title text-uppercase display-2 mt-5 " th:text="${category.categoryName}"></h1>
+						</a>
 					</div>
 				</div>
 			</div>
