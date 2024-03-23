@@ -81,7 +81,8 @@ public class SpringSecurityConfiguration {
 //					auth.anyRequest().permitAll();
 					auth.anyRequest().authenticated();
 				})
-				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/"))
+				.formLogin(form -> form.loginPage("/login")
+						.defaultSuccessUrl("/"))
 //				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //				.addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.requestCache(cache -> cache.requestCache(requestCache))

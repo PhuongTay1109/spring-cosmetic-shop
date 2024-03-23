@@ -1,6 +1,7 @@
 package com.cosmetics.myshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,14 @@ public class ProductService {
 	
 	public List<Product> findProductsByCategoryName(String categoryName) {
 		return productRepository.findByCategoryName(categoryName);
+	}
+	
+	public Product findProductByid(Integer id) {
+		Optional<Product> product = productRepository.findById(id);
+		if (product.isEmpty()) {
+			return null;
+		}
+		return product.get();
 	}
 
 }

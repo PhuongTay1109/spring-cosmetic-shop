@@ -1,5 +1,12 @@
+:root {
+	--bg-primary:  #F6E7E5;
+	--border-primary: #f39aa9;
+	--link-primary: #D49696;
+	--link-primary-hover:  #91c2d2;
+}
+
 .bg-primary {
-    background-color: #F6E7E5 !important; 
+    background-color: var(--bg-primary) !important; 
 }
 
 .border-primary {
