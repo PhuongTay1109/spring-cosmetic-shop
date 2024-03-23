@@ -32,7 +32,7 @@ public class ProductController {
 	String getProduct(@PathVariable(name = "product_id") Integer id, Model model) throws JsonMappingException, JsonProcessingException {
 		Product product = productService.findProductByid(id);
 //		System.out.println(product);
-		System.out.println(product.getTagList());
+//		System.out.println(product.getTagList());
 		model.addAttribute("product", product);
 		
 		ObjectMapper objectMapper = new ObjectMapper();

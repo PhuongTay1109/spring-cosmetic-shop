@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cosmetics.myshop.model.Product;
@@ -36,6 +38,13 @@ public class ProductService {
 			return null;
 		}
 		return product.get();
+	}
+	public List<Product> findRelatedProductsByPage(Product product, Integer page, Integer per_page){
+		Pageable pageable = PageRequest.of(page, per_page);
+//		System.out.println("fetch data");
+		
+		return productRepository.findRelatedProductsByPage(product.getId().toString(), product.getCategoryName(), product.getBrand(), product.getProductType(), pageable);
+		
 	}
 
 }

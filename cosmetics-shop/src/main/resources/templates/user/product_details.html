@@ -28,15 +28,17 @@
 							<strong>Price:</strong> $199
 						</p>
 						<p class="card-text">
-							<strong>Category: </strong><th:block th:text="${product.Name}"></th:block>
+							<strong>Category: </strong>
+							<th:block th:text="${product.Name}"></th:block>
 						</p>
 						<p class="card-text">
-							<strong>Product type: </strong>P<th:block th:text="${product.productType}"></th:block>
+							<strong>Product type: </strong>P
+							<th:block th:text="${product.productType}"></th:block>
 						</p>
 						<p class="card-text">
-							<strong>Tags:</strong> 
-							<span class="badge badge-primary" th:each="tag : ${tagList}">
-							<th:block th:text="${tag}"> </th:block> 
+							<strong>Tags:</strong> <span class="badge badge-primary"
+								th:each="tag : ${tagList}"> <th:block th:text="${tag}">
+								</th:block>
 							</span> &nbsp;
 						</p>
 						<p class="card-text mt-4">
@@ -119,7 +121,24 @@
 						</div>
 					</div>
 				</div>
+				<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link" href="#"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+						</a></li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+								class="sr-only">Next</span>
+						</a></li>
+					</ul>
+				</nav>
 			</div>
+
+
 			<!-- Related products -->
 		</div>
 	</div>
@@ -128,6 +147,7 @@
 
 	<!-- Footer -->
 	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<script type="text/javascript" th:src="@{/js/user/product_details.js}"></script>
 </body>
 
 </html>
