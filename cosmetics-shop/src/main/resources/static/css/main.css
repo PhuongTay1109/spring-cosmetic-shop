@@ -68,3 +68,7 @@
 .text-danger {
 	font-weight: 500 !important;
 }
+
+#carousel-a-tag:hover {
+	opacity: 0.8;
+}

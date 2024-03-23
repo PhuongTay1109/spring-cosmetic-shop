@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.repository.UserRepository;
 
 @Service
@@ -14,10 +15,13 @@ public class UserService implements UserDetailsService {
 	UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		System.out.println("UserService");
-		return userRepository.findByUsername(username).orElseThrow();
-	}
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        User user = userRepository.findByUsername(username).get();
+        if(user == null){
+            throw new UsernameNotFoundException("could not found user..!!");
+        }
+        return user;
+    }
 
 }

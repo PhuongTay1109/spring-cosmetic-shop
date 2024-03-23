@@ -7,12 +7,15 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,10 @@ import com.cosmetics.myshop.model.Role;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.repository.RoleRepository;
 import com.cosmetics.myshop.repository.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class AuthenticationService {
@@ -106,17 +113,26 @@ public class AuthenticationService {
 		}
 	}
 
-	public String loginUser(Map<String, String> body, RedirectAttributes attributes) {
+	public String loginUser(HttpServletResponse response, Map<String, String> body, RedirectAttributes attributes) {
 		try {
-			System.out.println(body);
+//			System.out.println(body);
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
-			String token = jwtService.generateJwt(authentication);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			System.out.println(token);
-			System.out.println("success");
+			String accessToken = jwtService.GenerateToken(authentication.getName());
+			SecurityContext securityContext =  SecurityContextHolder.getContext();
+//			System.out.println("Authentication auth/login " + authentication.getName());
+//			securityContext.setAuthentication(authentication);
+			System.out.println("accessToken /auth/login" + accessToken.toString() );
+			ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+					.httpOnly(true)
+					.secure(false)
+					.maxAge(60*60*1000)
+					.build();
+			response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+//			System.out.println(accessToken);
+//			System.out.println("success");
 			return "redirect:/";
-		} catch(Exception e) {
+		} catch(Exception e) { 
 			System.out.println(e);
 			attributes.addFlashAttribute("error", "Invalid username or password");
 			return "redirect:/login";
