@@ -22,11 +22,11 @@
 					th:data-bs-slide-to="${iter.index}"></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item" th:classappend="${categoryStat.index} == 0 ? active:''" data-bs-interval="10000"
+				<div class="carousel-item" th:classappend="${categoryStat.index} == 0 ? active:''" data-bs-interval="3000"
 					th:each="category : ${categoryList}">
 					<img th:src="${category.imageLink}" class="d-block w-100">
 					<div class="carousel-caption d-none d-md-block">
-						<a class="text-decoration-none"
+						<a class="text-decoration-none" id="carousel-a-tag"
 							th:href="@{/products?category_name={categoryName}(categoryName=${category.categoryName})}">
 							<h1 class="section-title text-uppercase display-2 mt-5 "
 								th:text="${category.categoryName}"></h1>
