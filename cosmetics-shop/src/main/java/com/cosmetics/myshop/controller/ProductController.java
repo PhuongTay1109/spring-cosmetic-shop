@@ -39,6 +39,7 @@ public class ProductController {
 		List<String> tagList = new ArrayList<>();
 		tagList = Arrays.asList(objectMapper.readValue(product.getTagList(), String[].class));
 		model.addAttribute("tagList", tagList);
+		model.addAttribute("product_id", id);
 		return "/user/product_details";
 	}
 	

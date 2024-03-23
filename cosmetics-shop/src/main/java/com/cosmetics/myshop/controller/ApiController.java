@@ -23,12 +23,9 @@ public class ApiController {
 	@ResponseBody
 	@GetMapping("/related_products")
 	List<Product> getRelatedProductsByPage(@RequestParam Map<String, String> param){
-		System.out.println(param.get("page"));
-		System.out.println(param.get("id"));
 		Integer id = Integer.parseInt(param.get("id")) ;
 		Integer page = Integer.parseInt(param.get("page"));
-		Integer per_page = 6;
-		System.out.println("asda");
+		Integer per_page = 4;
 		Product product = productService.findProductByid(id);
 		return productService.findRelatedProductsByPage(product, page, per_page);
 	}
