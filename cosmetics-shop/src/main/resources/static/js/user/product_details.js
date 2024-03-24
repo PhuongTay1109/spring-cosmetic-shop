@@ -28,7 +28,7 @@ async function handlePageClick(id, page) {
 						</a>
 						
 						<div class="card-body">
-							<h5 class="card-title">${product.name}</h5>
+							<h5 class="card-title fs-6">${product.name}</h5>
 							<p class="card-text">${product.price}</p>
 							<a href="#" class="btn btn-primary">Buy Now</a>
 						</div>

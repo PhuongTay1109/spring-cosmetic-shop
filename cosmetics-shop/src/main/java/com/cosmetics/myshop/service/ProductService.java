@@ -25,7 +25,8 @@ public class ProductService {
 	ProductRepository productRepository;
 	
 	public List<Product> findAllProducts() {
-		return productRepository.findAll();
+		List<Product> products = productRepository.findAll();
+		return products;
 	}
 	
 	public List<Product> findProductsByCategoryName(String categoryName) {
@@ -43,7 +44,11 @@ public class ProductService {
 		Pageable pageable = PageRequest.of(page, per_page);
 //		System.out.println("fetch data");
 		
-		return productRepository.findRelatedProductsByPage(product.getId().toString(), product.getCategoryName(), product.getBrand(), product.getProductType(), pageable);
+		return productRepository.findRelatedProductsByPage(product.getId().toString(), 
+				product.getCategoryName(), 
+				product.getBrand(), 
+				product.getProductType(), 
+				pageable);
 		
 	}
 

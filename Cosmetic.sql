@@ -283,4 +283,9 @@ UNLOCK TABLES;
 
 -- Dump completed on 2024-03-14 21:11:47
 
+SET SQL_SAFE_UPDATES = 0;
+UPDATE product
+SET price = round(price/20000,2)
+WHERE true
+
 
