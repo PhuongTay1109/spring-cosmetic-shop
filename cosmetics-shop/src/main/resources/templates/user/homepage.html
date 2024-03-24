@@ -29,7 +29,7 @@
 						<a class="text-decoration-none" id="carousel-a-tag"
 							th:href="@{/products?category_name={categoryName}(categoryName=${category.categoryName})}">
 							<h1 class="section-title text-uppercase display-2 mt-5 "
-								th:text="${category.categoryName}"></h1>
+								th:text="${stringUtils.normalizeString(category.categoryName)}"></h1>
 						</a>
 					</div>
 				</div>

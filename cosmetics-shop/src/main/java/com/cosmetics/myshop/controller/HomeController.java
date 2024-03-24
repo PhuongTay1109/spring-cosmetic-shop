@@ -31,13 +31,8 @@ public class HomeController {
 	@GetMapping("/")
 	private String home(Model model) {
 		List<Category> categoryList = categoryService.findAllCategories();
-
-		for (Category category : categoryList) {
-			String normalizedCategoryName = StringUtils.normalizeString(category.getCategoryName());
-			category.setCategoryName(normalizedCategoryName);
-			System.out.println(category.getCategoryName());
-		}
-
+		StringUtils stringUtils = new StringUtils();
+		model.addAttribute("stringUtils", stringUtils);
 		model.addAttribute("categoryList", categoryList);
 		return "/user/homepage";
 	}
