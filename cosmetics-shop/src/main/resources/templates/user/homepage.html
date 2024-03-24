@@ -6,7 +6,7 @@
 </head>
 
 <body>
-	<header th:replace="fragments/userFragments :: userHeader"></header>
+	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
 
 
 	<section class="bg-primary">
@@ -257,7 +257,7 @@
 	</section>
 
 	<!-- Footer -->
-	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
 </body>
 
 </html>
