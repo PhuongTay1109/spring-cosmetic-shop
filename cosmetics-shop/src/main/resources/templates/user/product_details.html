@@ -19,13 +19,15 @@
 					<div class="card-body">
 						<h3 class="card-title text-center mb-4" th:text="${product.name}">
 						</h3>
-						<p class="card-text fst-italic lead" th:text="${product.description}"></p>
+						<p class="card-text fst-italic lead"
+							th:text="${product.description}"></p>
 						<p class="card-text">
 							<strong>Brand:</strong>
 							<th:block th:text="${product.brand}"></th:block>
 						</p>
 						<p class="card-text">
-							<strong>Price:</strong> $<th:block th:text="${product.price}"></th:block>
+							<strong>Price:</strong> $
+							<th:block th:text="${product.price}"></th:block>
 						</p>
 						<p class="card-text">
 							<strong>Category: </strong>
@@ -57,7 +59,7 @@
 					<h2 class="text-uppercase mb-0">Related Products</h2>
 					<hr class="line flex-grow-1 ml-3" />
 				</div>
-				
+
 				<!--
 				
 				
@@ -77,22 +79,22 @@
 						</div>
 					</div>
 				</div>  -->
-				
+
 
 				<nav aria-label="Page navigation example"
 					class="d-flex justify-content-center">
 					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="#"
+						<li class="page-item"><button class="page-link" id="page-previous"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 								<span class="sr-only">Previous</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
-								class="sr-only">Next</span>
-						</a></li>
+						</button></li>
+						<li class="page-item"><button class="page-link page-number">1</button></li>
+						<li class="page-item"><button class="page-link page-number">2</button></li>
+						<li class="page-item"><button class="page-link page-number">3</button></li>
+						<li class="page-item"><button id="page-next" class="page-link page-number"
+								aria-label="Next">
+								<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
+							</button></li>
 					</ul>
 				</nav>
 			</div>
