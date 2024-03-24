@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org/">
 
-<head th:replace="fragments/commonFragments :: commonHead">
+<head th:replace="~{fragments/commonFragments :: commonHead}">
 <title>Sign in</title>
 </head>
 
 <body>
-	<header th:replace="fragments/securityFragments :: loginHeader"></header>
+	<header th:replace="~{fragments/securityFragments :: loginHeader}"></header>
 
 	<section
 		class="bg-primary py-3 py-md-5 py-xl-8 d-flex justify-content-center align-items-center">
@@ -117,7 +117,7 @@
 
 
 	<!-- Footer -->
-	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
 </body>
 
 </html>
