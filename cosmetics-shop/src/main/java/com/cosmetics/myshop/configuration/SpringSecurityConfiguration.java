@@ -39,7 +39,12 @@ import io.jsonwebtoken.Jwts;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
-	private static final String[] IGNORE = { "/css/**", "/js/**", "/img/**", "/webjars/**", "/webjarsjs" };
+	private static final String[] IGNORE = { "/css/**", "/js/**", "/img/**", "/webjars/**", "/webjarsjs",
+			"/auth/**", "/login", "/register" };
+	
+	
+//	@Autowired
+//	JwtAuthenticationFilter jwtAuthenticationFilter;
 	
 
 	@Bean
@@ -64,14 +69,6 @@ public class SpringSecurityConfiguration {
 	}
 
 	@Bean
-	DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-		daoProvider.setUserDetailsService(userDetailsService());
-		daoProvider.setPasswordEncoder(passwordEncoder());
-		return daoProvider;
-	}
-
-	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		// Turn off query "continue" after login
@@ -81,28 +78,31 @@ public class SpringSecurityConfiguration {
 				.authorizeHttpRequests(auth -> {
 					auth.requestMatchers(IGNORE).permitAll();
 					auth.requestMatchers("/auth/**", "/login", "/register").permitAll();
+//					auth.anyRequest().permitAll();
 					auth.anyRequest().authenticated();
 				})
-				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/"))
-				.addFilterAfter(new FilterOne("/"), UsernamePasswordAuthenticationFilter.class)
-				.requestCache(cache -> cache.requestCache(null))
-//				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
+				.formLogin(form -> form.loginPage("/login")
+						.defaultSuccessUrl("/"))
 //				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//				.addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.requestCache(cache -> cache.requestCache(requestCache))
+//				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
+				
 		
 				.logout(logout -> logout.permitAll()).build();
 	}
 	
-	@Bean
-	JwtDecoder jwtDecoder() {
-		return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
-	}
-
-	@Bean
-	JwtEncoder jwtEncoder() {
-		JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
-		JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-		return new NimbusJwtEncoder(jwks);
-	}
+//	@Bean
+//	JwtDecoder jwtDecoder() {
+//		return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
+//	}
+//
+//	@Bean
+//	JwtEncoder jwtEncoder() {
+//		JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
+//		JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+//		return new NimbusJwtEncoder(jwks);
+//	}
 	
 	
 

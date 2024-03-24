@@ -28,6 +28,7 @@
 							
 							<div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
 							<div th:if="${param.logout}" class="alert alert-info">You have been logged out.</div>
+							<div th:if="${param.registered}" class="alert alert-info">You have registered successfully. Please login first!</div>
 							<div th:if="${error}" class="alert alert-danger">
 								<th:block th:text="${error}"></th:block>
 							</div>

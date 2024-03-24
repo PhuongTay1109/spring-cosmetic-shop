@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="fragments/commonFragments :: commonHead">
+<title>Home page</title>
+</head>
+
+<body class="bg-primary">
+	<header th:replace="fragments/userFragments :: userHeader"></header>
+	<div class="container mt-5">
+		<div class="card product-details-card">
+			<div class="row product-details-row bg-white p-3">
+				<div class="product-info"></div>
+				<div class="col-md-4">
+					<img th:src="${product.imageLink}" class="card-img-top product-img"
+						alt="Product Image">
+				</div>
+				<div class="col-md-8">
+					<div class="card-body">
+						<h3 class="card-title text-center mb-4" th:text="${product.name}">
+						</h3>
+						<p class="card-text lead" th:text="${product.description}"></p>
+						<p class="card-text">
+							<strong>Brand:</strong>
+							<th:block th:text="${product.brand}"></th:block>
+						</p>
+						<p class="card-text">
+							<strong>Price:</strong> $199
+						</p>
+						<p class="card-text">
+							<strong>Category: </strong>
+							<th:block th:text="${product.Name}"></th:block>
+						</p>
+						<p class="card-text">
+							<strong>Product type: </strong>P
+							<th:block th:text="${product.productType}"></th:block>
+						</p>
+						<p class="card-text">
+							<strong>Tags:</strong> <span class="badge badge-primary"
+								th:each="tag : ${tagList}"> <th:block th:text="${tag}">
+								</th:block>
+							</span> &nbsp;
+						</p>
+						<p class="card-text mt-4">
+							<button class="btn btn-primary">Add to Cart</button>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row product-details-row related-products">
+
+				<!-- Related products -->
+				<div
+					class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
+					<hr class="line flex-grow-1 mr-3" />
+					<h2 class="text-uppercase mb-0">Related Products</h2>
+					<hr class="line flex-grow-1 ml-3" />
+				</div>
+				<div class="col-md-3 mb-4">
+					<div class="card position-relative">
+						<div class="position-absolute top-0 end-0 mt-2 me-2">
+							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+						</div>
+						<div class="position-absolute top-0 end-0 mt-5 me-2">
+							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+						</div>
+						<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
+						<div class="card-body">
+							<h5 class="card-title">Product 1</h5>
+							<p class="card-text">$19.99</p>
+							<a href="#" class="btn btn-primary">Buy Now</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 mb-4">
+					<div class="card position-relative">
+						<div class="position-absolute top-0 end-0 mt-2 me-2">
+							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+						</div>
+						<div class="position-absolute top-0 end-0 mt-5 me-2">
+							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+						</div>
+						<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
+						<div class="card-body">
+							<h5 class="card-title">Product 2</h5>
+							<p class="card-text">$19.99</p>
+							<a href="#" class="btn btn-primary">Buy Now</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 mb-4">
+					<div class="card position-relative">
+						<div class="position-absolute top-0 end-0 mt-2 me-2">
+							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+						</div>
+						<div class="position-absolute top-0 end-0 mt-5 me-2">
+							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+						</div>
+						<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
+						<div class="card-body">
+							<h5 class="card-title">Product 3</h5>
+							<p class="card-text">$19.99</p>
+							<a href="#" class="btn btn-primary">Buy Now</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 mb-4">
+					<div class="card position-relative">
+						<div class="position-absolute top-0 end-0 mt-2 me-2">
+							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+						</div>
+						<div class="position-absolute top-0 end-0 mt-5 me-2">
+							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+						</div>
+						<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
+						<div class="card-body">
+							<h5 class="card-title">Product 4</h5>
+							<p class="card-text">$19.99</p>
+							<a href="#" class="btn btn-primary">Buy Now</a>
+						</div>
+					</div>
+				</div>
+				<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link" href="#"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+						</a></li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+								class="sr-only">Next</span>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+
+
+			<!-- Related products -->
+		</div>
+	</div>
+	</div>
+	</div>
+
+	<!-- Footer -->
+	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<script type="text/javascript" th:src="@{/js/user/product_details.js}"></script>
+</body>
+
+</html>

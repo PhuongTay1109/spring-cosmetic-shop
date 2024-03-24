@@ -30,7 +30,7 @@
 								<div class="row gy-3 overflow-hidden">
 									
 									<div class="col-12 col-md-6">
-										<div class="firstName-error error" style="font-weight: 800;"></div>
+										<div class="firstName-error text-danger"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="firstName"
 												id="firstName" placeholder="First Name" required> <label
@@ -39,7 +39,7 @@
 									</div>
 									
 									<div class="col-12 col-md-6">
-										<div class="lastName-error error" style="font-weight: 800;"></div>
+										<div class="lastName-error text-danger"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="lastName"
 												id="lastName" placeholder="Last Name" required> <label
@@ -47,6 +47,7 @@
 										</div>
 									</div>
 									<div class="col-12 col-md-6">
+										<div class="email-error text-danger"></div>
 										<div class="form-floating mb-3">
 											<input type="email" class="form-control" name="email"
 												id="email" placeholder="name@example.com" required>
@@ -54,7 +55,7 @@
 										</div>
 									</div>
 									<div class="col-12 col-md-6">
-										<div class="phone-error error" style="font-weight: 800;"></div>
+										<div class="phone-error text-danger"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="phone"
 												id="phone" placeholder="Phone" required> <label
@@ -69,7 +70,7 @@
 										</div>
 									</div>
 									<div class="col-12">
-										<div class="username-error error" style="font-weight: 800;"></div>
+										<div class="username-error text-danger"></div>
 										<div class="form-floating mb-3">
 											<input type="text" class="form-control" name="username"
 												id="username" placeholder="Username" required> <label
@@ -77,12 +78,16 @@
 										</div>
 									</div>
 									<div class="col-12">
-										<div class="password-error error" style="font-weight: 800;"></div>
+										<div class="password-error text-danger"></div>
 										<div class="form-floating mb-3">
 											<input type="password" class="form-control" name="password"
 												id="password" value="" placeholder="Password" required>
+					
+											<i class="fa fa-eye-slash eye-icon" onclick="hideAndShowPass()" aria-hidden="true"></i>
 											<label for="password" class="form-label">Password</label>
+											
 										</div>
+										
 									</div>
 									<div class="col-12">
 										<div class="d-grid">
@@ -141,5 +146,4 @@
 	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
 	<script type="text/javascript" th:src="@{js/register.js}"></script>
 </body>
-
 </html>

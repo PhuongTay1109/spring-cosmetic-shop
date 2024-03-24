@@ -15,6 +15,9 @@ import com.cosmetics.myshop.dto.LoginResponseDTO;
 import com.cosmetics.myshop.dto.RegisterDTO;
 import com.cosmetics.myshop.service.AuthenticationService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -28,9 +31,9 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestParam Map<String, String> body, RedirectAttributes attributes) {
+	public String login(HttpServletResponse response, @RequestParam Map<String, String> body, RedirectAttributes attributes) {
 //		System.out.println("post ./auth/login");
-		return authenticationService.loginUser(body, attributes);
+		return authenticationService.loginUser(response, body, attributes);
 	}
 
 
