@@ -285,7 +285,58 @@ UNLOCK TABLES;
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE product
-SET price = round(price/20000,2)
-WHERE true
+SET price = round(price/19999,2)
+WHERE true;
+
+UPDATE product
+SET description = "Blush adds a flush of color to the cheeks, enhancing the complexion and providing a healthy glow."
+WHERE category_name = "blush" AND description = "";
+
+UPDATE product
+SET description = "Bronzer adds warmth and definition to the face, mimicking a sun-kissed glow and sculpting the features."
+WHERE category_name = "bronzer" AND description = "";
+
+UPDATE product
+SET description = "Eyebrow products define and shape the eyebrows, filling in sparse areas and enhancing the natural arch."
+WHERE category_name = "eyebrow" AND description = "";
+
+UPDATE product
+SET description = "Eyeliner defines the eyes and enhances their shape, adding drama and intensity to any eye look."
+WHERE category_name = "eyeliner" AND description = "";
+
+UPDATE product
+SET description = "Eyeshadow comes in a variety of colors and finishes, allowing for endless eye looks and creative expression."
+WHERE category_name = "eyeshadow" AND description = "";
+
+UPDATE product
+SET description = "Foundation provides an even base for makeup application, smoothing out imperfections and creating a flawless complexion."
+WHERE category_name = "foundation" AND description = "";
+
+UPDATE product
+SET description = "Lip liner defines the lips and prevents lipstick from feathering, creating a precise and long-lasting lip look."
+WHERE category_name = "lip_liner" AND description = "";
+
+UPDATE product
+SET description = "Lipstick adds color and hydration to the lips, enhancing their natural shape and making a statement."
+WHERE category_name = "lipstick" AND description = "";
+
+UPDATE product
+SET description = "Mascara lengthens, volumizes, and defines the lashes, making them appear fuller and more prominent."
+WHERE category_name = "mascara" AND description = "";
+
+UPDATE product
+SET description = "Nail polish adds color and shine to the nails, allowing for endless nail art designs and creative expression."
+WHERE category_name = "nail_polish" AND description = "";
+
+UPDATE product
+SET product_type = category_name
+WHERE product_type is null;
+
+UPDATE product
+SET rating = round((RAND() * 4) + 1,1)
+WHERE rating IS NULL;
+
+
+
 
 

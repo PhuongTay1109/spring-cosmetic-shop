@@ -40,16 +40,20 @@ public class ProductService {
 		}
 		return product.get();
 	}
-	public List<Product> findRelatedProductsByPage(Product product, Integer page, Integer per_page){
-		Pageable pageable = PageRequest.of(page, per_page);
+	public List<Product> findRelatedProductsByPage(Product product, Pageable pageable){
 //		System.out.println("fetch data");
-		
 		return productRepository.findRelatedProductsByPage(product.getId().toString(), 
 				product.getCategoryName(), 
 				product.getBrand(), 
-				product.getProductType(), 
+				product.getProductType(),
 				pageable);
 		
+	}
+	public long countRelatedProducts(Product product) {
+		return productRepository.countRelatedProducts(product.getId().toString(),
+				product.getCategoryName(), 
+				product.getBrand(),
+				product.getProductType());
 	}
 
 }

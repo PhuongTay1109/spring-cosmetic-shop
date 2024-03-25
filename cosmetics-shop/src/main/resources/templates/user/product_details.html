@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org/">
 
-<head th:replace="fragments/commonFragments :: commonHead">
+<head th:replace="~{fragments/commonFragments :: commonHead}">
 <title>Home page</title>
 </head>
 
 <body class="bg-primary">
-	<header th:replace="fragments/userFragments :: userHeader"></header>
+	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
 	<div class="container mt-5">
 		<div class="card product-details-card">
 			<div class="row product-details-row bg-white p-3">
@@ -23,23 +23,23 @@
 							th:text="${product.description}"></p>
 						<p class="card-text">
 							<strong>Brand:</strong>
-							<th:block th:text="${product.brand}"></th:block>
+							<th:block th:text="${stringUtils.normalizeString(product.brand)}"></th:block>
 						</p>
 						<p class="card-text">
 							<strong>Price:</strong> $
-							<th:block th:text="${product.price}"></th:block>
+							<span th:text="${product.price}"></span>
 						</p>
 						<p class="card-text">
 							<strong>Category: </strong>
-							<th:block th:text="${product.Name}"></th:block>
+							<th:block th:text="${stringUtils.normalizeString(product.categoryName)}"></th:block>
 						</p>
 						<p class="card-text">
 							<strong>Product type: </strong>
-							<th:block th:text="${product.productType}"></th:block>
+							<th:block th:if="${product.productType}" th:text="${stringUtils.normalizeString(product.productType)}"></th:block>
 						</p>
 						<p class="card-text">
 							<strong>Tags:</strong> <span class="badge badge-primary"
-								th:each="tag : ${tagList}"> <th:block th:text="${tag}">
+								th:each="tag : ${tagList}"> <th:block th:text="${stringUtils.normalizeString(tag)}">
 								</th:block>
 							</span> &nbsp;
 						</p>
@@ -53,7 +53,7 @@
 			<div class="row product-details-row related-products">
 
 				<!-- Related products -->
-				<div id="related-products-seperate" th:data-id="${product_id}"
+				<div id="related-products-seperate" th:data-totalRelatedProducts ="${totalRelatedProducts}" th:data-id="${product_id}"
 					class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
 					<hr class="line flex-grow-1 mr-3" />
 					<h2 class="text-uppercase mb-0">Related Products</h2>
@@ -61,9 +61,6 @@
 				</div>
 
 				<!--
-				
-				
-				
 					<div class="card position-relative">
 						<div class="position-absolute top-0 end-0 mt-2 me-2">
 							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
@@ -82,18 +79,16 @@
 
 
 				<nav aria-label="Page navigation example"
-					class="d-flex justify-content-center">
-					<ul class="pagination">
-						<li class="page-item"><button class="page-link" id="page-previous"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-								<span class="sr-only">Previous</span>
+					class="">
+					<ul id="related-products-pagination" class="pagination flex-wrap d-flex justify-content-center">
+						<li class="page-item" id="page-previous"><button class="page-link"  id="page-previous"
+							aria-label="Previous"> <span aria-hidden="true" class="page-btn-size">&laquo;</span>
+								<span class="sr-only" style="font-size: 20px">Previous</span>
 						</button></li>
-						<li class="page-item"><button class="page-link page-number">1</button></li>
-						<li class="page-item"><button class="page-link page-number">2</button></li>
-						<li class="page-item"><button class="page-link page-number">3</button></li>
-						<li class="page-item"><button id="page-next" class="page-link page-number"
+					
+						<li class="page-item"><button class="page-link" id="page-next"
 								aria-label="Next">
-								<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
+								<span aria-hidden="true" class="page-btn-size">&raquo;</span> <span class="sr-only">Next</span>
 							</button></li>
 					</ul>
 				</nav>
@@ -106,7 +101,7 @@
 
 
 	<!-- Footer -->
-	<footer th:replace="fragments/commonFragments :: footer"></footer>
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
 	<script type="text/javascript" th:src="@{/js/user/product_details.js}"></script>
 </body>
 
