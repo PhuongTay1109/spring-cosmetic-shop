@@ -24,6 +24,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
+import com.cosmetics.myshop.handler.Oauth2AuthenticationSuccessHandler;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.UserService;
 import com.cosmetics.myshop.utils.RSAKeyProperties;
@@ -40,11 +41,14 @@ import io.jsonwebtoken.Jwts;
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
 	private static final String[] IGNORE = { "/css/**", "/js/**", "/img/**", "/webjars/**", "/webjarsjs",
-			"/auth/**", "/login", "/register" };
+			"/auth/**", "/login", "/register", "/favicon.ico" };
 	
 	
 //	@Autowired
 //	JwtAuthenticationFilter jwtAuthenticationFilter;
+	
+	@Autowired
+	Oauth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler;
 	
 
 	@Bean
@@ -78,17 +82,13 @@ public class SpringSecurityConfiguration {
 				.authorizeHttpRequests(auth -> {
 					auth.requestMatchers(IGNORE).permitAll();
 					auth.requestMatchers("/auth/**", "/login", "/register").permitAll();
-//					auth.anyRequest().permitAll();
 					auth.anyRequest().authenticated();
 				})
+				.oauth2Login(oauth2 -> oauth2.loginPage("/login").successHandler(oauth2AuthenticationSuccessHandler))
 				.formLogin(form -> form.loginPage("/login")
 						.defaultSuccessUrl("/"))
-//				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//				.addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.requestCache(cache -> cache.requestCache(requestCache))
 //				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
-				
-		
 				.logout(logout -> logout.permitAll()).build();
 	}
 	
