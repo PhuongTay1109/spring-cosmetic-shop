@@ -47,6 +47,7 @@
 											<input type="password" class="form-control" name="password"
 												id="password" value="" placeholder="Password" required>
 											<label for="password" class="form-label">Password</label>
+											<i class="fa fa-eye-slash eye-icon" onclick="hideAndShowPass()" aria-hidden="true"></i>
 										</div>
 									</div>
 									<div class="row">
@@ -88,7 +89,7 @@
 								<div class="col-12">
 									<p class="mt-4 mb-4">OR CONTINUE WITH</p>
 									<div class="d-flex gap-2 gap-sm-3 justify-content-centerX">
-										<a href="#!"
+										<a th:href="@{/oauth2/authorization/google}"
 											class="btn btn-outline-danger bsb-btn-circle bsb-btn-circle-2xl">
 											<svg xmlns="http://www.w3.org/2000/svg" width="24"
 												height="24" fill="currentColor" class="bi bi-google"
@@ -118,6 +119,7 @@
 
 	<!-- Footer -->
 	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
+	<script type="text/javascript" th:src="@{js/security/register.js}"></script>
 </body>
 
 </html>
