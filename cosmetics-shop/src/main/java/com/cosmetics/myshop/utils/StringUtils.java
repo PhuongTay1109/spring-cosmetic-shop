@@ -18,7 +18,6 @@ public class StringUtils {
 			result +=restOfWord + " ";
 			
 		}
-		System.out.println(result);
 		return result;		
 	}
 }

@@ -3,6 +3,7 @@ package com.cosmetics.myshop.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query("SELECT p FROM Product p where p.id != ?1 and (p.categoryName = ?2 or p.brand = ?3 or p.productType=?4)")
 	List<Product> findRelatedProductsByPage(String id, String categoryName, String brand, String productType, Pageable pageable);
 	
-	long countById(Integer id);
+	@Query("SELECT Count(p) FROM Product p where p.id != ?1 and (p.categoryName = ?2 or p.brand = ?3 or p.productType=?4)")
+	long countRelatedProducts(String id, String categoryName, String brand, String productType);
 }

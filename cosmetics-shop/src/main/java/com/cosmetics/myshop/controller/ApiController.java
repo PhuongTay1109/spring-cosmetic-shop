@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +27,9 @@ public class ApiController {
 	List<Product> getRelatedProductsByPage(@RequestParam Map<String, String> param){
 		Integer id = Integer.parseInt(param.get("id")) ;
 		Integer page = Integer.parseInt(param.get("page"));
-		Integer per_page = 4;
+		Integer per_page = 12;
 		Product product = productService.findProductByid(id);
-		return productService.findRelatedProductsByPage(product, page, per_page);
+		Pageable pageable = PageRequest.of(page,per_page);
+		return productService.findRelatedProductsByPage(product, pageable);
 	}
 }

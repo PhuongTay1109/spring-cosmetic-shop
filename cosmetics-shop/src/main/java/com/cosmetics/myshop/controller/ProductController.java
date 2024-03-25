@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import com.cosmetics.myshop.model.Product;
 import com.cosmetics.myshop.repository.ProductRepository;
 import com.cosmetics.myshop.service.ProductService;
+import com.cosmetics.myshop.utils.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,15 +32,17 @@ public class ProductController {
 	@GetMapping("/{product_id}")
 	String getProduct(@PathVariable(name = "product_id") Integer id, Model model) throws JsonMappingException, JsonProcessingException {
 		Product product = productService.findProductByid(id);
-//		System.out.println(product);
-//		System.out.println(product.getTagList());
-		model.addAttribute("product", product);
-		
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<String> tagList = new ArrayList<>();
 		tagList = Arrays.asList(objectMapper.readValue(product.getTagList(), String[].class));
+		StringUtils stringUtils = new StringUtils();
+		long totalRelatedProducts = productService.countRelatedProducts(product);
+//		System.out.println(totalRelatedProducts);
+		model.addAttribute("product", product);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("product_id", id);
+		model.addAttribute("stringUtils", stringUtils);
+		model.addAttribute("totalRelatedProducts", totalRelatedProducts);
 		return "/user/product_details";
 	}
 	
