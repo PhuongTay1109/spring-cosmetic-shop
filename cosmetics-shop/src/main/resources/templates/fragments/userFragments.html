@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="https://www.thymeleaf.org/">
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <body>
 	<!-- Begin: User header -->
 	<header th:fragment="userHeader" class="container-fluid fixed-top"
 		id="userHeader">
-		<nav class="navbar navbar-expand-lg">
+		<nav class="navbar navbar-expand-lg" >
 			<div class="container-md">
 				<h1 class="h1 me-4">
 					<a href="/" class="link-primary text-decoration-none">AW
@@ -24,16 +26,24 @@
 				</form>
 
 				<div class="collapse navbar-collapse" id="navbarNavDropdown">
-					<ul class="navbar-nav" style="margin-left: auto">
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false"> Username </a>
+					<ul class="navbar-nav  d-flex align-items-center" style="margin-left: auto">
+						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+							href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false"></a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/logout">Log out</a></li>
-								<li><a class="dropdown-item" href="#">Another action</a></li>
-								<li><a class="dropdown-item" href="#">Something else
-										here</a></li>
+								<li><a class="dropdown-item" href="#">Profile</a></li>
+								<li><a class="dropdown-item" href="/logout">Logout</a></li>
+
+
 							</ul></li>
+						<li class="nav-item me-2">
+							<div class="wrapper">
+								<img th:src="${#authentication.principal.avatar}"
+									style="object-fit: contain; height: 30px;" alt="asd">
+								<span th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}"></span>
+							</div>
+						</li>
+						
 						<li class="nav-item">
 							<div class="wrapper">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i> <span

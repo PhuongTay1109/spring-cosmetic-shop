@@ -13,18 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.oauth2.jwt.JwtEncodingException;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
-import com.cosmetics.myshop.handler.Oauth2AuthenticationSuccessHandler;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.UserService;
 import com.cosmetics.myshop.utils.RSAKeyProperties;
@@ -81,7 +72,6 @@ public class SpringSecurityConfiguration {
 		return http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> {
 					auth.requestMatchers(IGNORE).permitAll();
-					auth.requestMatchers("/auth/**", "/login", "/register").permitAll();
 					auth.anyRequest().authenticated();
 				})
 				.oauth2Login(oauth2 -> oauth2.loginPage("/login").successHandler(oauth2AuthenticationSuccessHandler))

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.cosmetics.myshop.model.Provider;
 import com.cosmetics.myshop.model.Role;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.repository.RoleRepository;
@@ -39,13 +40,13 @@ public class CosmeticsShopApplication {
 	        if (userRepository.findByUsername("admin").isEmpty()) {
 	            Set<Role> roles = new HashSet<>();
 	            roles.add(roleRepository.findByAuthority("ADMIN").orElseThrow());
-	            User admin = new User("admin", passwordEncoder.encode("123"), roles);
+	            User admin = new User("admin", passwordEncoder.encode("123"),"Admin", "","","","/img/user/no_avatar.png","","LOCAL",roles);
 	            userRepository.save(admin);
 	        }
 	        if (userRepository.findByUsername("user1").isEmpty()) {
 	        	Set<Role> roles = new HashSet<>();
 	        	roles.add(roleRepository.findByAuthority("USER").orElseThrow());
-	        	User user = new User("user1", passwordEncoder.encode("123"), roles);
+	            User user = new User("user1", passwordEncoder.encode("123"),"User", "","","","/img/user/no_avatar.png","","LOCAL",roles);
 	        	userRepository.save(user);
 	        }
 
