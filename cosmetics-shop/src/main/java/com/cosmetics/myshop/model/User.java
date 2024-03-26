@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
@@ -32,9 +33,13 @@ public class User implements UserDetails{
 	
 	private String username;
 	private String password;
+	private String firstName;
+	private String lastName;
 	private String phone;
 	private String email;
+	private String avatar;
 	private String address;
+	private String provider;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
@@ -54,6 +59,22 @@ public class User implements UserDetails{
 		this.password = password;
 		this.authorities = authorities;
 	}
+	
+	public User(String username, String password, String firstName, String lastName, String phone,
+			String email, String avatar, String address, String provider, Set<Role> authorities) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.avatar = avatar;
+		this.address = address;
+		this.provider = provider;
+		this.authorities = authorities;
+	}
+	
 	
 
 	@Override
@@ -97,5 +118,7 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	
 
 }

@@ -49,6 +49,7 @@ public class AuthenticationService {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
 
 	public RegisterDTO registerUser(RegisterDTO body) {
 		System.out.println(body);
@@ -98,15 +99,11 @@ public class AuthenticationService {
 			return body;
 		} else { // Valid
 			String encodedPassword = passwordEncoder.encode(body.getPassword());
-			User registerUser = new User();
 			Set<Role> roles = new HashSet<>();
 			roles.add(roleRepository.findByAuthority("USER").orElseThrow());
-			registerUser.setUsername(body.getUsername());
-			registerUser.setPassword(encodedPassword);
-			registerUser.setAuthorities(roles);
-			registerUser.setEmail(body.getEmail());
-			registerUser.setAddress(body.getAddress());
-			userRepository.save(registerUser);
+			User registeredUser = new User(body.getUsername(), encodedPassword, body.getFirstName(), body.getLastName(),
+					body.getPhone(), body.getEmail(), "/img/user/no_avatar.png", body.getAddress(), "LOCAL", roles);
+			userRepository.save(registeredUser);
 			RegisterDTO successRegister = new RegisterDTO();
 			successRegister.setValid(true);
 			return successRegister;
@@ -119,9 +116,6 @@ public class AuthenticationService {
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
 			String accessToken = jwtService.GenerateToken(authentication.getName());
-			SecurityContext securityContext =  SecurityContextHolder.getContext();
-//			System.out.println("Authentication auth/login " + authentication.getName());
-//			securityContext.setAuthentication(authentication);
 			System.out.println("accessToken /auth/login" + accessToken.toString() );
 			ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
 					.httpOnly(true)
@@ -138,4 +132,5 @@ public class AuthenticationService {
 			return "redirect:/login";
 		}
 	}
+
 }
