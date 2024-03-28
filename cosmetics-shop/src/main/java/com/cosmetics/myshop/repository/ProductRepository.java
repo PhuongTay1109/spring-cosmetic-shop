@@ -20,4 +20,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	@Query("SELECT Count(p) FROM Product p where p.id != ?1 and (p.categoryName = ?2 or p.brand = ?3 or p.productType=?4)")
 	long countRelatedProducts(String id, String categoryName, String brand, String productType);
+	
+	@Query("SELECT p FROM Product p WHERE p.categoryName = :categoryName")
+	List<Product> findProductsByCategoryPagination(String categoryName, Pageable pageable);
+	
+	long countByCategoryName(String categoryName);
 }

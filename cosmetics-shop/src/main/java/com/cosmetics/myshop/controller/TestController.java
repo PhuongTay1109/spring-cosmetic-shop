@@ -26,6 +26,7 @@ public class TestController {
 	public List<Category> getCategories() { 
 		return categoryService.findAllCategories();
 	}
+	
 	@ResponseBody
 	@GetMapping("/products")
 	public List<Product> getProducts() { 
