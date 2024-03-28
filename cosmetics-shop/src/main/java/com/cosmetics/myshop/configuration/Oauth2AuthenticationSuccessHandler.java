@@ -59,6 +59,7 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 			String avatar = (String) attributes.get("picture") != null ? (String) attributes.get("picture")
 					: "/img/user/no_avatar.png";
 			String firstName = (String) attributes.get("given_name");
+			System.out.println(firstName);
 			String lastName = (String) attributes.get("family_name");
 			String provider = "GOOGLE";
 			if (attributes.get("name") != null) { // Facebook Login
@@ -67,6 +68,8 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 				firstName = fullName.split(" ")[0];
 				lastName = fullName.split(" ")[1];
 			}
+			System.out.println(firstName);
+			System.out.println(lastName);
 			String username = email;
 			String password = "";
 			String address = "";
