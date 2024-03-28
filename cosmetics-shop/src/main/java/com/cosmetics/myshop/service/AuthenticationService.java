@@ -1,5 +1,6 @@
 package com.cosmetics.myshop.service;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -8,38 +9,33 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.cosmetics.myshop.dto.LoginResponseDTO;
 import com.cosmetics.myshop.dto.RegisterDTO;
 import com.cosmetics.myshop.model.Role;
 import com.cosmetics.myshop.model.User;
-import com.cosmetics.myshop.repository.RoleRepository;
-import com.cosmetics.myshop.repository.UserRepository;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class AuthenticationService {
 	@Autowired
-	UserRepository userRepository;
-
+	UserService userService;
+	
 	@Autowired
-	RoleRepository roleRepository;
+	RoleService roleService;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -47,8 +43,6 @@ public class AuthenticationService {
 	@Autowired
 	JwtService jwtService;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
 	
 
 	public RegisterDTO registerUser(RegisterDTO body) {
@@ -75,12 +69,12 @@ public class AuthenticationService {
 			body.setUsername("Username must contain at least 4 characters, including letters and numbers!");
 			isValid = false;
 		}
-		Optional<User> user = userRepository.findByUsername(body.getUsername());
+		Optional<User> user = userService.findByUsername(body.getUsername());
 		if (user.isPresent()) {
 			body.setUsername("Username has been used!");
 			isValid = false;
 		}
-		user = userRepository.findByEmail(body.getEmail());
+		user = userService.findByEmail(body.getEmail());
 		if (user.isPresent()) {
 			body.setEmail("Email has been used!");
 			isValid = false;
@@ -100,37 +94,14 @@ public class AuthenticationService {
 		} else { // Valid
 			String encodedPassword = passwordEncoder.encode(body.getPassword());
 			Set<Role> roles = new HashSet<>();
-			roles.add(roleRepository.findByAuthority("USER").orElseThrow());
+			roles.add(roleService.findByAuthority("USER").orElseThrow());
 			User registeredUser = new User(body.getUsername(), encodedPassword, body.getFirstName(), body.getLastName(),
 					body.getPhone(), body.getEmail(), "/img/user/no_avatar.png", body.getAddress(), "LOCAL", roles);
-			userRepository.save(registeredUser);
+			userService.saveUser(registeredUser);
 			RegisterDTO successRegister = new RegisterDTO();
 			successRegister.setValid(true);
 			return successRegister;
 		}
 	}
-
-	public String loginUser(HttpServletResponse response, Map<String, String> body, RedirectAttributes attributes) {
-		try {
-//			System.out.println(body);
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(body.get("username"), body.get("password")));
-			String accessToken = jwtService.GenerateToken(authentication.getName());
-			System.out.println("accessToken /auth/login" + accessToken.toString() );
-			ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
-					.httpOnly(true)
-					.secure(false)
-					.maxAge(60*60*1000)
-					.build();
-			response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-//			System.out.println(accessToken);
-//			System.out.println("success");
-			return "redirect:/";
-		} catch(Exception e) { 
-			System.out.println(e);
-			attributes.addFlashAttribute("error", "Invalid username or password");
-			return "redirect:/login";
-		}
-	}
-
+	
 }
