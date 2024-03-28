@@ -1,6 +1,5 @@
 package com.cosmetics.myshop.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cosmetics.myshop.model.Category;
 import com.cosmetics.myshop.model.Product;
-import com.cosmetics.myshop.repository.CategoryRepository;
-import com.cosmetics.myshop.repository.ProductRepository;
 import com.cosmetics.myshop.service.CategoryService;
 import com.cosmetics.myshop.service.ProductService;
 

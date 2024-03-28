@@ -337,6 +337,21 @@ SET rating = round((RAND() * 4) + 1,1)
 WHERE rating IS NULL;
 
 
+DROP PROCEDURE IF EXISTS delete_user;
+DELIMITER //
+CREATE PROCEDURE delete_user(IN userId INT)
+BEGIN
+    -- Delete user roles
+    DELETE FROM users_roles_junction WHERE user_id = userId;
+
+    -- Delete the user
+    DELETE FROM user WHERE user_id = userId;
+END//
+DELIMITER ;
+
+
+
+
 
 
 
