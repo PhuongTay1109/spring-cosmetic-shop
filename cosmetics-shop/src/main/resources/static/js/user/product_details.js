@@ -86,10 +86,10 @@ async function handlePageClick(page) {
 		html +=`
 		<div id="related-product" class="col-md-3 mb-4">
 				<div class="card position-relative">
-						<div class="position-absolute top-0 end-0 mt-2 me-2">
+						<div style="z-index: 2" class="position-absolute top-0 end-0 mt-2 me-2">
 							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
 						</div>
-						<div class="position-absolute top-0 end-0 mt-icon me-2">
+						<div style="z-index: 2" class="position-absolute top-0 end-0 mt-icon me-2">
 							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 						</div>
 						<a class="related-product-img" href="/product/${product.id}">
