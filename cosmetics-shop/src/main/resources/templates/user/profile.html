@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{fragments/commonFragments :: commonHead}">
+<title>Home page</title>
+</head>
+
+<body class=" bg-primary">
+	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
+	<div class="container bg-primary  rounded bg-white mt-5 mb-5">
+    <form action="/profile" th:method="put" class="row">
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" name="id" th:value="${user.userId}">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" th:src="*{avatar}"><span th:text="*{firstName} + ' ' + *{lastName}" class="font-weight-bold"></span><span th:text="*{email}" class="text-black-50"></span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" name="firstName" th:value="${user.firstName}" placeholder="First name"></div>
+                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" name="lastName" th:value="${user.lastName}" placeholder="Surname"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" name="phone"  th:value="${user.phone}" placeholder="Enter phone number" value=""></div>
+                    <div class="col-md-12 mt-3"><label class="labels">Address</label><input type="text" th:value="${user.address}" class="form-control" placeholder="Enter address" ></div>  
+                    <div class="col-md-12 mt-3"><label class="labels">Email</label><input type="text" disabled th:value="${user.email}" name="email" class="form-control" placeholder="Enter address" ></div>  
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+
+	<!-- Footer -->
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
+</body>
+
+</html>
