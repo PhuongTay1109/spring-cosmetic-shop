@@ -82,3 +82,15 @@
 .page-btn-size {
 	font-size: 18px;
 }
+
+.mt-5 {
+	margin-top: 5rem !important;
+}
+
+.mt-icon {
+	margin-top: 3rem !important;
+}
+
+.page-link {
+	 color: #D49696 !important;
+}

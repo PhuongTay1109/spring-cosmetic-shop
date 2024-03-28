@@ -89,7 +89,7 @@ async function handlePageClick(page) {
 						<div class="position-absolute top-0 end-0 mt-2 me-2">
 							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
 						</div>
-						<div class="position-absolute top-0 end-0 mt-5 me-2">
+						<div class="position-absolute top-0 end-0 mt-icon me-2">
 							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 						</div>
 						<a class="related-product-img" href="/product/${product.id}">

@@ -41,6 +41,11 @@ public class TestController {
 		return authentication;
 	}
 	
+	@GetMapping("/products/category")
+	public String getProductsPage() {
+		return "/user/products";
+	}
+	
 	
 	
 }
