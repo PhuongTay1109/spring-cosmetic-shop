@@ -28,7 +28,7 @@
 					<img th:src="${category.imageLink}" class="d-block w-100">
 					<div class="carousel-caption d-none d-md-block">
 						<a class="text-decoration-none" id="carousel-a-tag"
-							th:href="@{/products?category_name={categoryName}(categoryName=${category.categoryName})}">
+							th:href="@{/products/{categoryName}(categoryName=${category.categoryName})}">
 							<h1 class="section-title text-uppercase display-2 mt-icon "
 								th:text="${stringUtils.normalizeString(category.categoryName)}"></h1>
 						</a>
