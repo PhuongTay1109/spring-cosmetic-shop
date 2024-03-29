@@ -52,11 +52,11 @@
 								<li><a class="dropdown-item text-primary-color" href="/logout">Logout</a></li>
 							</ul></li>
 						<li class="nav-item me-2">
-							<div class="wrapper">
+							<a class="wrapper text-decoration-none nav-link" href="/profile">
 								<img th:src="${#authentication.principal.avatar}"
 									style="object-fit: contain; height: 30px; border-radius: 20px" alt=""> <span
 									class="text-primary-color" th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}"></span>
-							</div>
+							</a>
 						</li>
 
 						<li class="nav-item">
