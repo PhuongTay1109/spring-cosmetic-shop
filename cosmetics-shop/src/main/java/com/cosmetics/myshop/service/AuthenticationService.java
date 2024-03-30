@@ -50,8 +50,8 @@ public class AuthenticationService {
 		boolean isValid = true;
 
 		// Validate first name
-		boolean isFirstNameValid = Pattern.compile("^[A-Z][a-zA-Z]*$").matcher(body.getFirstName()).matches();
-		boolean isLastNameValid = Pattern.compile("^[A-Z][a-zA-Z]*$").matcher(body.getLastName()).matches();
+		boolean isFirstNameValid = Pattern.compile("^[A-ZÀ-Ỹ][a-yà-ỹ]*$").matcher(body.getFirstName()).matches();
+		boolean isLastNameValid = Pattern.compile("^[A-ZÀ-Ỹ][a-yà-ỹ]*$").matcher(body.getLastName()).matches();
 		boolean isUsernameValid = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z]).{4,}$").matcher(body.getUsername())
 				.matches();
 		boolean isPasswordValid = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$").matcher(body.getPassword())

@@ -18,7 +18,7 @@
 }
 
 .link-primary:hover {
-    color: #91c2d2 !important;
+    color: white !important;
 }
 
 .btn-primary {
@@ -74,6 +74,13 @@
 }
 .text-danger {
 	font-weight: 500 !important;
+}
+.text-primary-color, .text-primary-color:hover{
+	color: #d49696;
+}
+
+.header-bg-color {
+	background-color: #553838 !important;
 }
 
 #carousel-a-tag:hover {
