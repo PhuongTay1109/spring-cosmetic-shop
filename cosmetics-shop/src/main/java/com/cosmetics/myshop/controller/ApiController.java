@@ -33,14 +33,22 @@ public class ApiController {
 		return productService.findRelatedProductsByPage(product, pageable);
 	}
 
+//	@ResponseBody
+//	@GetMapping("/products")
+//	List<Product> getProductsByCategoryPagination(@RequestParam Map<String, String> param) {
+//		String categoryName = param.get("category_name");
+//		Integer pageNumber = Integer.parseInt(param.get("page"));
+//		Integer pageSize = 12;
+//		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//
+//		return productService.findProductsByCategoryPagination(categoryName, pageable);
+//	}
+	
 	@ResponseBody
-	@GetMapping("/products/{category_name}")
-	List<Product> getProductsByCategoryPagination(@PathVariable("category_name") String categoryName,
-			@RequestParam("page") Integer pageNumber) {
+	@GetMapping("/products")
+	List<Product> getProductsByCategory(@RequestParam Map<String, String> param) {
+		String categoryName = param.get("category_name");
 
-		Integer pageSize = 12;
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-
-		return productService.findProductsByCategoryPagination(categoryName, pageable);
+		return productService.findProductsByCategoryName(categoryName);
 	}
 }

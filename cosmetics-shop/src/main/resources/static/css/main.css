@@ -78,10 +78,10 @@
 .text-primary-color, .text-primary-color:hover{
 	color: #d49696;
 }
-
+/*
 .header-bg-color {
 	background-color: #553838 !important;
-}
+}*/
 
 #carousel-a-tag:hover {
 	opacity: 0.8;
