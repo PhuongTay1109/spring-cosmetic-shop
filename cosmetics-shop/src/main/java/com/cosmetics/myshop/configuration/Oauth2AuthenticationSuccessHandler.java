@@ -12,6 +12,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -21,6 +25,7 @@ import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.repository.RoleRepository;
 import com.cosmetics.myshop.repository.UserRepository;
 import com.cosmetics.myshop.service.AuthenticationService;
+import com.cosmetics.myshop.service.CustomOauth2UserService;
 import com.cosmetics.myshop.service.RoleService;
 import com.cosmetics.myshop.service.UserService;
 
@@ -32,17 +37,34 @@ import jakarta.servlet.http.HttpServletResponse;
 public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	@Autowired
 	UserService userService;
+	
+	
+	@Autowired
+	CustomOauth2UserService customOauth2UserService;
 
 	@Autowired
 	RoleService roleService;
+	
+	private String determineOAuth2Provider(Map<String, Object> attributes) {
+	    // Check if specific attributes exist to identify the OAuth2 provider
+	    if (attributes.containsKey("sub")) {
+	        // Google-specific attribute
+	        return "GOOGLE";
+	    } else if (attributes.containsKey("id")) {
+	        // Facebook-specific attribute
+	        return "FACEBOOK";
+	    }
+	    // Add more checks for other providers if necessary
+
+	    // Default to "Unknown" if provider cannot be determined
+	    return "Unknown";
+	}
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 		Map<String, Object> attributes = oAuth2User.getAttributes();
-		System.out.println(attributes);
 		String email = (String) attributes.get("email");
 		Optional<User> optionalUser = userService.findByEmail(email);
 		if (optionalUser.isPresent()) {
@@ -53,17 +75,13 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 					userDetails, null, userDetails.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		} else {
-
-//			public User(String username, String password, String firstName, String lastName, String phone,
-//					String email, String avatar, String address, String provider, Set<Role> authorities) {
 			String avatar = (String) attributes.get("picture") != null ? (String) attributes.get("picture")
 					: "/img/user/no_avatar.png";
+			String provider = determineOAuth2Provider(attributes);
 			String firstName = (String) attributes.get("given_name");
 			System.out.println(firstName);
 			String lastName = (String) attributes.get("family_name");
-			String provider = "GOOGLE";
-			if (attributes.get("name") != null) { // Facebook Login
-				provider = "FACEBOOK";
+			if (attributes.get("name") != null) { 
 				String fullName = (String) attributes.get("name");
 				firstName = fullName.split(" ")[0];
 				lastName = fullName.split(" ")[1];

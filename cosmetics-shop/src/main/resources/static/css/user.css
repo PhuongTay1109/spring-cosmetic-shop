@@ -45,3 +45,7 @@
 .badge-primary {
     background-color: #6c757d;
 }
+.text-overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
