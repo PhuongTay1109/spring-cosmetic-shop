@@ -21,16 +21,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
-@RequestMapping("/product")
+//@RequestMapping("/product")
 
 public class ProductController {
 	@Autowired
 	ProductService productService;
-	
-	@GetMapping("/{product_id}")
-	String getProduct(@PathVariable(name = "product_id") Integer id, Model model) throws JsonMappingException, JsonProcessingException {
+
+	@GetMapping("/product/{product_id}")
+	String getProduct(@PathVariable(name = "product_id") Integer id, Model model)
+			throws JsonMappingException, JsonProcessingException {
 		Product product = productService.findProductByid(id);
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<String> tagList = new ArrayList<>();
@@ -45,5 +45,13 @@ public class ProductController {
 		model.addAttribute("totalRelatedProducts", totalRelatedProducts);
 		return "/user/product_details";
 	}
-	
+
+	@GetMapping("/products/{category_name}")
+	String getProductsByCategory(@PathVariable(name = "category_name") String categoryName, Model model) {
+		// Implement logic to retrieve products by category
+		List<Product> products = productService.findProductsByCategoryName(categoryName);
+		model.addAttribute("categoryName", categoryName);
+		model.addAttribute("products", products);
+		return "/user/products";
+	}
 }
