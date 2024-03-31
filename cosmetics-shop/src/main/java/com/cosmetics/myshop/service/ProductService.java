@@ -35,6 +35,14 @@ public class ProductService {
 		return productRepository.countByCategoryName(categoryName);
 	}
 	
+	public List<String> findBrandsByCategory(String categoryName) {
+		return productRepository.findBrandsByCategory(categoryName);
+	}
+	
+	public List<String> findProductTypesByCategory(String categoryName) {
+		return productRepository.findProductTypesByCategory(categoryName);
+	}
+	
 	public Product findProductByid(Integer id) {
 		Optional<Product> product = productRepository.findById(id);
 		if (product.isEmpty()) {

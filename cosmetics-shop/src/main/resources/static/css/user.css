@@ -49,3 +49,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.shop-name {
+	color: black !important;
+}
+
+.shop-name:hover {
+	color: white !important;
+}

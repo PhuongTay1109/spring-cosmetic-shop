@@ -18,7 +18,7 @@
 }
 
 .link-primary:hover {
-    color: white !important;
+    color: var(--link-primary-hover) !important;
 }
 
 .btn-primary {
@@ -43,7 +43,7 @@
     position: absolute;
     top: -5px;
     right: -8px;
-    color: #D49696 !important;
+    color: white !important;
 }
 
 .carousel-inner img {
@@ -78,10 +78,10 @@
 .text-primary-color, .text-primary-color:hover{
 	color: #d49696;
 }
-/*
+
 .header-bg-color {
-	background-color: #553838 !important;
-}*/
+	background-color: #edb2b2 !important;
+}
 
 #carousel-a-tag:hover {
 	opacity: 0.8;
@@ -100,4 +100,16 @@
 
 .page-link {
 	 color: #D49696 !important;
+}
+
+#sort-btn {
+	display: inline-block !important;
+	background-color: white !important;
+	color: black !important;
+	border-radius: 10px !important;
+}
+
+.dropdown-menu {
+	--bs-dropdown-link-active-bg: var(--bs-tertiary-bg) !important; 
+	--bs-dropdown-link-active-color: black !important;
 }
