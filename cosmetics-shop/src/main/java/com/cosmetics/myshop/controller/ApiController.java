@@ -48,7 +48,6 @@ public class ApiController {
 	@GetMapping("/products")
 	List<Product> getProductsByCategory(@RequestParam Map<String, String> param) {
 		String categoryName = param.get("category_name");
-
 		return productService.findProductsByCategoryName(categoryName);
 	}
 }

@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-//@RequestMapping("/product")
-
 public class ProductController {
 	@Autowired
 	ProductService productService;
@@ -48,10 +46,15 @@ public class ProductController {
 
 	@GetMapping("/products/{category_name}")
 	String getProductsByCategory(@PathVariable(name = "category_name") String categoryName, Model model) {
-		// Implement logic to retrieve products by category
-		List<Product> products = productService.findProductsByCategoryName(categoryName);
+		List<String> brandList = productService.findBrandsByCategory(categoryName);
+		List<String> typeList = productService.findProductTypesByCategory(categoryName);
+		StringUtils stringUtils = new StringUtils();
+		
+		model.addAttribute("brandList", brandList);
+		model.addAttribute("typeList", typeList);
+		model.addAttribute("stringUtils", stringUtils);
 		model.addAttribute("categoryName", categoryName);
-		model.addAttribute("products", products);
+		
 		return "/user/products";
 	}
 }

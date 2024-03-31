@@ -10,7 +10,7 @@
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-md">
 				<h1 class="h1 me-4">
-					<a href="/" class="link-primary text-decoration-none">AW
+					<a href="/" class="shop-name text-decoration-none">AW
 						Cosmetics</a>
 				</h1>
 
@@ -27,35 +27,37 @@
 					</form>
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle text-primary-color" role="button"
+							class="nav-link dropdown-toggle" role="button"
 							data-bs-toggle="dropdown" aria-expanded="false"></a>
 							<ul class="dropdown-menu">
 								<li th:each="category : ${categoryList}">
 									<a class="dropdown-item" th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
-										<span class="text-primary-color" th:text="${stringUtils.normalizeString(category.categoryName)}"></span>	
+										<span th:text="${stringUtils.normalizeString(category.categoryName)}"></span>	
 									</a>
 								</li>
 							</ul>	
 						</li>
-						<li class="nav-item"><a class="nav-link text-primary-color link-primary" href="/category">Category
-						</a>
+						<li class="nav-item">
+							<a class="nav-link" href="#" style="font-size: 20px">Category</a>
 						</li>
 					</ul>
 					
 					<ul class="navbar-nav align-items-center"
 						style="margin-left: auto">
 						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle text-primary-color" href="#" role="button"
+							class="nav-link dropdown-toggle" href="#" role="button"
 							data-bs-toggle="dropdown" aria-expanded="false"></a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item text-primary-color" href="/profile">Profile</a></li>
-								<li><a class="dropdown-item text-primary-color" href="/logout">Logout</a></li>
+								<li><a class="dropdown-item" href="/profile">Profile</a></li>
+								<li><a class="dropdown-item" href="/logout">Logout</a></li>
 							</ul></li>
 						<li class="nav-item me-2">
 							<a class="wrapper text-decoration-none nav-link" href="/profile">
 								<img th:src="${#authentication.principal.avatar}"
-									style="object-fit: contain; height: 30px; border-radius: 20px" alt=""> <span
-									class="text-primary-color" th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}"></span>
+									style="object-fit: contain; height: 30px; border-radius: 20px" alt=""> 
+									<span
+										th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}">
+									</span>
 							</a>
 						</li>
 

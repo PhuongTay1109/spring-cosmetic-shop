@@ -25,4 +25,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	List<Product> findProductsByCategoryPagination(String categoryName, Pageable pageable);
 	
 	long countByCategoryName(String categoryName);
+	
+	@Query("SELECT DISTINCT p.brand FROM Product p WHERE p.categoryName = :categoryName and p.brand IS NOT NULL")
+	List<String> findBrandsByCategory(String categoryName);
+	
+	@Query("SELECT DISTINCT p.productType FROM Product p WHERE p.categoryName = :categoryName and p.productType IS NOT NULL")
+	List<String> findProductTypesByCategory(String categoryName);
 }
