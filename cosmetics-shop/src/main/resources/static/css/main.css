@@ -111,5 +111,15 @@
 
 .dropdown-menu {
 	--bs-dropdown-link-active-bg: var(--bs-tertiary-bg) !important; 
-	--bs-dropdown-link-active-color: black !important;
+	--bs-dropdown-link-active-color: #D49696 !important;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 300px; 
+    object-fit: cover; 
+}
+
+.card-title {
+	height: 50px;
 }
