@@ -65,5 +65,10 @@ public class ProductService {
 				product.getBrand(),
 				product.getProductType());
 	}
-
+	
+	public List <Product> searchProductsByKeyword(String keyword) {
+		return productRepository.searchByKeyword(keyword);
+	}
+	
+	
 }
