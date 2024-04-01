@@ -96,13 +96,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
 						<div style="z-index: 2" class="position-absolute top-0 end-0 mt-icon me-2">
 							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
 						</div>
-						<a class="related-product-img" href="/product/${product.id}">
-							<img src="${product.imageLink}" style="height: 300px; width:100%" class="card-img-top" />
+						<a class="card-product-img" href="/product/${product.id}">
+							<img src="${product.imageLink}" class="card-img-top" />
 						</a>
 							
 						<div class="card-body">
-							<h5 class="card-title fs-6 text-nowrap text-overflow-ellipsis" >${product.name}</h5>
-							<p class="card-title fst-italic lead text-nowrap text-overflow-ellipsis" >
+
+							<h5 class="card-title text-overflow-ellipsis">${product.name}</h5>
+							<p class="card-text fst-italic lead text-nowrap 
+									text-overflow-ellipsis" style="font-size: 16px">
 								${product.description}
 							</p>
 							<p class="card-text">$${product.price}</p>

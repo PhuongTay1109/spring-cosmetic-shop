@@ -34,7 +34,7 @@ public class ApiController {
 	}
 
 //	@ResponseBody
-//	@GetMapping("/products")
+//	@GetMapping("/products_by_category")
 //	List<Product> getProductsByCategoryPagination(@RequestParam Map<String, String> param) {
 //		String categoryName = param.get("category_name");
 //		Integer pageNumber = Integer.parseInt(param.get("page"));
@@ -48,7 +48,6 @@ public class ApiController {
 	@GetMapping("/products")
 	List<Product> getProductsByCategory(@RequestParam Map<String, String> param) {
 		String categoryName = param.get("category_name");
-
 		return productService.findProductsByCategoryName(categoryName);
 	}
 }

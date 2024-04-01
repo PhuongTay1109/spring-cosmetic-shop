@@ -8,7 +8,7 @@
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-md">
 				<h1 class="h1 me-4">
-					<a href="/" class="link-primary text-decoration-none">AW
+					<a href="/" class="shop-name text-decoration-none">AW
 						Cosmetics</a>
 				</h1>
 
@@ -31,6 +31,7 @@
 										th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
 										<span class="link-primary"
 											th:text="${stringUtils.normalizeString(category.categoryName)}"></span>
+
 									</a>
 								</li>
 							</ul>

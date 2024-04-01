@@ -12,9 +12,15 @@
     transition: transform 0.3s ease-in-out; /* Adds smooth transition on hover */
 }
 
+
 .related-product-img:hover {
 	opacity: 0.4;
 }
+.card-product-img:hover {
+	opacity: 0.8;
+
+}
+
 .product-img:hover {
     border-radius: 15px !important;
     transform: scale(1.05); /* Scales up the image slightly on hover */
@@ -29,6 +35,7 @@
 .related-products {
 	background-color: #f7f4f4
 }
+
 .product-details-card {
 	overflow:hidden;
     border: none;
@@ -36,8 +43,6 @@
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
     transition: all 0.3s ease-in-out;
 }
-
-
 
 .badge-primary {
     background-color: #6c757d;
@@ -69,3 +74,12 @@
     opacity: 0.7;
     cursor: pointer; /* Change cursor to pointer on hover */
 }
+
+.shop-name {
+	color: black !important;
+}
+
+.shop-name:hover {
+	color: white !important;
+}
+
