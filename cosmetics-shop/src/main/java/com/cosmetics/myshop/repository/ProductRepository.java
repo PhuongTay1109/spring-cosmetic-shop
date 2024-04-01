@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	List<Product> findByCategoryName(String categoryName);
 	Optional<Product> findById(Integer id);
 	
-	@Query("SELECT p FROM Product p where p.id != ?1 and (p.categoryName = ?2 or p.brand = ?3 or p.productType=?4)")
+	@Query("SELECT p FROM Product p where p.id != ?1 and (p.categoryName = ?2 or p.brand = ?3 or p.productType=?4) ORDER BY p.rating DESC")
 	List<Product> findRelatedProductsByPage(String id, String categoryName, String brand, String productType, Pageable pageable);
 	
 	@Query("SELECT Count(p) FROM Product p where p.id != ?1 and (p.categoryName = ?2 or p.brand = ?3 or p.productType=?4)")
@@ -31,4 +31,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	@Query("SELECT DISTINCT p.productType FROM Product p WHERE p.categoryName = :categoryName and p.productType IS NOT NULL")
 	List<String> findProductTypesByCategory(String categoryName);
+	
+	@Query("SELECT p FROM Product p WHERE p.categoryName LIKE %:keyword% "
+			+ "OR p.description LIKE %:keyword% "
+			+ "OR p.brand LIKE %:keyword% "
+			+ "OR p.productType LIKE %:keyword% "
+			+ "OR p.tagList LIKE %:keyword% ORDER BY p.rating DESC LIMIT 200")
+	List<Product> searchByKeyword(String keyword);
 }

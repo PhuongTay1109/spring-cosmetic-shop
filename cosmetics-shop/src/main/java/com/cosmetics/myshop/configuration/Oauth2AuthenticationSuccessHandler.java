@@ -25,7 +25,6 @@ import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.repository.RoleRepository;
 import com.cosmetics.myshop.repository.UserRepository;
 import com.cosmetics.myshop.service.AuthenticationService;
-import com.cosmetics.myshop.service.CustomOauth2UserService;
 import com.cosmetics.myshop.service.RoleService;
 import com.cosmetics.myshop.service.UserService;
 
@@ -38,9 +37,6 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 	@Autowired
 	UserService userService;
 	
-	
-	@Autowired
-	CustomOauth2UserService customOauth2UserService;
 
 	@Autowired
 	RoleService roleService;

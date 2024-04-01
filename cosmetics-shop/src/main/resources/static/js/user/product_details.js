@@ -121,12 +121,11 @@ async function handlePageClick(page) {
 							
 						<div class="card-body">
 
-							<h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
-							<p class="card-title fst-italic lead text-nowrap 
-									text-overflow-ellipsis" style="font-size: 16px">
+							<h5 class="card-title text-nowrap text-overflow-ellipsis" title="${product.name}" >${product.name}</h5>
+							<p class="card-title fst-italic lead text-nowrap  text-overflow-ellipsis" title="${product.description}" style="font-size: 16px">
 								${product.description}
 							</p>
-							<p class="card-text">$${product.price}</p>
+							<p class="card-text fw-bold">$${product.price}</p>
 							<a href="#" class="card-text text-decoration-none btn btn-primary">Buy Now</a>
 						</div>
 					</div>
