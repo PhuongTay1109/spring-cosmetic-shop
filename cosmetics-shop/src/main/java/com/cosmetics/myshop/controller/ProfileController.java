@@ -62,7 +62,7 @@ public class ProfileController {
 			isValid = false;
 		}
 		if (isPhoneValid == false) {
-			response.put("phone", "The fist name must only contain letters and the first letter must be capitalized!");
+			response.put("phone", "Phone must contain only 10 numbers!");
 			isValid = false;
 		}
 		response.put("isValid",isValid);

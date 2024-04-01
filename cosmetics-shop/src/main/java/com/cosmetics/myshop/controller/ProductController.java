@@ -40,7 +40,7 @@ public class ProductController {
 //		System.out.println(totalRelatedProducts);
 		model.addAttribute("product", product);
 		model.addAttribute("tagList", tagList);
-		model.addAttribute("product_id", id);
+		model.addAttribute("productId", id);
 		model.addAttribute("stringUtils", stringUtils);
 		model.addAttribute("totalRelatedProducts", totalRelatedProducts);
 		return "/user/product_details";

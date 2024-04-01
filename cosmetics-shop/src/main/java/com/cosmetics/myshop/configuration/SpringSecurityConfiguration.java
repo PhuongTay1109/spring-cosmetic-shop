@@ -71,14 +71,14 @@ public class SpringSecurityConfiguration {
 		requestCache.setMatchingRequestParameterName(null);
 		return http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers(IGNORE).permitAll();
-					auth.anyRequest().authenticated();
+					auth.requestMatchers("/profile", "/api/**").authenticated();
+					auth.anyRequest().permitAll();
+					
 				})
 				.oauth2Login(oauth2 -> oauth2.loginPage("/login").successHandler(oauth2AuthenticationSuccessHandler))
 				.formLogin(form -> form.loginPage("/login")
 						.defaultSuccessUrl("/"))
 				.requestCache(cache -> cache.requestCache(requestCache))
-//				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
 				.logout(logout -> logout.permitAll()).build();
 	}
 	
