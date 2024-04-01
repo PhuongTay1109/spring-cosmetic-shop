@@ -71,7 +71,7 @@ public class SpringSecurityConfiguration {
 		requestCache.setMatchingRequestParameterName(null);
 		return http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/profile", "/api/**").authenticated();
+					auth.requestMatchers("/profile").authenticated();
 					auth.anyRequest().permitAll();
 					
 				})
