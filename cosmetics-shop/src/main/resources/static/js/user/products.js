@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
         return totalPage;
     }
 
-    async function handlePageClick(pageNumber) {
+    function handlePageClick(pageNumber) {
         const startIndex = pageNumber * pageSize;
         const endIndex = Math.min(startIndex + pageSize, totalProducts);
         const productsOnPage = fetchedProducts.slice(startIndex, endIndex);
@@ -84,19 +84,35 @@ document.addEventListener("DOMContentLoaded", async function(event) {
         window.scroll(0, 0);
     }
 
-    async function handlePagination() {
-        await handlePageClick(currentPage);
+    function handlePagination() {
+        handlePageClick(currentPage);
+        pageNumber[currentPage].focus();
+        window.scroll(0, 0);
 
         pageNumber = Array.from(pageNumber);
 
         for (const page of pageNumber) {
-            page.addEventListener("click", async function(event) {
+            page.addEventListener("click", (event) => {
                 const currentPage = pageNumber.indexOf(event.currentTarget); //Get index of clickedPage
                 pageNumber[currentPage].focus();
-                await handlePageClick(currentPage);
-                updateURL(currentPage + 1); // Update URL with page number
+                handlePageClick(currentPage);
+                updateURL(currentPage + 1); 
             })
         }
+        
+        pagePrevious.addEventListener("click", () => {
+			currentPage = currentPage == 0 ? totalPage - 1 : currentPage - 1;
+			pageNumber[currentPage].focus()
+			handlePageClick(currentPage);
+			updateURL(currentPage + 1);
+		})
+		
+		pageNext.addEventListener("click", () => {
+			currentPage = currentPage == totalPage - 1 ? 0 : currentPage + 1;
+			pageNumber[currentPage].focus()
+			handlePageClick(currentPage);
+			updateURL(currentPage + 1);
+		})
     }
 
     // Update URL with page number
