@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function(event) {
-    const productsElement = document.getElementById("products-by-category");
+    const productsElement = document.getElementById("products-container");
     const categoryNameElement = document.getElementById("category-name");
     const categoryName = categoryNameElement.getAttribute("data-categoryName");
     const totalProducts = categoryNameElement.getAttribute("data-totalProductsByCategory");
@@ -49,15 +49,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
         return totalPage;
     }
 
-    function handlePageClick(pageNumber) {
-		// remove products of previous page
-	    let children = productsElement.children;
-	    for (let i = children.length - 1; i >= 0; i--) {
-	        if (children[i].tagName.toLowerCase() !== 'nav') {
-	            productsElement.removeChild(children[i]);
-	        }
-	    }
-    
+    function handlePageClick(pageNumber) {    
         let startIndex = pageNumber * pageSize;
         let endIndex = Math.min(startIndex + pageSize, totalProducts);
         let productsOnPage = fetchedProducts.slice(startIndex, endIndex);
@@ -88,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
                         </div>`
         }
 
-        productsElement.insertAdjacentHTML("afterbegin", html);
+        productsElement.innerHTML = html;
         window.scroll(0, 0);
     }
 
