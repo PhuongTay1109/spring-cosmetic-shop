@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 		let pageShow = 2
 		if (page == 0 || page == totalPage - 1) {
-			pageShow = 6;
+			pageShow = 3;
 		}
 
 		for (let i = 0; i <= pageShow; ++i) {
@@ -101,13 +101,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 						</a>
 							
 						<div class="card-body">
+
 							<h5 class="card-title text-overflow-ellipsis">${product.name}</h5>
 							<p class="card-text fst-italic lead text-nowrap 
 									text-overflow-ellipsis" style="font-size: 16px">
 								${product.description}
 							</p>
 							<p class="card-text">$${product.price}</p>
-							<a href="#" class="btn btn-primary">Buy Now</a>
+							<a href="#" class="card-text text-decoration-none btn btn-primary">Buy Now</a>
 						</div>
 					</div>
 		</div>`

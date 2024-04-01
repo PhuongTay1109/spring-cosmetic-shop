@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <body>
 	<!-- Begin: User header -->
-	<header th:fragment="userHeader" class="header-bg-color container-fluid fixed-top"
-		id="userHeader">
+	<header th:fragment="userHeader" class="header-bg-color container-fluid fixed-top" id="userHeader">
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-md">
 				<h1 class="h1 me-4">
@@ -14,59 +12,65 @@
 						Cosmetics</a>
 				</h1>
 
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-					aria-controls="navbarNavDropdown" aria-expanded="false"
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNavDropdown">
 					<form class="d-flex" role="search">
-						<input class="form-control me-2 text-primary-color" type="search"
-							placeholder="Search" aria-label="Search">
+						<input class="form-control me-2 link-primary" type="search" placeholder="Search"
+							aria-label="Search">
 					</form>
 					<ul class="navbar-nav">
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false"></a>
+						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle link-primary" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false"></a>
 							<ul class="dropdown-menu">
 								<li th:each="category : ${categoryList}">
-									<a class="dropdown-item" th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
-										<span th:text="${stringUtils.normalizeString(category.categoryName)}"></span>	
+									<a class="dropdown-item"
+										th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
+										<span class="link-primary"
+											th:text="${stringUtils.normalizeString(category.categoryName)}"></span>
+
 									</a>
 								</li>
-							</ul>	
+							</ul>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#" style="font-size: 20px">Category</a>
+						<li class="nav-item"><a class="nav-link link-primary fw-bold" href="/category/all">Category
+							</a>
 						</li>
 					</ul>
-					
-					<ul class="navbar-nav align-items-center"
-						style="margin-left: auto">
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false"></a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/profile">Profile</a></li>
-								<li><a class="dropdown-item" href="/logout">Logout</a></li>
-							</ul></li>
-						<li class="nav-item me-2">
-							<a class="wrapper text-decoration-none nav-link" href="/profile">
-								<img th:src="${#authentication.principal.avatar}"
-									style="object-fit: contain; height: 30px; border-radius: 20px" alt=""> 
-									<span
-										th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}">
-									</span>
-							</a>
+
+					<ul class="navbar-nav align-items-center" style="margin-left: auto">
+						<th:block th:if="${#authentication.principal != 'anonymousUser'}">
+							<li class="nav-item dropdown"><a
+									class="nav-link dropdown-toggle text-primary-color link-primary" href="#"
+									role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item link-primary" href="/profile">Profile</a></li>
+									<li><a class="dropdown-item link-primary" href="/logout">Logout</a></li>
+								</ul>
+							</li>
+							<li class="nav-item me-2">
+								<a class="wrapper text-decoration-none nav-link" href="/profile">
+									<img th:src="${#authentication.principal.avatar}"
+										style="object-fit: contain; height: 30px; border-radius: 20px" alt=""> <span
+										class="link-primary fw-bold"
+										th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}"></span>
+								</a>
+							</li>
+						</th:block>
+
+						<li class="nav-item" th:if="${#authentication.principal == 'anonymousUser'}">
+							<a class="nav-link link-primary fw-bold" href="/login">Login</a>
 						</li>
 
 						<li class="nav-item">
 							<div class="wrapper">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i> <span
-									id="cart-number"> 0 </span>
+								<i class="bi bi-cart" style="font-size: 1.5rem;"></i> <span id="cart-number"> 0 </span>
 							</div>
 						</li>
+						
 					</ul>
 
 				</div>
@@ -77,4 +81,5 @@
 	<!-- End: User header -->
 
 </body>
+
 </html>

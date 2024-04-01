@@ -2,25 +2,29 @@
 <html xmlns:th="https://www.thymeleaf.org/">
 
 <head th:replace="~{fragments/commonFragments :: commonHead}">
-<title>Home page</title>
+	<title>Home page</title>
 </head>
 
 <body class="bg-primary">
 	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
 	<div class="container mt-5 pt-5 pb-5">
 		<div class="card product-details-card">
-			<div class="row product-details-row bg-white p-3">
-				<div class="product-info"></div>
+			<div class="row mt-2 bg-white p-3">
+				<div class="restroom mb-2">
+					<a class="restroom-link" href="/"><i class="fa-solid fa-house"></i></a>
+					<i class="fa-solid fa-chevron-right"></i>
+					<a class="fw-bold restroom-link" th:href="@{/products/{categoryName}(categoryName=${product.categoryName})}" th:text="${stringUtils.normalizeString(product.categoryName)}"></a>
+					<i class="fa-solid fa-chevron-right"></i>
+					<a class="fw-bold restroom-link text-success" th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+				</div>
 				<div class="col-md-4">
-					<img th:src="${product.imageLink}" class="card-img-top product-img"
-						alt="Product Image">
+					<img th:src="${product.imageLink}" class="card-img-top product-img" alt="Product Image">
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
 						<h3 class="card-title text-center mb-4" th:text="${product.name}">
 						</h3>
-						<p class="card-text fst-italic lead"
-							th:text="${product.description}"></p>
+						<p class="card-text fst-italic lead" th:text="${product.description}"></p>
 						<p class="card-text">
 							<strong>Brand:</strong>
 							<th:block th:text="${stringUtils.normalizeString(product.brand)}"></th:block>
@@ -35,14 +39,17 @@
 						</p>
 						<p class="card-text">
 							<strong>Product type: </strong>
-							<th:block th:if="${product.productType}" th:text="${stringUtils.normalizeString(product.productType)}"></th:block>
+							<th:block th:if="${product.productType}"
+								th:text="${stringUtils.normalizeString(product.productType)}"></th:block>
 						</p>
 						<p class="card-text">
-							<strong>Tags:</strong> <span class="badge badge-primary"
-								th:each="tag : ${tagList}"> <th:block th:text="${stringUtils.normalizeString(tag)}">
+							<strong>Tags:</strong> <span class="badge badge-primary" th:each="tag : ${tagList}">
+								<th:block th:text="${stringUtils.normalizeString(tag)}">
 								</th:block>
 							</span> &nbsp;
 						</p>
+						<i class="card-text fa-solid fa-star rating-start"></i>&nbsp;<span class="" th:text="${product.rating}"></span>
+
 						<p class="card-text mt-4">
 							<button class="btn btn-primary">Add to Cart</button>
 						</p>
@@ -50,10 +57,11 @@
 				</div>
 			</div>
 
-			<div class="row product-details-row related-products pb-5">
+			<div class="row product-details-row related-products p-3">
 
 				<!-- Related products -->
-				<div id="related-products-seperate" th:data-totalRelatedProducts ="${totalRelatedProducts}" th:data-productId="${product_id}"
+				<div id="related-products-seperate" th:data-totalRelatedProducts="${totalRelatedProducts}"
+					th:data-productId="${productId}"
 					class="d-flex flex-wrap justify-content-center align-items-center my-3 py-lg-5">
 					<!--  -->
 					<hr class="line flex-grow-1 mr-3" />
@@ -79,17 +87,16 @@
 				</div>  -->
 
 
-				<nav aria-label="Page navigation example"
-					class="">
+				<nav aria-label="Page navigation example" class="">
 					<ul id="related-products-pagination" class="pagination flex-wrap d-flex justify-content-center">
-						<li class="page-item" id="page-previous"><button class="page-link"  id="page-previous"
-							aria-label="Previous"> <span aria-hidden="true" class="page-btn-size">&laquo;</span>
+						<li class="page-item" id="page-previous"><button class="page-link" id="page-previous"
+								aria-label="Previous"> <span aria-hidden="true" class="page-btn-size">&laquo;</span>
 								<span class="sr-only" style="font-size: 20px">Previous</span>
-						</button></li>
-					
-						<li class="page-item"><button class="page-link" id="page-next"
-								aria-label="Next">
-								<span aria-hidden="true" class="page-btn-size">&raquo;</span> <span class="sr-only">Next</span>
+							</button></li>
+
+						<li class="page-item"><button class="page-link" id="page-next" aria-label="Next">
+								<span aria-hidden="true" class="page-btn-size">&raquo;</span> <span
+									class="sr-only">Next</span>
 							</button></li>
 					</ul>
 				</nav>
