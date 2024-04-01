@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{fragments/commonFragments :: commonHead}">
+	<title>Home page</title>
+</head>
+
+<body class="bg-primary">
+	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
+
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-3 mb-4" th:each="category : ${categoryList}">
+				<div class="card position-relative shadow">
+					<a class="related-product-img" th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
+						<img th:src="${category.imageLink}" class="card-img-top rounded-top" style="height: 350px; object-fit: cover;" />
+						<div class="image-overlay">
+							<div class="text-overlay">
+								<h2 class="" th:text="${stringUtils.normalizeString(category.categoryName)}"></h2>	
+							</div>
+						</div>
+						<div class="admin-buttons" th:each="role : ${#authentication.getAuthorities()}" th:if="${role.authority == 'ADMIN'}">
+							<a href="#" class="btn btn-hover btn-primary btn-sm me-1"><i class="fa-solid fa-trash"></i></a>
+							<a href="#" class="btn btn-hover btn-primary btn-sm"><i class="fa-solid fa-pen"></i></a>
+						</div>
+					</a>
+					
+					<!-- Role-based buttons for administrators -->
+					
+				</div>
+			</div>
+			
+			<div class="col-md-3 mb-4" th:each="role : ${#authentication.getAuthorities()}"
+				th:if="${role.authority == 'ADMIN'}">
+				<div class="card p-3 position-relative shadow h-100 create-card">
+					<div class="d-flex justify-content-center align-items-center h-100">
+						<div>
+							<span class="display-1 text-dark">+</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
+</body>
+
+</html>

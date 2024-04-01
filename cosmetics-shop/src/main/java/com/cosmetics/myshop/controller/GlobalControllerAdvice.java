@@ -21,20 +21,14 @@ public class GlobalControllerAdvice {
 
 	@ModelAttribute("categoryList")
 	public List<Category> getCategoryList() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.isAuthenticated()) {
-			return categoryService.findAllCategories();
-		}
-		return null;
+		return categoryService.findAllCategories();
 	}
+
 	@ModelAttribute("stringUtils")
 	public StringUtils getStringUtils() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.isAuthenticated()) {
-			StringUtils stringUtils = new StringUtils();
-			return stringUtils;
-		}
-		return null;
+
+		StringUtils stringUtils = new StringUtils();
+		return stringUtils;
 	}
 
 }

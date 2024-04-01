@@ -14,11 +14,13 @@
 }
 
 .link-primary {
+    /* font-weight: bold; */
     color: #D49696 !important;
 }
 
 .link-primary:hover {
     color: var(--link-primary-hover) !important;
+
 }
 
 .btn-primary {
@@ -101,6 +103,39 @@
 .page-link {
 	 color: #D49696 !important;
 }
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text-overlay {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5px;
+    border-radius: 5px;
+}
+.admin-buttons {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items at the start of the cross axis (vertically) */
+    position: absolute;
+    bottom: 5px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.btn-hover:hover {
+    opacity: 0.8;
+}
+
 
 #sort-btn {
 	display: inline-block !important;
