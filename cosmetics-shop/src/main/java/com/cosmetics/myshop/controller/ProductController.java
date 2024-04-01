@@ -48,10 +48,12 @@ public class ProductController {
 	String getProductsByCategory(@PathVariable(name = "category_name") String categoryName, Model model) {
 		List<String> brandList = productService.findBrandsByCategory(categoryName);
 		List<String> typeList = productService.findProductTypesByCategory(categoryName);
+		long totalProductsByCategory = productService.countProductsByCategoryName(categoryName);
 		StringUtils stringUtils = new StringUtils();
 		
 		model.addAttribute("brandList", brandList);
 		model.addAttribute("typeList", typeList);
+		model.addAttribute("totalProductsByCategory", totalProductsByCategory);
 		model.addAttribute("stringUtils", stringUtils);
 		model.addAttribute("categoryName", categoryName);
 		
