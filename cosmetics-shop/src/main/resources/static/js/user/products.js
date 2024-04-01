@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     const pageSize = 12;
     let currentPage = 0;
     let totalPage = generatePageButtons(totalProducts, pageSize);
-    let pageNumber = document.querySelectorAll(".page-number");
+    let pageList = document.querySelectorAll(".page-number");
 
     // Check if URL contains page parameter
     // If it has, update the currentPage
@@ -50,9 +50,17 @@ document.addEventListener("DOMContentLoaded", async function(event) {
     }
 
     function handlePageClick(pageNumber) {
-        const startIndex = pageNumber * pageSize;
-        const endIndex = Math.min(startIndex + pageSize, totalProducts);
-        const productsOnPage = fetchedProducts.slice(startIndex, endIndex);
+		// remove products of previous page
+	    let children = productsElement.children;
+	    for (let i = children.length - 1; i >= 0; i--) {
+	        if (children[i].tagName.toLowerCase() !== 'nav') {
+	            productsElement.removeChild(children[i]);
+	        }
+	    }
+    
+        let startIndex = pageNumber * pageSize;
+        let endIndex = Math.min(startIndex + pageSize, totalProducts);
+        let productsOnPage = fetchedProducts.slice(startIndex, endIndex);
 
         let html = "";
         for (let product of productsOnPage) {
@@ -86,15 +94,15 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 
     function handlePagination() {
         handlePageClick(currentPage);
-        pageNumber[currentPage].focus();
+        pageList[currentPage].focus();
         window.scroll(0, 0);
 
-        pageNumber = Array.from(pageNumber);
+        pageList = Array.from(pageList);
 
-        for (const page of pageNumber) {
+        for (const page of pageList) {
             page.addEventListener("click", (event) => {
-                const currentPage = pageNumber.indexOf(event.currentTarget); //Get index of clickedPage
-                pageNumber[currentPage].focus();
+                currentPage = pageList.indexOf(event.currentTarget); //Get index of clickedPage
+                pageList[currentPage].focus();
                 handlePageClick(currentPage);
                 updateURL(currentPage + 1); 
             })
@@ -102,14 +110,14 @@ document.addEventListener("DOMContentLoaded", async function(event) {
         
         pagePrevious.addEventListener("click", () => {
 			currentPage = currentPage == 0 ? totalPage - 1 : currentPage - 1;
-			pageNumber[currentPage].focus()
+			pageList[currentPage].focus()
 			handlePageClick(currentPage);
 			updateURL(currentPage + 1);
 		})
 		
 		pageNext.addEventListener("click", () => {
 			currentPage = currentPage == totalPage - 1 ? 0 : currentPage + 1;
-			pageNumber[currentPage].focus()
+			pageList[currentPage].focus()
 			handlePageClick(currentPage);
 			updateURL(currentPage + 1);
 		})
