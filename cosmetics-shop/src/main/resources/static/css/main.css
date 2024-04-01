@@ -111,7 +111,7 @@
 
 .dropdown-menu {
 	--bs-dropdown-link-active-bg: var(--bs-tertiary-bg) !important; 
-	--bs-dropdown-link-active-color: black !important;
+	--bs-dropdown-link-active-color: #D49696 !important;
 }
 
 .card-img-top {

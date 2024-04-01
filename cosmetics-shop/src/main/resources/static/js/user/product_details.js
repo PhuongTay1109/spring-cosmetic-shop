@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 						</a>
 							
 						<div class="card-body">
-							<h5 class="card-title">${product.name}</h5>
+							<h5 class="card-title text-overflow-ellipsis">${product.name}</h5>
 							<p class="card-text fst-italic lead text-nowrap 
 									text-overflow-ellipsis" style="font-size: 16px">
 								${product.description}
