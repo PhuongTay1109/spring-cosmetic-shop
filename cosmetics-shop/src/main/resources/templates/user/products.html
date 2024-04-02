@@ -9,10 +9,13 @@
 		<div class="row">
 			<div class="col-md-8 order-md-2 col-lg-9">
 				<div class="container-fluid">
-					<div class="row mb-5">
-						<div class="col-12">
+					<div class="row mb-3">
+						<div class="row col-12">
+							<h1 id="category-name" class="text-primary-color text-uppercase font-weight-bold mb-3 col-6"
+								th:text="${categoryName}" th:data-categoryName="${categoryName}" 
+								th:data-totalProductsByCategory=${totalProductsByCategory}></h1>
 							<div
-								class="dropdown text-md-left float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
+								class="dropdown text-md-left float-md-left mb-3 mt-3 mt-md-0 mb-md-0 col-6">
 								<label class="mr-2">Sort by:</label>
 								<button class="btn btn-lg btn-light dropdown-toggle"
 									type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -32,7 +35,7 @@
 						<!-- Page number -->
 						<nav>
 							<ul id="products-by-category-pagination"
-								class="pagination flex-wrap d-flex justify-content-center">
+								class="pagination flex-wrap d-flex justify-content-center mb-5 mt-2l">
 								<li class="page-item" id="page-previous"><button
 										class="page-link" id="page-previous" aria-label="Previous">
 										<span aria-hidden="true" class="page-btn-size">&laquo;</span>
@@ -51,9 +54,7 @@
 				</div>
 			</div>
 			<div class="col-md-4 order-md-1 col-lg-3 sidebar-filter">
-				<h3 id="category-name" class="text-uppercase font-weight-bold mb-3"
-					th:text="${categoryName}" th:data-categoryName="${categoryName}" 
-					th:data-totalProductsByCategory=${totalProductsByCategory}></h3>
+				<h3 class="text-uppercase mt-2 mb-3 font-weight-bold">Type</h3>
 				<div class="mt-2 mb-2 pl-2" th:each="type : ${typeList}">
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input"> <label
@@ -63,7 +64,7 @@
 				</div>
 
 				<div class="divider mt-icon mb-5 border-bottom border-secondary"></div>
-				<h3 class="text-uppercase mt-icon mb-3 font-weight-bold">Brand</h3>
+				<h3 class="text-uppercase mt-2 mb-3 font-weight-bold">Brand</h3>
 				<div class="mt-2 mb-2 pl-2" th:each="brand : ${brandList}">
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input"> <label
