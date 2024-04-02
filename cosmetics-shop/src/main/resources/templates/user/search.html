@@ -10,7 +10,14 @@
 	<div class="container-fluid px-5 pt-5 mt-5 bg-primary">
 		<div class="row">
 			<div class="col-md-4 col-lg-3">
-				<h3 class="text-uppercase mb-3 font-weight-bold">Brand</h3>
+				<h3 class="text-uppercase mb-3 font-weight-bold">Category</h3>
+				<div class="mt-2 mb-2 pl-2" th:each="categoryName : ${categoryNames}">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" name="categoryName" th:value="${categoryName}" class="custom-control-input"> <label
+							class="custom-control-label"
+							th:text=${stringUtils.normalizeString(categoryName)}></label>
+					</div>
+				</div>
 			</div>
 			<div class="col-md-10 col-lg-9">
 				<div class="container-fluid">
@@ -67,7 +74,7 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		
-			const productList = /*[[${productList}]]*/ 'default';
+			let productList = /*[[${productList}]]*/ 'default';
 			const keyword = /*[[${keyword}]]*/ 'default';
 		
 		/*]]>*/

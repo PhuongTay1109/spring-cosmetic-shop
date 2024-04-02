@@ -134,11 +134,28 @@ async function handlePageClick(page) {
 }
 
 function generateStars(rating) {
-    let stars = '';
-    for (let i = 0; i < rating; i++) {
-        stars += '<i class="bi bi-star-fill" style="color: gold;"></i>';
-    }
-    return stars;
+	let fullStars = Math.floor(rating); // Get the number of full stars
+	let halfStar = rating - fullStars >= 0.5; // Check if there's a half star
+
+	let stars = '';
+
+	// Generate full stars
+	for (let i = 0; i < fullStars; i++) {
+		stars += '<i class="bi bi-star-fill" style="color: gold;"></i>';
+	}
+
+	// Generate half star if needed
+	if (halfStar) {
+		stars += '<i class="bi bi-star-half" style="color: gold;"></i>';
+		fullStars++; // Increment the count of full stars
+	}
+
+	// Generate empty stars to fill up the remaining space (if any)
+	for (let i = fullStars; i < 5; i++) {
+		stars += '<i class="bi bi-star" style="color: gold;"></i>';
+	}
+
+	return stars;
 }
 
 async function handlePagination() {
@@ -168,22 +185,39 @@ function updateURL(pageNumber) {
 }
 
 function addToFavorites() {
-    var heartIcon = document.getElementById('heartIcon');
-    var heartText = document.getElementById('heartText');
+	var heartIcon = document.getElementById('heartIcon');
+	var heartText = document.getElementById('heartText');
 
-    if (heartIcon.classList.contains('bi-heart')) {
-        heartIcon.classList.remove('bi-heart');
-        heartIcon.classList.add('bi-heart-fill');
-        heartText.innerText = 'Added to favorites';
-        heartText.style.color = 'red';
-    } else {
-        heartIcon.classList.remove('bi-heart-fill');
-        heartIcon.classList.add('bi-heart');
-        heartText.innerText = 'Add to favorites';
-        heartText.style.color = ''; 
-    }
+	if (heartIcon.classList.contains('bi-heart')) {
+		heartIcon.classList.remove('bi-heart');
+		heartIcon.classList.add('bi-heart-fill');
+		heartText.innerText = 'Added to favorites';
+		heartText.style.color = 'red';
+	} else {
+		heartIcon.classList.remove('bi-heart-fill');
+		heartIcon.classList.add('bi-heart');
+		heartText.innerText = 'Add to favorites';
+		heartText.style.color = '';
+	}
 }
 
+function changeQuantity(btn) {
+	var input = document.getElementById('quantity');
+	// console.log(input)
+	var currentValue = parseInt(input.value);
+	var minValue = parseInt(input.min);
+	var maxValue = parseInt(input.max);
+
+	if (btn.getAttribute('data-type') === 'minus') {
+		if (currentValue > minValue) {
+			input.value = currentValue - 1;
+		}
+	} else if (btn.getAttribute('data-type') === 'plus') {
+		if (currentValue < maxValue) {
+			input.value = currentValue + 1;
+		}
+	}
+}
 
 
 

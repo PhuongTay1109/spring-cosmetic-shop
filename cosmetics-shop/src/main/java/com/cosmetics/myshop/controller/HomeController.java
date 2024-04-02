@@ -25,15 +25,15 @@ public class HomeController {
 
 	@GetMapping("/search")
 	private String search(@RequestParam String keyword, Model model) {
-		System.out.println(keyword);
 		List<Product> productList = productService.searchProductsByKeyword(keyword);
 		
-		List<String> categoryList = categoryService.findAllCategories().stream()
+		List<String> categoryNames = categoryService.findAllCategories().stream()
 				.map(Category::getCategoryName)
 				.collect(Collectors.toList());
 		model.addAttribute("productList", productList);
+		model.addAttribute("categoryNames", categoryNames);
 		model.addAttribute("keyword", keyword);
-		System.out.println(productList.toString());
+//		System.out.println(productList.toString());
 		return "user/search";
 	}
 
