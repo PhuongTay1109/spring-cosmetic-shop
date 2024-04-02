@@ -36,6 +36,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 			+ "OR p.description LIKE %:keyword% "
 			+ "OR p.brand LIKE %:keyword% "
 			+ "OR p.productType LIKE %:keyword% "
-			+ "OR p.tagList LIKE %:keyword% ORDER BY p.rating DESC LIMIT 200")
+			+ "OR p.tagList LIKE %:keyword% ORDER BY p.rating DESC")
 	List<Product> searchByKeyword(String keyword);
+	
+	@Query("SELECT DISTINCT p.brand FROM Product p")
+	List<String> findAllBrands();
 }

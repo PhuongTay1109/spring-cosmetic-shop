@@ -13,18 +13,21 @@
 				<div class="restroom mb-4">
 					<a class="restroom-link" href="/"><i class="fa-solid fa-house"></i></a>
 					<i class="fa-solid fa-chevron-right"></i>
-					<a class="fw-bold restroom-link" th:href="@{/products/{categoryName}(categoryName=${product.categoryName})}" th:text="${stringUtils.normalizeString(product.categoryName)}"></a>
+					<a class="fw-bold restroom-link"
+						th:href="@{/products/{categoryName}(categoryName=${product.categoryName})}"
+						th:text="${stringUtils.normalizeString(product.categoryName)}"></a>
 					<i class="fa-solid fa-chevron-right"></i>
-					<a class="fw-bold restroom-link text-success" th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+					<a class="fw-bold restroom-link text-success" th:href="@{/product/{id}(id=${product.id})}"
+						th:text="${product.name}"></a>
 				</div>
 				<div class="col-md-4">
 					<img th:src="${product.imageLink}" class="card-img-top product-img" alt="Product Image">
 					<div class="text-center mt-3">
-				        <button class="btn btn-outline-danger btn-favorites" onclick="addToFavorites()">
-				            <i id="heartIcon" class="bi bi-heart"></i>
-				            <span id="heartText">Add to favorites</span>
-				        </button>
-				    </div>
+						<button class="btn btn-outline-danger btn-favorites" onclick="addToFavorites()">
+							<i id="heartIcon" class="bi bi-heart"></i>
+							<span id="heartText">Add to favorites</span>
+						</button>
+					</div>
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
@@ -54,24 +57,25 @@
 								</th:block>
 							</span> &nbsp;
 						</p>
-						<i class="card-text fa-solid fa-star rating-start"></i>&nbsp;<span class="" th:text="${product.rating}"></span>
-						<!-- Quantity selector -->					
-						<div class="input-group mt-4" style="width:15%">
-						    <strong>Quantity: </strong>
-						    <span class="input-group-btn">
-						        <button type="button" class="btn btn-number" data-type="minus" data-field="quantity">
-						            <i class="bi bi-dash"></i>
-						        </button>
-						    </span>
-						    <input type="text" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-						    <span class="input-group-btn">
-						        <button type="button" class="btn btn-number" data-type="plus" data-field="quantity">
-						            <i class="bi bi-plus"></i>
-						        </button>
-						    </span>
-						</div>
+						<p class="card-text"><strong>Raing:</strong> <i
+								class="card-text fa-solid fa-star rating-start"></i>&nbsp;<span class=""
+								th:text="${product.rating}"></span></p>
+						<!-- Quantity selector -->
+						<p class="card-text mt-4">
+							<strong>Quantity: </strong>
+							<button type="button" class="btn" data-type="minus" data-field="quantity"
+								onclick="changeQuantity(this)">
+								<i class="bi bi-dash"></i>
+							</button>
+							<input type="text" name="quantity" id="quantity" class="form-control input-number"
+								style="width: 8%; display: inline-block" value="1" min="1" max="100">
+							<button type="button" class="btn" data-type="plus" data-field="quantity"
+								onclick="changeQuantity(this)">
+								<i class="bi bi-plus"></i>
+							</button>
+						</p>
 
-						
+
 						<p class="card-text mt-4">
 							<button class="btn cart-btn me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
@@ -133,6 +137,7 @@
 		</div>
 	</div>
 
+	
 
 	<!-- Footer -->
 	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>

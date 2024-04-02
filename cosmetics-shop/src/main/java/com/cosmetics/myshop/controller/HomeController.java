@@ -1,13 +1,14 @@
 package com.cosmetics.myshop.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.cosmetics.myshop.model.Category;
 import com.cosmetics.myshop.model.Product;
 import com.cosmetics.myshop.service.CategoryService;
@@ -21,11 +22,19 @@ public class HomeController {
 	CategoryService categoryService;
 	@Autowired
 	ProductService productService;
-	
-	@ResponseBody
+
 	@GetMapping("/search")
-	private List<Product> search() {
-		return productService.searchProductsByKeyword("based");
+	private String search(@RequestParam String keyword, Model model) {
+		List<Product> productList = productService.searchProductsByKeyword(keyword);
+		
+		List<String> categoryNames = categoryService.findAllCategories().stream()
+				.map(Category::getCategoryName)
+				.collect(Collectors.toList());
+		model.addAttribute("productList", productList);
+		model.addAttribute("categoryNames", categoryNames);
+		model.addAttribute("keyword", keyword);
+//		System.out.println(productList.toString());
+		return "user/search";
 	}
 
 	@GetMapping("/register")
@@ -36,7 +45,7 @@ public class HomeController {
 	@GetMapping("/login")
 	private String login() {
 		System.out.println("Login page");
-		return "/security/login";
+		return "security/login";
 	}
 
 	@GetMapping("/")

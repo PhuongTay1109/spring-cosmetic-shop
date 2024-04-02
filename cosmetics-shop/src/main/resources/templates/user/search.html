@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="~{fragments/commonFragments :: commonHead}">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
+	<div id="main-container" class="container-fluid px-5 pt-5 mt-5 bg-primary">
+		<div class="row">
+			<div class="col-md-4 col-lg-3">
+				<h3 class="text-uppercase mb-3 font-weight-bold">Category</h3>
+				<div class="mt-2 mb-2 pl-2" th:each="categoryName : ${categoryNames}">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" name="categoryName" th:value="${categoryName}" class="custom-control-input"> <label
+							class="custom-control-label"
+							th:text=${stringUtils.normalizeString(categoryName)}></label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10 col-lg-9">
+				<div class="container-fluid">
+					<div class="row">
+						<h3 class="mb-3 font-weight-bold">Search result for '<span class="text-danger" th:text="${keyword}"></span>'</h3>
+					</div>
+					<div class="row" id="products-container">
+						<div class="col-md-3">
+							<div class="card position-relative">
+								<div class="position-absolute top-0 end-0 mt-2 me-2">
+									<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
+								</div>
+								<div class="position-absolute top-0 end-0 mt-icon me-2">
+									<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
+								</div>
+								<a class="card-product-img" href="/product/${product.id}">
+									<img src="/img/categories/banner.png" class="card-img-top" />
+								</a>
+								<div class="card-body">
+									<h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
+									<p class="card-text fst-italic lead text-nowrap text-overflow-ellipsis"
+										style="font-size: 16px">
+										${product.description}
+									</p>
+									<p class="card-text">$${product.price}</p>
+									<a href="#" class="btn btn-primary">Buy Now</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<nav>
+						<ul id="search-products-pagination"
+							class="pagination flex-wrap d-flex justify-content-center">
+							<li class="page-item" id="page-previous"><button
+									class="page-link" id="page-previous" aria-label="Previous">
+									<span aria-hidden="true" class="page-btn-size">&laquo;</span>
+									<span class="sr-only" style="font-size: 20px">Previous</span>
+								</button></li>
+
+							<li class="page-item"><button class="page-link"
+									id="page-next" aria-label="Next">
+									<span aria-hidden="true" class="page-btn-size">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</button></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		
+			let productList = /*[[${productList}]]*/ 'default';
+			const keyword = /*[[${keyword}]]*/ 'default';
+		
+		/*]]>*/
+	</script>
+	<script type="text/javascript" th:src="@{/js/user/search.js}"></script>
+
+</body>
+
+</html>

@@ -9,7 +9,7 @@
 	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
 
 	<div class="container mt-5">
-		<div class="row">
+		<div class="row">	
 			<div class="col-md-3 mb-4" th:each="category : ${categoryList}">
 				<div class="card position-relative shadow">
 					<a class="related-product-img" th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
