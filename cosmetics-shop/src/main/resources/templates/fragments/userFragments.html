@@ -62,7 +62,11 @@
 						</th:block>
 
 						<li class="nav-item" th:if="${#authentication.principal == 'anonymousUser'}">
-							<a class="nav-link link-primary fw-bold" href="/login">Login</a>
+							<a class="nav-link header-link after" href="/login">Login</a>	
+						</li>
+						
+						<li class="nav-item" th:if="${#authentication.principal == 'anonymousUser'}">
+							<a class="nav-link header-link ps-0" href="/register">Register </a>
 						</li>
 
 						<li class="nav-item">

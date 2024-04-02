@@ -4,17 +4,16 @@ const categoryName = categoryNameElement.getAttribute("data-categoryName");
 const totalProducts = categoryNameElement.getAttribute("data-totalProductsByCategory");
 const pageNext = document.querySelector("#page-next");
 const pagePrevious = document.querySelector("#page-previous");
-const pageSize = 12;
+const pageSize = 16;
 let currentPage = 0;
 let totalPage = generatePageButtons(totalProducts, pageSize);
 let pageList = document.querySelectorAll(".page-number");
-let fetchedProducts = null
+let fetchedProducts = null;
 
 window.addEventListener('popstate', function(event) {
 	const currentPageFromHistory = event.state ? event.state.page : 0;
-	console.log("Current Page from previous history:", currentPageFromHistory);
 	currentPage = currentPageFromHistory - 1;
-	handlePagination()
+	handlePagination();
 });
 
 document.addEventListener("DOMContentLoaded", async function(event) {
@@ -27,11 +26,9 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 	}
 
 	// Variable to store fetched data
-	fetchedProducts = await fetchData()
+	fetchedProducts = await fetchData();
 
 	handlePagination();
-
-
 });
 
 // Fetch data from server
@@ -68,31 +65,37 @@ function handlePageClick(pageNumber) {
 	for (let product of productsOnPage) {
 		html += `<div class="col-6 col-md-6 col-lg-3 mb-3">
                             <div class="card position-relative">
-                                <div class="position-absolute top-0 end-0 mt-2 me-2">
-                                    <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-                                </div>
-                                <div class="position-absolute top-0 end-0 mt-icon me-2">
-                                    <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-                                </div>
                                 <a class="card-product-img" href="/product/${product.id}">
-                                    <img src="${product.imageLink}" class="card-img-top" />
-                                </a>
+									<img src="${product.imageLink}" class="card-img-top" />
+								</a>
                                 <div class="card-body">
-                                    <h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
+                                	<a class="link-primary text-decoration-none" href="/product/${product.id}">
+                                    	<h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
+                                    </a>
                                     <p class="card-text fst-italic lead text-nowrap text-overflow-ellipsis"
                                         style="font-size: 16px" >
                                         ${product.description}
                                     </p>
                                     <p class="card-text">$${product.price}</p>
-                                    <a href="#" class="btn btn-primary">Buy Now</a>
+                                    <div class="rating">
+					                    ${generateStars(product.rating)}
+					                </div>
                                 </div>
                             </div>
                         </div>`
 	}
 
 	productsContainer.innerHTML = html;
-	updateURL(currentPage + 1)
+	updateURL(currentPage + 1);
 	window.scroll(0, 0);
+}
+
+function generateStars(rating) {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += '<i class="bi bi-star-fill" style="color: gold;"></i>';
+    }
+    return stars;
 }
 
 function handlePagination() {
@@ -113,13 +116,13 @@ function handlePagination() {
 
 	pagePrevious.addEventListener("click", () => {
 		currentPage = currentPage == 0 ? totalPage - 1 : currentPage - 1;
-		pageList[currentPage].focus()
+		pageList[currentPage].focus();
 		handlePageClick(currentPage);
 	})
 
 	pageNext.addEventListener("click", () => {
 		currentPage = currentPage == totalPage - 1 ? 0 : currentPage + 1;
-		pageList[currentPage].focus()
+		pageList[currentPage].focus();
 		handlePageClick(currentPage);
 	})
 }
@@ -127,6 +130,5 @@ function handlePagination() {
 // Update URL with page number
 function updateURL(pageNumber) {
 	const newURL = window.location.pathname + '?page=' + pageNumber;
-	console.log("newURL", newURL)
 	history.pushState({ page: pageNumber }, '', newURL);
 }

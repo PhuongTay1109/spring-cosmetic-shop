@@ -19,6 +19,12 @@
 				</div>
 				<div class="col-md-4">
 					<img th:src="${product.imageLink}" class="card-img-top product-img" alt="Product Image">
+					<div class="text-center mt-3">
+				        <button class="btn btn-outline-danger btn-favorites" onclick="addToFavorites()">
+				            <i id="heartIcon" class="bi bi-heart"></i>
+				            <span id="heartText">Add to favorites</span>
+				        </button>
+				    </div>
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
@@ -49,7 +55,23 @@
 							</span> &nbsp;
 						</p>
 						<i class="card-text fa-solid fa-star rating-start"></i>&nbsp;<span class="" th:text="${product.rating}"></span>
+						<!-- Quantity selector -->					
+						<div class="input-group mt-4" style="width:15%">
+						    <strong>Quantity: </strong>
+						    <span class="input-group-btn">
+						        <button type="button" class="btn btn-number" data-type="minus" data-field="quantity">
+						            <i class="bi bi-dash"></i>
+						        </button>
+						    </span>
+						    <input type="text" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+						    <span class="input-group-btn">
+						        <button type="button" class="btn btn-number" data-type="plus" data-field="quantity">
+						            <i class="bi bi-plus"></i>
+						        </button>
+						    </span>
+						</div>
 
+						
 						<p class="card-text mt-4">
 							<button class="btn cart-btn me-2">
 								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
