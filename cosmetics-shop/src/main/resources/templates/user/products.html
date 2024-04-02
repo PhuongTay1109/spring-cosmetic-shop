@@ -21,7 +21,7 @@
 								    aria-expanded="false">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</button>
 								<ul class="dropdown-menu sort-menu" aria-labelledby="sortMenuButton">
 								    <li><a class="dropdown-item sort-item" 
-								    	data-sort-method="best-selling">Best Selling</a></li>
+								    	data-sort-method="top-rating">Top rating</a></li>
 								    <li><a class="dropdown-item sort-item"
 								    	data-sort-method="price-descending">Price Descending</a></li>
 								    <li><a class="dropdown-item sort-item"
@@ -77,6 +77,8 @@
 							th:text=${stringUtils.normalizeString(brand)}></label>
 					</div>
 				</div>
+				
+				<a class="btn btn-primary clear-btn mt-4">Clear all</a>
 
 			</div>
 		</div>

@@ -23,12 +23,19 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 	// If it has, update the currentPage
 	const urlParams = new URLSearchParams(window.location.search);
 	const pageParam = urlParams.get('page');
+	const sortParam = urlParams.get('sort');
+	
 	if (pageParam !== null) {
 		currentPage = parseInt(pageParam) - 1; // Subtract 1 because page index starts from 0
 	}
 
 	// Variable to store fetched data
 	fetchedProducts = await fetchData();
+	
+	if (sortParam != null) {
+		sortBy = sortParam;
+		sortProducts(sortBy);
+	}	
 
 	handlePagination();
 });
@@ -175,9 +182,9 @@ function sortProducts(sortBy) {
     let sortedProducts = [];
     const button = document.getElementById('sortButton');
     switch (sortBy) {		
-          case 'best-selling':
-            button.innerText = 'Best Selling';
-            //sortedProducts = fetchedProducts.sort((a, b) => b.sold - a.sold);
+          case 'top-rating':
+            button.innerText = 'Top Rating';
+            sortedProducts = fetchedProducts.sort((a, b) => b.rating - a.rating);
             break; 
           case 'price-descending':
             button.innerText = 'Price Descending';
