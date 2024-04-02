@@ -155,6 +155,7 @@
 }
 
 .card-title {
+	height: 30px !important;
 }
 
 .header-link {
@@ -175,4 +176,8 @@
 
 .after:hover::after {
     color: black!important;
+}
+
+.hidden {
+	display: none!important;
 }
