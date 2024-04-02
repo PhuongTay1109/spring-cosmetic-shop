@@ -92,3 +92,12 @@
 	padding: 12px 20px !important;
 }
 
+.btn-favorites {
+	border: none !important;
+}
+
+.btn-favorites:hover {
+	 background-color: transparent !important;
+	 color: red !important;
+}
+

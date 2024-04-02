@@ -16,6 +16,7 @@ const perPage = 12
 
 let totalPage = generatePageButtons(totalRelatedProducts, perPage);
 let pageNumber = document.querySelectorAll(".page-number");
+
 document.addEventListener("DOMContentLoaded", async function (event) {
 
 	// Check if URL contains page parameter
@@ -106,36 +107,39 @@ async function handlePageClick(page) {
 
 	let html = "";
 	for (let product of products) {
-		html += `
-		<div id="related-product" class="col-md-3 mb-4 mt-3">
-				<div class="card position-relative">
-						<div style="z-index: 2" class="position-absolute top-0 end-0 mt-2 me-2">
-							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-						</div>
-						<div style="z-index: 2" class="position-absolute top-0 end-0 mt-icon me-2">
-							<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-						</div>
-						<a class="card-product-img" href="/product/${product.id}">
-							<img src="${product.imageLink}" class="card-img-top" />
-						</a>
-							
-						<div class="card-body">
-
-							<h5 class="card-title text-nowrap text-overflow-ellipsis" title="${product.name}" >${product.name}</h5>
-							<p class="card-title fst-italic lead text-nowrap  text-overflow-ellipsis" title="${product.description}" style="font-size: 16px">
-								${product.description}
-							</p>
-							<p class="card-text fw-bold">$${product.price}</p>
-							<a href="#" class="card-text text-decoration-none btn btn-primary">Buy Now</a>
-						</div>
-					</div>
-		</div>`
+		html += `<div id="related-product" class="col-md-3 mb-4 mt-3">
+						<div class="card position-relative">
+                                <a class="card-product-img" href="/product/${product.id}">
+									<img src="${product.imageLink}" class="card-img-top" />
+								</a>
+                                <div class="card-body">
+                                	<a class="link-primary text-decoration-none" href="/product/${product.id}">
+                                    	<h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
+                                    </a>
+                                    <p class="card-text fst-italic lead text-nowrap text-overflow-ellipsis"
+                                        style="font-size: 16px" >
+                                        ${product.description}
+                                    </p>
+                                    <p class="card-text">$${product.price}</p>
+                                    <div class="rating">
+					                    ${generateStars(product.rating)}
+					                </div>
+                                </div>
+                            </div>
+				</div>`
 	}
 	relatedProductsSeperate.insertAdjacentHTML("afterend", html)
 	updateURL(page + 1);
 	window.scroll(0, 0);
 }
 
+function generateStars(rating) {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += '<i class="bi bi-star-fill" style="color: gold;"></i>';
+    }
+    return stars;
+}
 
 async function handlePagination() {
 	handlePageClick(currentPage)
@@ -162,6 +166,24 @@ function updateURL(pageNumber) {
 	const newURL = window.location.pathname + '?page=' + pageNumber;
 	history.pushState({ page: pageNumber }, '', newURL);
 }
+
+function addToFavorites() {
+    var heartIcon = document.getElementById('heartIcon');
+    var heartText = document.getElementById('heartText');
+
+    if (heartIcon.classList.contains('bi-heart')) {
+        heartIcon.classList.remove('bi-heart');
+        heartIcon.classList.add('bi-heart-fill');
+        heartText.innerText = 'Added to favorites';
+        heartText.style.color = 'red';
+    } else {
+        heartIcon.classList.remove('bi-heart-fill');
+        heartIcon.classList.add('bi-heart');
+        heartText.innerText = 'Add to favorites';
+        heartText.style.color = ''; 
+    }
+}
+
 
 
 
