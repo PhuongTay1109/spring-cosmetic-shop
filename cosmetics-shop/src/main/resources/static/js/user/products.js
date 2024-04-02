@@ -10,6 +10,8 @@ let totalPage = generatePageButtons(totalProducts, pageSize);
 let pageList = document.querySelectorAll(".page-number");
 let fetchedProducts = null;
 
+let sortBy = undefined;
+
 window.addEventListener('popstate', function(event) {
 	const currentPageFromHistory = event.state ? event.state.page : 0;
 	currentPage = currentPageFromHistory - 1;
@@ -56,7 +58,7 @@ function generatePageButtons(totalProducts, pageSize) {
 	return totalPage;
 }
 
-function handlePageClick(pageNumber) {
+function handlePageClick(pageNumber, sortBy) {
 	let startIndex = pageNumber * pageSize;
 	let endIndex = Math.min(startIndex + pageSize, totalProducts);
 	let productsOnPage = fetchedProducts.slice(startIndex, endIndex);
@@ -86,7 +88,10 @@ function handlePageClick(pageNumber) {
 	}
 
 	productsContainer.innerHTML = html;
-	updateURL(currentPage + 1);
+	if(sortBy != undefined)
+		updateURL(currentPage + 1, sortBy);
+	else
+		updateURL(currentPage + 1);
 	window.scroll(0, 0);
 }
 
@@ -116,7 +121,7 @@ function generateStars(rating) {
 }
 
 function handlePagination() {
-	handlePageClick(currentPage);
+	handlePageClick(currentPage, sortBy);
 	pageList[currentPage].focus();
 	window.scroll(0, 0);
 
@@ -126,26 +131,71 @@ function handlePagination() {
 		page.addEventListener("click", (event) => {
 			currentPage = pageList.indexOf(event.currentTarget); //Get index of clickedPage
 			pageList[currentPage].focus();
-			handlePageClick(currentPage);
-
+			handlePageClick(currentPage, sortBy);
 		})
 	}
 
 	pagePrevious.addEventListener("click", () => {
 		currentPage = currentPage == 0 ? totalPage - 1 : currentPage - 1;
 		pageList[currentPage].focus();
-		handlePageClick(currentPage);
+		handlePageClick(currentPage, sortBy);
 	})
 
 	pageNext.addEventListener("click", () => {
 		currentPage = currentPage == totalPage - 1 ? 0 : currentPage + 1;
 		pageList[currentPage].focus();
-		handlePageClick(currentPage);
+		handlePageClick(currentPage, sortBy);
 	})
 }
 
-// Update URL with page number
-function updateURL(pageNumber) {
-	const newURL = window.location.pathname + '?page=' + pageNumber;
-	history.pushState({ page: pageNumber }, '', newURL);
+function updateURL(pageNumber, sortBy) {
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', pageNumber);
+    if (sortBy !== undefined) { 
+        params.set('sort', sortBy);
+    } else {
+        params.delete('sort'); 
+    }
+    const newURL = `${window.location.pathname}?${params.toString()}`;
+    history.pushState({ page: pageNumber }, '', newURL);
+}
+
+
+// Handle sort feature
+document.querySelectorAll('.sort-item').forEach(item => {
+	item.addEventListener('click', (event) => {
+		sortBy = event.target.getAttribute('data-sort-method');
+		sortProducts(sortBy);
+		// load products of current after sort
+		handlePageClick(currentPage, sortBy); 
+	});
+});
+
+function sortProducts(sortBy) {
+    let sortedProducts = [];
+    const button = document.getElementById('sortButton');
+    switch (sortBy) {		
+          case 'best-selling':
+            button.innerText = 'Best Selling';
+            //sortedProducts = fetchedProducts.sort((a, b) => b.sold - a.sold);
+            break; 
+          case 'price-descending':
+            button.innerText = 'Price Descending';
+            sortedProducts = fetchedProducts.sort((a, b) => b.price - a.price);
+            break;
+          case 'price-ascending':
+            button.innerText = 'Price Ascending';
+            sortedProducts = fetchedProducts.sort((a, b) => a.price - b.price);
+            break;
+          case 'name-ascending':
+            button.innerText = 'Name A-Z';
+            sortedProducts = fetchedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+       	  case 'name-descending':
+            button.innerText = 'Name Z-A';
+            sortedProducts = fetchedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+        }
+
+    fetchedProducts = sortedProducts;
 }
