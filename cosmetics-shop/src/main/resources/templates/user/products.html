@@ -17,16 +17,21 @@
 							<div
 								class="dropdown text-md-left float-md-left mb-3 mt-3 mt-md-0 mb-md-0 col-6">
 								<label class="mr-2">Sort by:</label>
-								<button class="btn btn-lg btn-light dropdown-toggle"
-									type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-									aria-expanded="false">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<li><a class="dropdown-item" href="#">Best Selling</a></li>
-									<li><a class="dropdown-item" href="#">Price Descending</a></li>
-									<li><a class="dropdown-item" href="#">Price Ascending</a></li>
+								<button class="btn btn-lg btn-light dropdown-toggle sort-text" type="button" id="sortButton" data-bs-toggle="dropdown"
+								    aria-expanded="false">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</button>
+								<ul class="dropdown-menu sort-menu" aria-labelledby="sortMenuButton">
+								    <li><a class="dropdown-item sort-item" 
+								    	data-sort-method="best-selling">Best Selling</a></li>
+								    <li><a class="dropdown-item sort-item"
+								    	data-sort-method="price-descending">Price Descending</a></li>
+								    <li><a class="dropdown-item sort-item"
+								    	data-sort-method="price-ascending">Price Ascending</a></li>
+								    <li><a class="dropdown-item sort-item" 
+								    	data-sort-method="name-ascending">Name A-Z</a></li>
+   									<li><a class="dropdown-item sort-item" 
+   										data-sort-method="name-descending">Name Z-A</a></li>
 								</ul>
 							</div>
-
 						</div>
 					</div>
 					<div class="row">
