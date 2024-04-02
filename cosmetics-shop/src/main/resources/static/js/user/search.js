@@ -1,4 +1,5 @@
 const productsContainer = document.getElementById("products-container");
+const mainContainer = document.getElementById("main-container")
 const totalProducts = productList.length;
 const pageSize = 4 * 6
 const pagination = document.getElementById('search-products-pagination');
@@ -19,8 +20,26 @@ window.addEventListener('popstate', function (event) {
     handlePagination()
 });
 
-handlePagination(currentPage, totalPage, pageList, productList);
-handleFilter();
+main();
+
+function main(){
+    if (productList.length == 0) { //Handle not found result
+        console.log(mainContainer)
+        mainContainer.innerHTML =`<div role="status" class="text-center">
+        <img alt="" style="width: 30%" src="https://static.vecteezy.com/system/resources/previews/019/520/922/non_2x/no-result-document-file-data-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg" class="">
+        <div class="message" >
+            <div class="fw-bold fs-5">No results found</div>
+            <div class="fs-5">Try different or more general keywords</div>
+        </div>
+
+    </div>
+    `
+    }
+    else {
+        handlePagination(currentPage, totalPage, pageList, productList);
+        handleFilter();
+    }
+}
 
 function handlePageClick(pageNumber, pageSize, totalPage, pageList, productList) {
     let startIndex = pageNumber * pageSize;
@@ -201,7 +220,6 @@ function handleFilter() {
                 })
             }
             console.log(filteredProducts)
-
             // Get all children of the UL element
             const children = pagination.children;
 
@@ -212,6 +230,12 @@ function handleFilter() {
             let totalPage = generatePageButtons(filteredProducts.length, pageSize)
             let currentPageOfFilterProducts = 0
             pageList = document.querySelectorAll(".page-number");
+            if (filteredProducts.length == 0) {
+                productsContainer.innerHTML = ""
+                pagination.style.display = "none";
+                return;
+            }
+            pagination.display="block"
             handlePagination(currentPageOfFilterProducts, totalPage, pageList, filteredProducts)
 
         })
