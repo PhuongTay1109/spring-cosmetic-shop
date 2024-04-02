@@ -107,7 +107,7 @@ async function handlePageClick(page) {
 	let html = "";
 	for (let product of products) {
 		html += `
-		<div id="related-product" class="col-md-3 mb-4">
+		<div id="related-product" class="col-md-3 mb-4 mt-3">
 				<div class="card position-relative">
 						<div style="z-index: 2" class="position-absolute top-0 end-0 mt-2 me-2">
 							<i class="bi bi-heart" style="font-size: 1.5rem;"></i>

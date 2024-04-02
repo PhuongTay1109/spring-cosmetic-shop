@@ -8,13 +8,12 @@ const pageSize = 12;
 let currentPage = 0;
 let totalPage = generatePageButtons(totalProducts, pageSize);
 let pageList = document.querySelectorAll(".page-number");
-let fetchedProducts = null
+let fetchedProducts = null;
 
 window.addEventListener('popstate', function(event) {
 	const currentPageFromHistory = event.state ? event.state.page : 0;
-	console.log("Current Page from previous history:", currentPageFromHistory);
 	currentPage = currentPageFromHistory - 1;
-	handlePagination()
+	handlePagination();
 });
 
 document.addEventListener("DOMContentLoaded", async function(event) {
@@ -27,11 +26,9 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 	}
 
 	// Variable to store fetched data
-	fetchedProducts = await fetchData()
+	fetchedProducts = await fetchData();
 
 	handlePagination();
-
-
 });
 
 // Fetch data from server
@@ -66,7 +63,7 @@ function handlePageClick(pageNumber) {
 
 	let html = "";
 	for (let product of productsOnPage) {
-		html += `<div class="col-6 col-md-6 col-lg-3 mb-3">
+		html += `<div class="col-6 col-md-6 col-lg-3 mb-4 mt-3">
                             <div class="card position-relative">
                                 <div class="position-absolute top-0 end-0 mt-2 me-2">
                                     <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
@@ -91,7 +88,7 @@ function handlePageClick(pageNumber) {
 	}
 
 	productsContainer.innerHTML = html;
-	updateURL(currentPage + 1)
+	updateURL(currentPage + 1);
 	window.scroll(0, 0);
 }
 
@@ -113,13 +110,13 @@ function handlePagination() {
 
 	pagePrevious.addEventListener("click", () => {
 		currentPage = currentPage == 0 ? totalPage - 1 : currentPage - 1;
-		pageList[currentPage].focus()
+		pageList[currentPage].focus();
 		handlePageClick(currentPage);
 	})
 
 	pageNext.addEventListener("click", () => {
 		currentPage = currentPage == totalPage - 1 ? 0 : currentPage + 1;
-		pageList[currentPage].focus()
+		pageList[currentPage].focus();
 		handlePageClick(currentPage);
 	})
 }
@@ -127,6 +124,5 @@ function handlePagination() {
 // Update URL with page number
 function updateURL(pageNumber) {
 	const newURL = window.location.pathname + '?page=' + pageNumber;
-	console.log("newURL", newURL)
 	history.pushState({ page: pageNumber }, '', newURL);
 }
