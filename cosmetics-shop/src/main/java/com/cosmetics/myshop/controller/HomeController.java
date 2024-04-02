@@ -21,11 +21,12 @@ public class HomeController {
 	CategoryService categoryService;
 	@Autowired
 	ProductService productService;
-	
-	@ResponseBody
+
 	@GetMapping("/search")
-	private List<Product> search() {
-		return productService.searchProductsByKeyword("based");
+	private String search(Model model) {
+		List<Product> productList = productService.searchProductsByKeyword("based");
+		model.addAttribute("productList", productList);
+		return "user/search";
 	}
 
 	@GetMapping("/register")
@@ -36,7 +37,7 @@ public class HomeController {
 	@GetMapping("/login")
 	private String login() {
 		System.out.println("Login page");
-		return "/security/login";
+		return "security/login";
 	}
 
 	@GetMapping("/")
