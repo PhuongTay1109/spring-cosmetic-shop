@@ -25,28 +25,6 @@
 						<h3 class="mb-3 font-weight-bold">Search result for '<span class="text-danger" th:text="${keyword}"></span>'</h3>
 					</div>
 					<div class="row" id="products-container">
-						<div class="col-md-3">
-							<div class="card position-relative">
-								<div class="position-absolute top-0 end-0 mt-2 me-2">
-									<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-								</div>
-								<div class="position-absolute top-0 end-0 mt-icon me-2">
-									<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-								</div>
-								<a class="card-product-img" href="/product/${product.id}">
-									<img src="/img/categories/banner.png" class="card-img-top" />
-								</a>
-								<div class="card-body">
-									<h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
-									<p class="card-text fst-italic lead text-nowrap text-overflow-ellipsis"
-										style="font-size: 16px">
-										${product.description}
-									</p>
-									<p class="card-text">$${product.price}</p>
-									<a href="#" class="btn btn-primary">Buy Now</a>
-								</div>
-							</div>
-						</div>
 					</div>
 					<nav>
 						<ul id="search-products-pagination"

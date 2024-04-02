@@ -89,12 +89,6 @@ function handlePageClick(pageNumber, pageSize, totalPage, pageList, productList)
     for (let product of productsOnPage) {
         html += `<div class="col-md-3 mb-3">
         <div class="card position-relative">
-            <div class="position-absolute top-0 end-0 mt-2 me-2">
-                <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-            </div>
-            <div class="position-absolute top-0 end-0 mt-icon me-2">
-                <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-            </div>
             <a class="card-product-img" href="/product/${product.id}">
                 <img src="${product.imageLink}" class="card-img-top" />
             </a>
@@ -108,7 +102,6 @@ function handlePageClick(pageNumber, pageSize, totalPage, pageList, productList)
                 <p class="card-text rating">
 		            ${generateStars(product.rating)}
                 </p>
-                <a href="#" class="btn btn-primary">Buy Now</a>
             </div>
         </div>
     </div>`;
