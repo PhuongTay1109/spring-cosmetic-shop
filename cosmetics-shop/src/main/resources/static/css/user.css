@@ -83,3 +83,12 @@
 	color: white !important;
 }
 
+.cart-btn {
+	background-color: white !important;
+    border-color: darksalmon !important;
+}
+
+.p-buy {
+	padding: 12px 20px !important;
+}
+
