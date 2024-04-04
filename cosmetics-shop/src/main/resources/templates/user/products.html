@@ -12,7 +12,7 @@
 					<div class="row mb-3">
 						<div class="row col-12">
 							<h1 id="category-name" class="text-primary-color text-uppercase font-weight-bold mb-3 col-6"
-								th:text="${categoryName}" th:data-categoryName="${categoryName}" 
+								th:text=${stringUtils.normalizeString(categoryName)} th:data-categoryName="${categoryName}" 
 								th:data-totalProductsByCategory=${totalProductsByCategory}></h1>
 							<div
 								class="dropdown text-md-left float-md-left mb-3 mt-3 mt-md-0 mb-md-0 col-6">

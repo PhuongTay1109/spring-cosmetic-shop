@@ -39,6 +39,11 @@ public class TestController {
 		return authentication;
 	}
 	
+	@GetMapping("/cart")
+	public String getCart() {
+		return "/user/cart";
+	}
+	
 	
 	
 }

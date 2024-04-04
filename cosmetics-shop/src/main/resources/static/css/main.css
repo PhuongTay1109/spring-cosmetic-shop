@@ -17,6 +17,10 @@
     color: #D49696 !important;
 }
 
+.text-primary {
+	color: #D49696 !important;
+}
+
 .link-primary:hover {
     color: var(--link-primary-hover) !important;
 

@@ -83,7 +83,7 @@
 	color: white !important;
 }
 
-.cart-btn {
+.add-to-cart-btn {
 	background-color: white !important;
     border-color: darksalmon !important;
 }
@@ -105,4 +105,45 @@
 	font-size: 16px;
 	color: #D49696;
 }
+
+/*Cart page CSS*/
+.shopping-cart-card{
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent;
+}
+
+.cart{
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+}
+
+
+.main{
+    margin: 0;
+    padding: 5vh 0;
+    width: 100%;
+}
+
+.close{
+    margin-left: auto;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.product-cart-img {
+    width: 3.5rem;
+}
+
+.nav-arrow {
+    margin-top: 4.5rem;
+    font-size: 20px;
+}
+
+
 
