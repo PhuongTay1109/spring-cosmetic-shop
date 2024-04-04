@@ -35,6 +35,9 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 
 	// Variable to store fetched data
 	fetchedProducts = await fetchData();
+	// At the begin, i show fetchedproduct
+	// but if there is any change (filter, sort)
+	// i need to store the new product list
 	productListToShow = fetchedProducts;
 	
 	if (sortParam != null) {
@@ -176,8 +179,7 @@ function updateURL(pageNumber, sortBy) {
     history.pushState({ page: pageNumber }, '', newURL);
 }
 
-
-// Handle sort feature
+// SORT 
 document.querySelectorAll('.sort-item').forEach(item => {
 	item.addEventListener('click', (event) => {
 		sortBy = event.target.getAttribute('data-sort-method');
@@ -216,7 +218,7 @@ function sortProducts(sortBy) {
     productListToShow = sortedProducts;
 }
 
-// filter feature
+// FILTER
 document.querySelectorAll('.custom-control-input').forEach(input => {
 	input.addEventListener('change', () => {
 		filterProducts();
