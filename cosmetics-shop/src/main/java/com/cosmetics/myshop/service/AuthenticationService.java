@@ -64,11 +64,11 @@ public class AuthenticationService {
 		if (isLastNameValid == false) {
 			body.setLastName("The last name must only contain letters and the first letter must be capitalized!");
 			isValid = false;
-		}
+		} 
 		if (isUsernameValid == false) {
 			body.setUsername("Username must contain at least 4 characters, including letters and numbers!");
 			isValid = false;
-		}
+		} 
 		Optional<User> user = userService.findByUsername(body.getUsername());
 		if (user.isPresent()) {
 			body.setUsername("Username has been used!");
@@ -78,20 +78,17 @@ public class AuthenticationService {
 		if (user.isPresent()) {
 			body.setEmail("Email has been used!");
 			isValid = false;
-		}
+		} 
 		if (isPasswordValid == false) {
 			body.setPassword("Password must contain at least 6 characters, including letters and numbers!");
 			isValid = false;
-		}
+		} 
 		if (isPhoneValid == false) {
 			body.setPhone("Phone must contain only 10 numbers!");
 			isValid = false;
-		}
+		} 
 		body.setValid(isValid);
-		if (isValid == false) {
-			System.out.println(body.toString());
-			return body;
-		} else { // Valid
+		if (isValid) { // Valid
 			String encodedPassword = passwordEncoder.encode(body.getPassword());
 			Set<Role> roles = new HashSet<>();
 			roles.add(roleService.findByAuthority("USER").orElseThrow());
@@ -102,6 +99,7 @@ public class AuthenticationService {
 			successRegister.setValid(true);
 			return successRegister;
 		}
+		return body;
 	}
 	
 }
