@@ -1,5 +1,6 @@
 package com.cosmetics.myshop.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.UserService;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @Controller
 @RequestMapping("/profile")
@@ -27,11 +31,14 @@ public class ProfileController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	@GetMapping("")
 	public String getProfile(Authentication authentication, Model model) {
 		User user = (User)authentication.getPrincipal();
 		model.addAttribute("user", user);
-		return "user/profile.html";
+		return "user/profile";
 	}
 	
 	@PutMapping("")
@@ -74,6 +81,44 @@ public class ProfileController {
 			userService.saveUser(existingUser);
 			Authentication authentication = new UsernamePasswordAuthenticationToken((User)existingUser,null, existingUser.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
+		return response;
+	}
+	
+	@GetMapping("/password/change")
+	public String getPasswordChange() {
+		return "user/password_change";
+	}
+	
+	@ResponseBody
+	@PutMapping("/password/change")
+	public Map<String, Object> handlePasswordChange(@RequestBody Map<String, String> body, Authentication authentication) {
+		//TODO: process PUT request
+		Map <String, Object> response = new HashMap<>();
+		User user = (User)authentication.getPrincipal();
+		boolean isNewPasswordValid = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$").matcher(body.get("newPassword"))
+				.matches();
+		boolean isValid = true;
+		if (!passwordEncoder.matches(body.get("currentPassword"), user.getPassword())){
+			response.put("currentPassword", "Current password isn't correct!");
+			isValid = false;
+		}
+		if (body.get("newPassword").equals(body.get("currentPassword"))) { //New password is as the same as current password
+			response.put("newPassword", "New password must be different from current password!");
+			isValid = false;
+		} else if(!isNewPasswordValid) {
+			response.put("newPassword", "New password must contain at least 6 characters, including letters and numbers!");
+			isValid = false;
+		}
+		if (!body.get("confirmPassword").equals(body.get("newPassword"))) { //Confirm password doesn't match new password
+			response.put("confirmPassword","Confirm password must match new password!");
+			isValid = false;
+		}
+		response.put("isValid", isValid);
+		if (isValid) {
+			String encodedPassword = passwordEncoder.encode(body.get("confirmPassword"));
+			user.setPassword(encodedPassword);
+			userService.saveUser(user);
 		}
 		return response;
 	}
