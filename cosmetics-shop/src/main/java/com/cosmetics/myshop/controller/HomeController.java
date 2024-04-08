@@ -1,6 +1,9 @@
 package com.cosmetics.myshop.controller;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +52,12 @@ public class HomeController {
 
 	@GetMapping("/")
 	private String home(Model model) {
-		List<Category> categoryList = categoryService.findAllCategories();
-		StringUtils stringUtils = new StringUtils();
-		model.addAttribute("stringUtils", stringUtils);
-		model.addAttribute("categoryList", categoryList);
+	
+		List<Product> topRatingProducts = productService.findTopRatingProducts();
+//		String test = topRatingProducts.stream()
+//				.map(Product::getName)
+//				.collect(Collectors.joining(" "));
+		model.addAttribute("topRatingProducts", topRatingProducts);
 		return "/user/homepage";
 	}
 

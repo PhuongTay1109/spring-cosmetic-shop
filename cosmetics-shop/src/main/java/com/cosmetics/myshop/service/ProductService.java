@@ -70,5 +70,12 @@ public class ProductService {
 		return productRepository.searchByKeyword(keyword);
 	}
 	
+	public List<Product> findTopRatingProducts() {
+		return productRepository.findTopRating();
+	}
+	
+	public List<Product> findNewArrivalProducts() {
+		return productRepository.findNewArrivals();
+	}
 	
 }

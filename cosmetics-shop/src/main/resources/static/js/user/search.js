@@ -10,22 +10,22 @@ const pageNext = document.querySelector("#page-next");
 const pagePrevious = document.querySelector("#page-previous");
 const categoryCheckboxes = document.querySelectorAll('input[name="categoryName"]');
 let checkedCategories = [] //For handle filter
-let currentPage = 0;
+
+
 
 window.addEventListener('popstate', function (event) {
     const currentPageFromHistory = event.state ? event.state.page : 0;
     console.log("Current Page from previous history:", currentPageFromHistory);
     currentPage = currentPageFromHistory - 1;
-    console.log(currentPage)
     handlePagination()
 });
 
 main();
 
-function main(){
+function main() {
     if (productList.length == 0) { //Handle not found result
         console.log(mainContainer)
-        mainContainer.innerHTML =`<div role="status" class="text-center">
+        mainContainer.innerHTML = `<div role="status" class="text-center">
         <img alt="" style="width: 30%" src="https://static.vecteezy.com/system/resources/previews/019/520/922/non_2x/no-result-document-file-data-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg" class="">
         <div class="message" >
             <div class="fw-bold fs-5">No results found</div>
@@ -36,6 +36,16 @@ function main(){
     `
     }
     else {
+        let currentPage = 0
+
+        // Check if URL contains page parameter
+        // If it has, update the currentPage
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page');
+        if (pageParam !== null) {
+            currentPage = parseInt(pageParam) - 1; // Subtract 1 because page index starts from 0
+            console.log(currentPage)
+        }
         handlePagination(currentPage, totalPage, pageList, productList);
         handleFilter();
     }
@@ -44,7 +54,6 @@ function main(){
 function handlePageClick(pageNumber, pageSize, totalPage, pageList, productList) {
     let startIndex = pageNumber * pageSize;
     let endIndex = Math.min(startIndex + pageSize, totalProducts);
-    console.log(productList);
     let productsOnPage = productList.slice(startIndex, endIndex);
 
     pageList.forEach((page, index) => {
@@ -83,7 +92,7 @@ function handlePageClick(pageNumber, pageSize, totalPage, pageList, productList)
 
     pageList[0].style.display = "block";
     pageList[totalPage - 1].style.display = "block";
-    pageList[currentPage].focus();
+    pageList[pageNumber].focus();
 
     let html = "";
     for (let product of productsOnPage) {
@@ -108,7 +117,7 @@ function handlePageClick(pageNumber, pageSize, totalPage, pageList, productList)
     }
 
     productsContainer.innerHTML = html;
-    updateURL(currentPage + 1)
+
     window.scroll(0, 0);
 }
 
@@ -129,8 +138,8 @@ function generatePageButtons(totalProducts, pageSize) {
 
 function handlePagination(currentPage, totalPage, pageList, productList) {
     handlePageClick(currentPage, pageSize, totalPage, pageList, productList);
+    updateURL(currentPage + 1)
     // console.log(currentPage);
-    window.scroll(0, 0);
 
     pageList = Array.from(pageList);
 
@@ -138,18 +147,20 @@ function handlePagination(currentPage, totalPage, pageList, productList) {
         page.addEventListener("click", (event) => {
             currentPage = pageList.indexOf(event.currentTarget); //Get index of clickedPage
             handlePageClick(currentPage, pageSize, totalPage, pageList, productList);
-
+            updateURL(currentPage + 1)
         })
     }
 
     pagePrevious.addEventListener("click", () => {
         currentPage = currentPage == 0 ? totalPage - 1 : currentPage - 1;
         handlePageClick(currentPage, pageSize, totalPage, pageList, productList);
+        updateURL(currentPage + 1)
     })
 
     pageNext.addEventListener("click", () => {
         currentPage = currentPage == totalPage - 1 ? 0 : currentPage + 1;
         handlePageClick(currentPage, pageSize, totalPage, pageList, productList);
+        updateURL(currentPage + 1)
     })
 }
 
@@ -212,11 +223,10 @@ function handleFilter() {
                     return checkedCategories.some(checkedCategory => checkedCategory === product.categoryName)
                 })
             }
-            console.log(filteredProducts)
             // Get all children of the UL element
             const children = pagination.children;
 
-            // Remove all children except the first and last
+            // Remove all button pages except the  "previous" and "next"
             for (let i = children.length - 2; i > 0; i--) {
                 pagination.removeChild(children[i]);
             }
@@ -228,7 +238,7 @@ function handleFilter() {
                 pagination.style.display = "none";
                 return;
             }
-            pagination.display="block"
+            pagination.display = "block"
             handlePagination(currentPageOfFilterProducts, totalPage, pageList, filteredProducts)
 
         })
