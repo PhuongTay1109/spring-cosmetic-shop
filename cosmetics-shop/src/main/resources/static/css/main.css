@@ -181,3 +181,52 @@
 .hidden {
 	display: none!important;
 }
+
+.btn-arrow {
+    background-color: transparent;
+    font-size: 2rem;
+    color: white;
+    font-weight: 700;
+    top: 50%;
+    transform: translateY(-50%, 50%);
+    /* border: transparent; */
+}
+.btn-left-arrow {
+    margin-left: 3rem;
+}
+
+.btn-right-arrow {
+    margin-right: 3rem;
+}
+
+
+@keyframes slide-left {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-right {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Apply the animation to the card */
+.slide-left {
+    animation: slide-left 0.7s ease-in-out;
+}
+
+.slide-right {
+    animation: slide-right 0.7s ease-in-out;
+}
