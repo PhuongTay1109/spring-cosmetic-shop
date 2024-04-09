@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head th:replace="~{fragments/commonFragments :: commonHead}">
-<title>Home page</title>
+	<title>Home page</title>
 </head>
 
 <body>
@@ -11,19 +10,16 @@
 
 	<section class="bg-primary mt-5">
 		<!-- Begin: Slider -->
-		<div id="carouselSlider" class="carousel carousel-dark slide"
-			data-bs-ride="carousel">
+		<div id="carouselSlider" class="carousel carousel-dark slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
-				<button type="button" aria-current="true"
-					data-bs-target="#carouselSlider" th:data-bs-slide-to="0"
+				<button type="button" aria-current="true" data-bs-target="#carouselSlider" th:data-bs-slide-to="0"
 					class="active"></button>
-				<button type="button" th:each="category, iter : ${categoryList}"
-					th:if="${iter.index} >= 1" data-bs-target="#carouselSlider"
-					th:data-bs-slide-to="${iter.index}"></button>
+				<button type="button" th:each="category, iter : ${categoryList}" th:if="${iter.index} >= 1"
+					data-bs-target="#carouselSlider" th:data-bs-slide-to="${iter.index}"></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item" th:classappend="${categoryStat.index} == 0 ? active:''" data-bs-interval="3000"
-					th:each="category : ${categoryList}">
+				<div class="carousel-item" th:classappend="${categoryStat.index} == 0 ? active:''"
+					data-bs-interval="3000" th:each="category : ${categoryList}">
 					<img th:src="${category.imageLink}" class="d-block w-100">
 					<div class="carousel-caption d-none d-md-block">
 						<a class="text-decoration-none" id="carousel-a-tag"
@@ -34,13 +30,11 @@
 					</div>
 				</div>
 			</div>
-			<button class="carousel-control-prev" type="button"
-				data-bs-target="#carouselSlider" data-bs-slide="prev">
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselSlider" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="visually-hidden">Previous</span>
 			</button>
-			<button class="carousel-control-next" type="button"
-				data-bs-target="#carouselSlider" data-bs-slide="next">
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselSlider" data-bs-slide="next">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				<span class="visually-hidden">Next</span>
 			</button>
@@ -84,104 +78,53 @@
 		<!-- End: Features -->
 
 		<!-- Begin: Sale off -->
-		<section id="new-arrival"
-			class="product-carousel position-relative open-up">
+		<section id="new-arrival" class="product-carousel position-relative open-up">
 			<div class="container">
-				<div
-					class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
+				<div class="d-flex flex-wrap justify-content-center align-items-center my-2 py-lg-5">
 					<hr class="line flex-grow-1 mr-3" />
-					<h2 class="text-uppercase mb-0">Sale off</h2>
+					<h2 class="text-uppercase mb-0">New arrival</h2>
 					<hr class="line flex-grow-1 ml-3" />
 				</div>
 
-				<div class="row">
-					<div class="col-md-3 mb-4">
+				<div class="row" id="new-arrival-wrapper">
+					<!-- <div class="col-3 mb-3">
 						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
+							<a class="card-product-img" href="/product/${product.id}">
+								<img src="${product.imageLink}" class="card-img-top" />
+							</a>
 							<div class="card-body">
-								<h5 class="card-title">Product 1</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
+								<h5 class="link-primary card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
+								<p class="card-text fst-italic lead text-nowrap text-overflow-ellipsis"
+									style="font-size: 16px">
+									${product.description}
+								</p>
+								<p class="card-text">$${product.price}</p>
+								<p class="card-text rating">
+									${generateStars(product.rating)}
+								</p>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-3 mb-4">
-						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
-							<div class="card-body">
-								<h5 class="card-title">Product 2</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 mb-4">
-						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
-							<div class="card-body">
-								<h5 class="card-title">Product 3</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 mb-4">
-						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
-							<div class="card-body">
-								<h5 class="card-title">Product 4</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
-							</div>
-						</div>
-					</div>
+					</div> -->
 				</div>
 
-				<div class="text-center mt-3">
-					<a href="#!" class="link-primary text-decoration-none"> View
-						All Products </a>
-				</div>
+				<button id="" class="btn btn-arrow btn-left-arrow position-absolute start-0">&lt; </button>
+				<button id="" class="btn btn-arrow btn-right-arrow position-absolute end-0">&gt;</button>
 			</div>
+			
 		</section>
 		<!-- Begin: Sale off -->
 
 		<!-- Begin: Best Sellers -->
-		<section id="best-seller"
-			class="product-carousel position-relative open-up">
+		<section id="top-rating" class="product-carousel position-relative open-up">
 			<div class="container">
-				<div
-					class="d-flex flex-wrap justify-content-center align-items-center my-5 py-lg-5">
+				<div class="d-flex flex-wrap justify-content-center align-items-center my-2 py-lg-5">
 					<hr class="line flex-grow-1 mr-3" />
-					<h2 class="text-uppercase mb-0">Best sellers</h2>
+					<h2 class="text-uppercase mb-0">Top rating products</h2>
 					<hr class="line flex-grow-1 ml-3" />
 				</div>
 
-				<div class="row">
-					<div class="col-md-3 mb-4">
+				<div class="row" id="top-rating-wrapper">
+					<!-- <div class="col-md-3 mb-4">
 						<div class="card position-relative">
 							<div class="position-absolute top-0 end-0 mt-2 me-2">
 								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
@@ -196,66 +139,25 @@
 								<a href="#" class="btn btn-primary">Buy Now</a>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-3 mb-4">
-						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
-							<div class="card-body">
-								<h5 class="card-title">Product 2</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 mb-4">
-						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
-							<div class="card-body">
-								<h5 class="card-title">Product 3</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 mb-4">
-						<div class="card position-relative">
-							<div class="position-absolute top-0 end-0 mt-2 me-2">
-								<i class="bi bi-heart" style="font-size: 1.5rem;"></i>
-							</div>
-							<div class="position-absolute top-0 end-0 mt-icon me-2">
-								<i class="bi bi-cart" style="font-size: 1.5rem;"></i>
-							</div>
-							<img th:src="@{/img/homepage/product.jpg}" class="card-img-top" />
-							<div class="card-body">
-								<h5 class="card-title">Product 4</h5>
-								<p class="card-text">$19.99</p>
-								<a href="#" class="btn btn-primary">Buy Now</a>
-							</div>
-						</div>
-					</div>
+					</div> -->
 				</div>
 
-				<div class="text-center mt-3 pb-5">
-					<a href="#!" class="link-primary text-decoration-none"> View
-						All Products </a>
-				</div>
+				<button id="" class="btn btn-arrow btn-left-arrow position-absolute start-0">&lt; </button>
+				<button id="" class="btn btn-arrow btn-right-arrow position-absolute end-0">&gt;</button>
 			</div>
 		</section>
 		<!-- End: Best Sellers -->
 	</section>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		
+			const topRatingProducts = /*[[${topRatingProducts}]]*/ 'default';
+			const newArrivalProducts = /*[[${newArrivalProducts}]]*/ 'default';
+		
+		/*]]>*/
+	</script>
 
+	<script type="text/javascript" th:src="@{/js/user/homepage.js}"></script>
 	<!-- Footer -->
 	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
 </body>
