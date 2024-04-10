@@ -75,15 +75,12 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 					: "/img/user/no_avatar.png";
 			String provider = determineOAuth2Provider(attributes);
 			String firstName = (String) attributes.get("given_name");
-			System.out.println(firstName);
 			String lastName = (String) attributes.get("family_name");
 			if (attributes.get("name") != null) { 
 				String fullName = (String) attributes.get("name");
 				firstName = fullName.split(" ")[0];
 				lastName = fullName.split(" ")[1];
 			}
-			System.out.println(firstName);
-			System.out.println(lastName);
 			String username = email;
 			String password = "";
 			String address = "";
