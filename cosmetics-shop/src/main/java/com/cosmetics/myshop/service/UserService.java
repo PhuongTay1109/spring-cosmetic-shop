@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.cosmetics.myshop.dto.RegisterDTO;
 import com.cosmetics.myshop.model.User;
 
 public interface UserService extends UserDetailsService {

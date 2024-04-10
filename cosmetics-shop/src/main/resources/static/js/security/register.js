@@ -27,13 +27,13 @@ document.addEventListener("DOMContentLoaded", async function() {
 			const data= await res.json();
 			console.log(data);
 			
-			if (!data.valid) {
-				document.querySelector('.firstName-error').innerHTML =  data.firstName.includes('!') ? data.firstName : '';
-				document.querySelector('.lastName-error').innerHTML =  data.lastName.includes('!') ? data.lastName : '';
-				document.querySelector('.password-error').innerHTML =  data.password.includes('!') ? data.password : '';
-				document.querySelector('.username-error').innerHTML =  data.username.includes('!') ? data.username : '';
-				document.querySelector('.phone-error').innerHTML =  data.phone.includes('!') ? data.phone : '';
-				document.querySelector('.email-error').innerHTML =  data.email.includes('!') ? data.email : '';
+			if (!data.isValid) {
+				document.querySelector('.firstName-error').innerHTML =  data.firstName ? data.firstName : '';
+				document.querySelector('.lastName-error').innerHTML =  data.lastName ? data.lastName : '';
+				document.querySelector('.password-error').innerHTML =  data.password ? data.password : '';
+				document.querySelector('.username-error').innerHTML =  data.username ? data.username : '';
+				document.querySelector('.phone-error').innerHTML =  data.phone ? data.phone : '';
+				document.querySelector('.email-error').innerHTML =  data.email ? data.email : '';
 			} else {
 				location.assign('/login?registered');
 			}

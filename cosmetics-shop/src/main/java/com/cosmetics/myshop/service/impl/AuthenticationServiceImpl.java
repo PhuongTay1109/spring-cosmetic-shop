@@ -1,6 +1,8 @@
 package com.cosmetics.myshop.service.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -32,9 +34,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	
 
-	public RegisterDTO registerUser(RegisterDTO body) {
-		System.out.println(body);
+	public Map<String, Object> registerUser(RegisterDTO body) {
+//		System.out.println(body);
 		boolean isValid = true;
+		Map<String, Object> response = new HashMap<>();
 
 		// Validate first name
 		boolean isFirstNameValid = Pattern.compile("^[A-ZÀ-Ỹ][a-yà-ỹ]*$").matcher(body.getFirstName()).matches();
@@ -45,36 +48,36 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				.matches();
 		boolean isPhoneValid = Pattern.compile("^[0-9]{10}$").matcher(body.getPhone()).matches();
 		if (isFirstNameValid == false) {
-			body.setFirstName("The fist name must only contain letters and the first letter must be capitalized!");
+			response.put("firstName","The fist name must only contain letters and the first letter must be capitalized!");
 			isValid = false;
 		}
 		if (isLastNameValid == false) {
-			body.setLastName("The last name must only contain letters and the first letter must be capitalized!");
+			response.put("lastName","The last name must only contain letters and the first letter must be capitalized!");
 			isValid = false;
 		} 
 		if (isUsernameValid == false) {
-			body.setUsername("Username must contain at least 4 characters, including letters and numbers!");
+			response.put("username","Username must contain at least 4 characters, including letters and numbers!");
 			isValid = false;
 		} 
 		Optional<User> user = userService.findByUsername(body.getUsername());
 		if (user.isPresent()) {
-			body.setUsername("Username has been used!");
+			response.put("username","Username has been used!");
 			isValid = false;
 		}
 		user = userService.findByEmail(body.getEmail());
 		if (user.isPresent()) {
-			body.setEmail("Email has been used!");
+			response.put("email","Email has been used!");
 			isValid = false;
 		} 
 		if (isPasswordValid == false) {
-			body.setPassword("Password must contain at least 6 characters, including letters and numbers!");
+			response.put("password","Password must contain at least 6 characters, including letters and numbers!");
 			isValid = false;
 		} 
 		if (isPhoneValid == false) {
-			body.setPhone("Phone must contain only 10 numbers!");
+			response.put("phone","Phone must contain only 10 numbers!");
 			isValid = false;
 		} 
-		body.setValid(isValid);
+		response.put("isValid", isValid);
 		if (isValid) { // Valid
 			String encodedPassword = passwordEncoder.encode(body.getPassword());
 			Set<Role> roles = new HashSet<>();
@@ -84,9 +87,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			userService.saveUser(registeredUser);
 			RegisterDTO successRegister = new RegisterDTO();
 			successRegister.setValid(true);
-			return successRegister;
 		}
-		return body;
+		return response;
 	}
 	
 }
