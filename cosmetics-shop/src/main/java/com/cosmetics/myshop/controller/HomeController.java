@@ -36,28 +36,15 @@ public class HomeController {
 		model.addAttribute("productList", productList);
 		model.addAttribute("categoryNames", categoryNames);
 		model.addAttribute("keyword", keyword);
-//		System.out.println(productList.toString());
 		return "user/search";
 	}
-
-	@GetMapping("/register")
-	private String register() {
-		return "security/register";
-	}
-
-	@GetMapping("/login")
-	private String login() {
-		return "security/login";
-	}
+	
 
 	@GetMapping("/")
 	private String home(Model model) {
 	
 		List<Product> topRatingProducts = productService.findTopRatingProducts();
 		List<Product> newArrivalProducts = productService.findNewArrivalProducts();
-//		String test = topRatingProducts.stream()
-//				.map(Product::getName)
-//				.collect(Collectors.joining(" "));
 		model.addAttribute("topRatingProducts", topRatingProducts);
 		model.addAttribute("newArrivalProducts", newArrivalProducts);
 		
