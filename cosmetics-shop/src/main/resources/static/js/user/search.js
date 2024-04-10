@@ -11,7 +11,9 @@ const pagePrevious = document.querySelector("#page-previous");
 const categoryCheckboxes = document.querySelectorAll('input[name="categoryName"]');
 let checkedCategories = [] //For handle filter
 
-
+document.addEventListener("DOMContentLoaded", async function() {
+	await updateCartNumber();
+});
 
 window.addEventListener('popstate', function (event) {
     const currentPageFromHistory = event.state ? event.state.page : 0;

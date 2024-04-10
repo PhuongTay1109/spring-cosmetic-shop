@@ -18,6 +18,7 @@ let totalPage = generatePageButtons(totalRelatedProducts, perPage);
 let pageNumber = document.querySelectorAll(".page-number");
 
 document.addEventListener("DOMContentLoaded", async function (event) {
+	 await updateCartNumber()
 
 	// Check if URL contains page parameter
 	// If it has, update the currentPage
@@ -218,6 +219,41 @@ function changeQuantity(btn) {
 		}
 	}
 }
+
+/*
+// **************************************
+// CART HANDLER
+// **************************************
+*/
+
+$(document).ready(function() {
+	$('.add-to-cart-btn').click(function() {
+		var input = document.getElementById('quantity');
+		var quantity = parseInt(input.value);
+		console.log("quantity: " + quantity);
+		console.log("product id: " + productId);
+		
+		var data = {
+        	productId: productId,
+            quantity: quantity
+         };     
+         
+         $.ajax({
+             type: 'POST',
+             url: '/api/cart/add',
+             contentType: 'application/json',
+             data: JSON.stringify(data),
+             success: async function(response) {
+             	alert('Product added to cart successfully!');
+                await updateCartNumber(); 
+             },
+             error: function(xhr, status, error) {
+             	alert('An error occurred while adding the product to cart.');
+             	console.error(error);
+             }
+         });
+	});
+});
 
 
 
