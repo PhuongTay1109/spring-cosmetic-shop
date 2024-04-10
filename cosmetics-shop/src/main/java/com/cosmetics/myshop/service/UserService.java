@@ -2,44 +2,20 @@ package com.cosmetics.myshop.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import com.cosmetics.myshop.model.User;
-import com.cosmetics.myshop.repository.UserRepository;
 
-@Service
-public class UserService implements UserDetailsService {
-	@Autowired
-	UserRepository userRepository;
-	
+public interface UserService extends UserDetailsService {
+
 	@Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = userRepository.findByUsername(username).get();
-        if(user == null){
-            throw new UsernameNotFoundException("could not found user..!!");
-        }
-        return user;
-    }
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 	
-	public Optional<User> findByUserId(Integer userId) {
-		return userRepository.findByUserId(userId);
-	}
-	
-	public Optional<User> findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-	
-	public Optional<User> findByUsername(String username) {
-		return userRepository.findByUsername(username);
-	}
-	
-	public User saveUser(User user) {
-		return userRepository.save(user);
-	}
+	public Optional<User> findByUserId(Integer userId) ;
+	public Optional<User> findByEmail(String email);
+	public Optional<User> findByUsername(String username);
+	public User saveUser(User user);
 
 }

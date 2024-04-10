@@ -18,6 +18,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.UserService;
+import com.cosmetics.myshop.service.impl.UserServiceImpl;
 import com.cosmetics.myshop.utils.RSAKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -44,7 +45,7 @@ public class SpringSecurityConfiguration {
 
 	@Bean
 	UserDetailsService userDetailsService() {
-		return new UserService();
+		return new UserServiceImpl();
 	}
 
 	@Autowired
