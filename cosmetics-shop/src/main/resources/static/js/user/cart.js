@@ -1,6 +1,11 @@
 /**
  * 
  */
+
+document.addEventListener("DOMContentLoaded", async function() {
+	await updateCartNumber();
+});
+
 function changeQuantity(btn) {
 	var input = document.getElementById('quantity');
 	// console.log(input)

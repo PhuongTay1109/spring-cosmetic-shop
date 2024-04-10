@@ -23,6 +23,8 @@ window.addEventListener('popstate', function(event) {
 });
 
 document.addEventListener("DOMContentLoaded", async function(event) {
+	await updateCartNumber();
+	
 	// Check if URL contains any parameter
 	// If it has, update the current page
 	const urlParams = new URLSearchParams(window.location.search);
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 
 	// Variable to store fetched data
 	fetchedProducts = await fetchData();
-	// At the begin, i show fetchedproduct
+	// At the begin, i show fetchedproduct - the original data
 	// but if there is any change (filter, sort)
 	// i need to store the new product list
 	productListToShow = fetchedProducts;

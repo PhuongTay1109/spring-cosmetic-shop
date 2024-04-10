@@ -1,24 +1,41 @@
 package com.cosmetics.myshop.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cosmetics.myshop.dto.CartItemDTO;
+import com.cosmetics.myshop.model.CartItem;
 import com.cosmetics.myshop.model.Product;
+import com.cosmetics.myshop.model.ShoppingSession;
+import com.cosmetics.myshop.model.User;
+import com.cosmetics.myshop.repository.ProductRepository;
+import com.cosmetics.myshop.service.CartItemService;
 import com.cosmetics.myshop.service.ProductService;
+import com.cosmetics.myshop.service.ShoppingSessionService;
 
 @Controller
 @RequestMapping("/api")
 public class ApiController {
+
+/*
+// **************************************
+// PRODUCT API
+// **************************************
+ */
 	@Autowired
 	ProductService productService;
 
@@ -33,21 +50,76 @@ public class ApiController {
 		return productService.findRelatedProductsByPage(product, pageable);
 	}
 
-//	@ResponseBody
-//	@GetMapping("/products_by_category")
-//	List<Product> getProductsByCategoryPagination(@RequestParam Map<String, String> param) {
-//		String categoryName = param.get("category_name");
-//		Integer pageNumber = Integer.parseInt(param.get("page"));
-//		Integer pageSize = 12;
-//		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-//
-//		return productService.findProductsByCategoryPagination(categoryName, pageable);
-//	}
-	
 	@ResponseBody
 	@GetMapping("/products")
 	List<Product> getProductsByCategory(@RequestParam Map<String, String> param) {
 		String categoryName = param.get("category_name");
 		return productService.findProductsByCategoryName(categoryName);
+	}
+
+/*
+// **************************************
+// CART API
+// **************************************
+*/
+
+	@Autowired
+	ShoppingSessionService shoppingSessionService;
+	@Autowired
+	CartItemService cartItemService;
+
+	@ResponseBody
+	@GetMapping("/cart")
+	public List<CartItemDTO> getCartItems(Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
+		int userId = user.getUserId();
+
+		ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
+
+		List<CartItemDTO> result = cartItemService.findAllCartItems(shoppingSession.getId());
+
+		return result;
+	}
+
+	@ResponseBody
+	@PostMapping("/cart/add")
+	public void addToCart(@RequestBody CartItemDTO addToCartDTO, Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
+		int userId = user.getUserId();
+
+		ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
+		if (shoppingSession == null) {
+			shoppingSession = new ShoppingSession();
+			shoppingSession.setUser(user);
+			shoppingSession.setCreatedAt(new Date());
+			shoppingSessionService.saveShoppingSession(shoppingSession);
+		}
+
+		// Check if the product is already in the cart
+		CartItem existingCartItem = 
+				cartItemService.findExistingCartItem(shoppingSession.getId(), addToCartDTO.getProductId());
+		if (existingCartItem != null) {
+			// Update quantity if the product is already in the cart
+			existingCartItem.setQuantity(existingCartItem.getQuantity() + addToCartDTO.getQuantity());
+			System.out.println(existingCartItem.getQuantity());
+			cartItemService.updateCartItemQuantity(shoppingSession.getId(), 
+								addToCartDTO.getProductId(), existingCartItem.getQuantity());
+			return;
+		}
+
+		// Create new cart item if the product is not in the cart
+		cartItemService.addToCart(shoppingSession.getId(), addToCartDTO.getProductId(), 
+									addToCartDTO.getQuantity(), new Date());
+	}
+	
+	@ResponseBody
+	@GetMapping("/cart/delete/{productId}")
+	public void deleteCartItem(@PathVariable Integer productId, Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
+		int userId = user.getUserId();
+
+		ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
+
+		cartItemService.deleteCartItem(shoppingSession.getId(), productId);
 	}
 }

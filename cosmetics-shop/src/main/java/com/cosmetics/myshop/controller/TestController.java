@@ -38,12 +38,4 @@ public class TestController {
 	public Authentication getaAuthentication(Authentication authentication) {
 		return authentication;
 	}
-	
-	@GetMapping("/cart")
-	public String getCart() {
-		return "/user/cart";
-	}
-	
-	
-	
 }
