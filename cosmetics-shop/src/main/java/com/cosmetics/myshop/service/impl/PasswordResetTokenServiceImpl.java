@@ -50,6 +50,9 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 	@Override
 	public boolean validatePasswordResetToken(String token) {
 		Optional<PasswordResetToken> passwordResetToken = passwordResetTokenRepository.findByToken(token);
+		if (isTokenExpired(passwordResetToken.get())) {
+			passwordResetTokenRepository.delete(passwordResetToken.get());
+		}
 		return passwordResetToken.isPresent() && !isTokenExpired(passwordResetToken.get());
 	}
 
@@ -61,7 +64,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 
 	private boolean isTokenExpired(PasswordResetToken token) {
 		Date expiryDate = token.getExpiryDate();
-		return expiryDate != null && expiryDate.before((Date) new java.util.Date());
+		return expiryDate != null && expiryDate.before( new java.util.Date());
 	}
 
 	@Override
