@@ -18,8 +18,6 @@ let totalPage = generatePageButtons(totalRelatedProducts, perPage);
 let pageNumber = document.querySelectorAll(".page-number");
 
 document.addEventListener("DOMContentLoaded", async function (event) {
-	 await updateCartNumber()
-
 	// Check if URL contains page parameter
 	// If it has, update the currentPage
 	const urlParams = new URLSearchParams(window.location.search);
@@ -134,31 +132,6 @@ async function handlePageClick(page) {
 	window.scroll(0, 0);
 }
 
-function generateStars(rating) {
-	let fullStars = Math.floor(rating); // Get the number of full stars
-	let halfStar = rating - fullStars >= 0.5; // Check if there's a half star
-
-	let stars = '';
-
-	// Generate full stars
-	for (let i = 0; i < fullStars; i++) {
-		stars += '<i class="bi bi-star-fill" style="color: gold;"></i>';
-	}
-
-	// Generate half star if needed
-	if (halfStar) {
-		stars += '<i class="bi bi-star-half" style="color: gold;"></i>';
-		fullStars++; // Increment the count of full stars
-	}
-
-	// Generate empty stars to fill up the remaining space (if any)
-	for (let i = fullStars; i < 5; i++) {
-		stars += '<i class="bi bi-star" style="color: gold;"></i>';
-	}
-
-	return stars;
-}
-
 async function handlePagination() {
 	handlePageClick(currentPage)
 	pageNumber = Array.from(pageNumber)
@@ -226,35 +199,35 @@ function changeQuantity(btn) {
 // **************************************
 */
 
-$(document).ready(function() {
-	$('.add-to-cart-btn').click(function() {
-		var input = document.getElementById('quantity');
-		var quantity = parseInt(input.value);
-		console.log("quantity: " + quantity);
-		console.log("product id: " + productId);
-		
-		var data = {
-        	productId: productId,
-            quantity: quantity
-         };     
-         
-         $.ajax({
-             type: 'POST',
-             url: '/api/cart/add',
-             contentType: 'application/json',
-             data: JSON.stringify(data),
-             success: async function(response) {
-             	alert('Product added to cart successfully!');
-                await updateCartNumber(); 
-             },
-             error: function(xhr, status, error) {
-             	alert('An error occurred while adding the product to cart.');
-             	console.error(error);
-             }
-         });
-	});
-});
+document.querySelector('.add-to-cart-btn').addEventListener("click", async () => {
+	var input = document.getElementById('quantity');
+	var quantity = parseInt(input.value);
+	
+	var data = {
+        productId: productId,
+        quantity: quantity
+    };
 
+	try {
+        const response = await fetch('/api/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+            throw new Error('An error occurred while adding the product to cart.');
+        }
+        
+        alert('Product added to cart successfully!');
+        await updateCartNumber();
+    } 
+    catch (error) {
+        console.error(error);
+    }
+});
 
 
 

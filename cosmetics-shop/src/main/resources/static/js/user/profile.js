@@ -3,8 +3,6 @@ form = document.querySelector("#profile-form")
 
  
 document.addEventListener("DOMContentLoaded", async function() {
-	await updateCartNumber();
-	
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
         let isValid = true

@@ -23,8 +23,6 @@ window.addEventListener('popstate', function(event) {
 });
 
 document.addEventListener("DOMContentLoaded", async function(event) {
-	await updateCartNumber();
-	
 	// Check if URL contains any parameter
 	// If it has, update the current page
 	const urlParams = new URLSearchParams(window.location.search);
@@ -113,31 +111,6 @@ function handlePageClick(currentPage, totalPage, pageList, productList, sortBy) 
 	}
 			
 	window.scroll(0, 0);
-}
-
-function generateStars(rating) {
-    let fullStars = Math.floor(rating); // Get the number of full stars
-    let halfStar = rating - fullStars >= 0.5; // Check if there's a half star
-
-    let stars = '';
-    
-    // Generate full stars
-    for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="bi bi-star-fill" style="color: gold;"></i>';
-    }
-    
-    // Generate half star if needed
-    if (halfStar) {
-        stars += '<i class="bi bi-star-half" style="color: gold;"></i>';
-        fullStars++; // Increment the count of full stars
-    }
-    
-    // Generate empty stars to fill up the remaining space (if any)
-    for (let i = fullStars; i < 5; i++) {
-        stars += '<i class="bi bi-star" style="color: gold;"></i>';
-    }
-    
-    return stars;
 }
 
 function handlePagination(currentPage, totalPage, pageList, productList, sortBy) {
