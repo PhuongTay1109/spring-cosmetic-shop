@@ -2,7 +2,6 @@
 const form = document.getElementById("change-password-form");
 
 document.addEventListener("DOMContentLoaded", async function(event) {	
-	await updateCartNumber();
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
         let isValid = true

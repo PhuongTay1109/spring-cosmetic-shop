@@ -2,13 +2,24 @@
  * 
  */
 
+let fetchedData;
+
 document.addEventListener("DOMContentLoaded", async function() {
-	await updateCartNumber();
+	//await updateCartNumber();
+	
+	fetchedData = await fetchData();
+	
+	console.log(fetchedData);
 });
+
+async function fetchData() {
+	const response = await fetch(`/api/cart`);
+	const data = await response.json();
+	return data;
+}
 
 function changeQuantity(btn) {
 	var input = document.getElementById('quantity');
-	// console.log(input)
 	var currentValue = parseInt(input.value);
 	var minValue = parseInt(input.min);
 	var maxValue = parseInt(input.max);

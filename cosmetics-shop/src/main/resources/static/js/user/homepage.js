@@ -11,11 +11,6 @@ const DISPLAYED_PRODUCTS = 4
 displayProductList(newArrivalProducts, newArrivalWrapper)
 displayProductList(topRatingProducts, topRatingWrapper)
 
-document.addEventListener("DOMContentLoaded", async function() {
-	await updateCartNumber();
-});
-
-
 function displayProductList(productList, productWrapper) {
     let html = '';
     for (let i = 0; i < 4; ++i) {
