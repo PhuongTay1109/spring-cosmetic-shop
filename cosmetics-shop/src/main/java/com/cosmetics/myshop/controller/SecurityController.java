@@ -55,7 +55,12 @@ public class SecurityController {
 		}
 		String provider = user.get().getProvider();
 		if (!provider.equals("LOCAL")) {
-			return "redirect:/forgot_password?error";
+			return "redirect:/forgot_password?oauth2";
+		}
+		Optional<PasswordResetToken> existingToken = passwordResetTokenService.findByUser(user.get());
+		if (existingToken.isPresent()) {
+			//Delete that token, then send new token to user
+			passwordResetTokenService.deleteTokenBy(existingToken.get());
 		}
 		PasswordResetToken passwordResetToken = passwordResetTokenService.createPasswordResetToken(user.get());
 		passwordResetTokenService.sendResetEmail(email, passwordResetToken.getToken());
@@ -64,13 +69,19 @@ public class SecurityController {
 	
 	@GetMapping("/reset_password")
 	public String getResetPassword(@RequestParam Map<String, String> body, Model model ) {
+		String success = body.get("success");
+		if (success != null) {
+			//After POST /reset_password, it redirect to GET /reset_password?success
+			return "security/reset_password";
+		}
+		
 	 	String token = body.get("token");
 		if (!passwordResetTokenService.validatePasswordResetToken(token)) {
+			//If that token is expired, server will delete that token and ask user to re-enter email
 	 		return "redirect:/forgot_password?invalid_token";
 	 	}
 	 	PasswordResetToken passwordResetToken = passwordResetTokenService.findByToken(token).get();
 	 	User user = passwordResetToken.getUser();
-	 	System.out.println(user);
 	 	model.addAttribute("userId", user.getUserId());
 		return "security/reset_password";
 	}
