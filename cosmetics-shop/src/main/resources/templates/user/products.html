@@ -11,6 +11,13 @@
 				<div class="container-fluid">
 					<div class="row mb-3">
 						<div class="row col-12">
+							<div class="restroom mb-4">
+								<a class="restroom-link" href="/"><i class="fa-solid fa-house"></i></a>
+								<i class="fa-solid fa-chevron-right"></i>
+								<a class="fw-bold restroom-link text-success"
+									th:href="@{/products/{categoryName}(categoryName=${categoryName})}"
+									th:text="${stringUtils.normalizeString(categoryName)}"></a>
+							</div>
 							<h1 id="category-name" class="text-primary-color text-uppercase font-weight-bold mb-3 col-6"
 								th:text=${stringUtils.normalizeString(categoryName)} th:data-categoryName="${categoryName}" 
 								th:data-totalProductsByCategory=${totalProductsByCategory}></h1>
