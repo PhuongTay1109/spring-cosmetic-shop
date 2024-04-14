@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 
 <head th:replace="~{fragments/adminFragments :: adminHead('Dashboard')}"></head>
 
@@ -20,12 +19,41 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav th:replace="~{fragments/adminFragments :: topbar}" > </nav>
+                <nav th:replace="~{fragments/adminFragments :: topbar}"> </nav>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Provider</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user : ${userList}"
+                                th:if="${user.getAuthorities()[0].getAuthority() == 'ROLE_USER'}">
+                                <th scope="row" th:text="${user.getUserId()}">1</th>
+                                <td th:text="${user.getUsername()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
+                                <td th:text="${user.getPhone()}"></td>
+                                <td th:text="${user.getProvider()}"></td>
+                                <td >
+                                    <a href="#" class="btn btn-hover btn-primary btn-sm me-1"><i
+                                            class="fa-solid fa-trash"></i></a>
+                                    <a href="#" class="btn btn-hover btn-primary btn-sm"><i
+                                            class="fa-solid fa-pen"></i></a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -73,22 +101,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script type="text/javascript" src="@{vendor/jquery/jquery.min.js}"></script>
-    <script type="text/javascript" src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script type="text/javascript" src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script type="text/javascript" src="@{js/admin/sb-admin-2.min.js}"></script>
-
-    <!-- Page level plugins -->
-    <script type="text/javascript" src="@{vendor/chart.js/Chart.min.js}"></script>
-
-    <!-- Page level custom scripts -->
-    <script type="text/javascript" src="@{js/demo/chart-area-demo.js}"></script>
-    <script type="text/javascript" src="@{js/demo/chart-pie-demo.js}"></script>
+    <script type="text/javascript" th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
 
 </body>
 

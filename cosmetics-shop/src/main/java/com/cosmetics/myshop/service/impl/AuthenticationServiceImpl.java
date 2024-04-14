@@ -81,7 +81,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if (isValid) { // Valid
 			String encodedPassword = passwordEncoder.encode(body.getPassword());
 			Set<Role> roles = new HashSet<>();
-			roles.add(roleService.findByAuthority("USER").orElseThrow());
+			roles.add(roleService.findByAuthority("ROLE_USER").orElseThrow());
 			User registeredUser = new User(body.getUsername(), encodedPassword, body.getFirstName(), body.getLastName(),
 					body.getPhone(), body.getEmail(), "/img/user/no_avatar.png", body.getAddress(), "LOCAL", roles);
 			userService.saveUser(registeredUser);

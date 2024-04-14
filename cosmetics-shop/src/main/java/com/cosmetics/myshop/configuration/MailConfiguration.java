@@ -20,7 +20,6 @@ public class MailConfiguration {
 		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
 		javaMailSenderImpl.setHost("smtp.gmail.com");
 		javaMailSenderImpl.setPort(587);
-		System.out.println(env.getProperty("email.username"));
 		javaMailSenderImpl.setUsername(env.getProperty("email.username"));
 		javaMailSenderImpl.setPassword(env.getProperty("email.password"));
 		Properties props = javaMailSenderImpl.getJavaMailProperties();

@@ -41,6 +41,8 @@ public class SpringSecurityConfiguration {
 	
 	@Autowired
 	Oauth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler;
+	@Autowired
+	FormAuthenticationSuccessHandler formAuthenticationSuccessHandler;
 	
 
 	@Bean
@@ -72,13 +74,14 @@ public class SpringSecurityConfiguration {
 		requestCache.setMatchingRequestParameterName(null);
 		return http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> {
+					auth.requestMatchers("/admin/**").hasRole("ADMIN");
 					auth.requestMatchers("/profile").authenticated();
 					auth.anyRequest().permitAll();
 					
 				})
 				.oauth2Login(oauth2 -> oauth2.loginPage("/login").successHandler(oauth2AuthenticationSuccessHandler))
 				.formLogin(form -> form.loginPage("/login")
-						.defaultSuccessUrl("/"))
+						.successHandler(formAuthenticationSuccessHandler))
 				.requestCache(cache -> cache.requestCache(requestCache))
 				.logout(logout -> logout.permitAll()).build();
 	}
