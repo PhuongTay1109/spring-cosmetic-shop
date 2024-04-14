@@ -47,8 +47,14 @@
 .wrapper #cart-number {
     position: absolute;
     top: -5px;
-    right: -17px;
-    color: white !important;
+    right: -24px;
+    color: black !important;
+    background-color: white;
+    width: 26px;
+    height: 21px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
 }
 
 .carousel-inner img {
