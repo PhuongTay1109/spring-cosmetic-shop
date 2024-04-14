@@ -27,25 +27,25 @@ public class CosmeticsShopApplication {
 		return args -> {
 			Role adminRole;
 			Role userRole;
-			if (roleRepository.findByAuthority("ADMIN").isEmpty()) {
-	            adminRole = roleRepository.save(new Role("ADMIN"));
+			if (roleRepository.findByAuthority("ROLE_ADMIN").isEmpty()) {
+	            adminRole = roleRepository.save(new Role("ROLE_ADMIN"));
 	            System.out.println(adminRole);
 	        }
 
-	        if (roleRepository.findByAuthority("USER").isEmpty()) {
-	            userRole = roleRepository.save(new Role("USER"));
+	        if (roleRepository.findByAuthority("ROLE_USER").isEmpty()) {
+	            userRole = roleRepository.save(new Role("ROLE_USER"));
 	            System.out.println(userRole);
 	        }
 
 	        if (userRepository.findByUsername("admin").isEmpty()) {
 	            Set<Role> roles = new HashSet<>();
-	            roles.add(roleRepository.findByAuthority("ADMIN").orElseThrow());
+	            roles.add(roleRepository.findByAuthority("ROLE_ADMIN").orElseThrow());
 	            User admin = new User("admin", passwordEncoder.encode("123"),"Admin", "","","","/img/user/no_avatar.png","","LOCAL",roles);
 	            userRepository.save(admin);
 	        }
 	        if (userRepository.findByUsername("user1").isEmpty()) {
 	        	Set<Role> roles = new HashSet<>();
-	        	roles.add(roleRepository.findByAuthority("USER").orElseThrow());
+	        	roles.add(roleRepository.findByAuthority("ROLE_USER").orElseThrow());
 	            User user = new User("user1", passwordEncoder.encode("123"),"User", "","","","/img/user/no_avatar.png","","LOCAL",roles);
 	        	userRepository.save(user);
 	        }

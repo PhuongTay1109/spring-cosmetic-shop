@@ -86,7 +86,7 @@ public class Oauth2AuthenticationSuccessHandler implements AuthenticationSuccess
 			String address = "";
 			String phone = "";
 			Set<Role> roles = new HashSet<>();
-			roles.add(roleService.findByAuthority("USER").orElseThrow());
+			roles.add(roleService.findByAuthority("ROLE_USER").orElseThrow());
 			User user = new User(username, password, firstName, lastName, phone, email, avatar, address, provider,
 					roles);
 			userService.saveUser(user);
