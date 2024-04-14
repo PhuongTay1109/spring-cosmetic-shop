@@ -23,9 +23,7 @@ public class FormAuthenticationSuccessHandler implements AuthenticationSuccessHa
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		User user = (User) authentication.getPrincipal();
-		System.out.println(user);
 		boolean isAdmin =user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-//		boolean isUser =user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER"));
 		if (isAdmin) {
 			response.sendRedirect("admin/dashboard");
 		} else {

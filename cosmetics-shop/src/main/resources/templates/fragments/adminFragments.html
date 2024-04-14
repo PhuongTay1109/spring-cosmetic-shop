@@ -31,7 +31,7 @@
 
 <body>
 	<!-- Sidebar -->
-	<ul th:fragment="sidebarAdmin" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+	<ul style="background-color: #d79292;" th:fragment="sidebarAdmin" class="navbar-nav sidebar sidebar-dark accordion"
 		id="accordionSidebar">
 
 		<!-- Sidebar - Brand -->
@@ -46,20 +46,20 @@
 		<hr class="sidebar-divider my-0">
 
 		<!-- Nav Item - Dashboard -->
-		<li class="nav-item active">
+		<li class="nav-item" id="dashboard">
 			<a class="nav-link" th:href="@{/admin/dashboard}">
-				<i class="fas fa-fw fa-tachometer-alt"></i>
-				<span>Dashboard</span></a>
+				<i class="fas fa-fw fa-tachometer-alt fw-bold"></i>
+				<span class="fw-bold">Dashboard</span></a>
 		</li>
 
 		<!-- Divider -->
 		<hr class="sidebar-divider" style="font-size: 15px;">
 
 		<!-- Nav Item - Pages Collapse Menu -->
-		<li class="nav-item">
-			<a class="nav-link" href="charts.html">
-				<i class="fa-solid fa-user"></i>
-				<span>Users</span></a>
+		<li class="nav-item" id="users">
+			<a class="nav-link" href="/admin/users">
+				<i class="fa-solid fa-user fw-bold"></i>
+				<span class="fw-bold">Users</span></a>
 		</li>
 
 		<!-- Nav Item - Utilities Collapse Menu -->
@@ -71,10 +71,10 @@
 			</a>
 		</li> -->
 
-		<li class="nav-item">
-			<a class="nav-link" href="charts.html">
-				<i class="fa-solid fa-cart-shopping"></i>
-				<span>Categories</span></a>
+		<li class="nav-item" id="categories">
+			<a class="nav-link" href="/admin/categories">
+				<i class="fa-solid fa-cart-shopping fw-bold"></i>
+				<span class="fw-bold">Categories</span></a>
 		</li>
 
 		<!-- Heading -->
@@ -83,23 +83,23 @@
 		</div> -->
 
 		<!-- Nav Item - Pages Collapse Menu -->
-		<li class="nav-item">
-			<a class="nav-link" href="charts.html">
-				<i class="fa-brands fa-product-hunt"></i>
-				<span>Products</span></a>
+		<li class="nav-item" id="products">
+			<a class="nav-link" href="/admin/products">
+				<i class="fa-brands fa-product-hunt fw-bold"></i>
+				<span class="fw-bold">Products</span></a>
 		</li>
 
 		<!-- Nav Item - Charts -->
 		<li class="nav-item">
 			<a class="nav-link" href="charts.html">
-				<i class="fas fa-fw fa-chart-area"></i>
-				<span>Charts</span></a>
+				<i class="fas fa-fw fa-chart-area fw-bold"></i>
+				<span class="fw-bold">Charts</span></a>
 		</li>
 
 		<!-- Nav Item - Tables -->
 		<li class="nav-item">
 			<a class="nav-link" href="tables.html">
-				<i class="fas fa-fw fa-table"></i>
+				<i class="fas fa-fw fa-table fw-bold"></i>
 				<span>Tables</span></a>
 		</li>
 
@@ -112,7 +112,7 @@
 
 
 	<!-- Topbar -->
-	<nav th:fragment="topbar" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+	<nav th:fragment="topbar" style="background-color: #edb2b2;" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 		<!-- Sidebar Toggle (Topbar) -->
 		<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
