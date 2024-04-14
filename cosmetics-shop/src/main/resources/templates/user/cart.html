@@ -7,131 +7,46 @@
 
 <body class="bg-primary">
 	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
-	<div class="container mt-5 pt-5 pb-5">
-		<div class="shopping-cart-card">
-			<div class="row">
-				<div class="col-md-12 cart">
-					<div class="title">
-						<div class="row">
-							<div class="col">
-								<h2 class="text-primary">
-									<b>Shopping Cart</b>
-								</h2>
-							</div>
-						</div>
-					</div>
-					<div class="row border-top border-bottom">
-						<div class="row main align-items-center">
-							<div class="col-2">
-								<img class="product-cart-img img-fluid"
-									src="https://i.imgur.com/1GrakTl.jpg">
-							</div>
-							<div class="col">
-								<div class="row text-muted">Shirt</div>
-								<div class="row">Cotton T-shirt</div>
-							</div>
-							<div class="col">
-								<button type="button" class="btn" data-type="minus" data-field="quantity"
-										onclick="changeQuantity(this)">
-									<i class="bi bi-dash"></i>
-								</button>
-								<input type="text" name="quantity" id="quantity" class="form-control input-number"
-										style="width: 20%; display:inline-block" value="1" min="1" max="100">
-								<button type="button" class="btn" data-type="plus" data-field="quantity"
-										onclick="changeQuantity(this)">
-									<i class="bi bi-plus"></i>
-								</button>
-							</div>
-							<div class="col d-flex justify-content-between align-items-center">
-								$  44.00 <span class="close">&#10005;</span>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="row main align-items-center">
-							<div class="col-2">
-								<img class="product-cart-img img-fluid"
-									src="https://i.imgur.com/ba3tvGm.jpg">
-							</div>
-							<div class="col">
-								<div class="row text-muted">Shirt</div>
-								<div class="row">Cotton T-shirt</div>
-							</div>
-							<div class="col">
-								<button type="button" class="btn" data-type="minus" data-field="quantity"
-										onclick="changeQuantity(this)">
-									<i class="bi bi-dash"></i>
-								</button>
-								<input type="text" name="quantity" id="quantity" class="form-control input-number"
-										style="width: 20%; display:inline-block" value="1" min="1" max="100">
-								<button type="button" class="btn" data-type="plus" data-field="quantity"
-										onclick="changeQuantity(this)">
-									<i class="bi bi-plus"></i>
-								</button>
-							</div>
-							<div class="col d-flex justify-content-between align-items-center">
-								$  44.00 <span class="close">&#10005;</span>
-							</div>
-						</div>
-					</div>
-					<div class="row border-top border-bottom">
-						<div class="row main align-items-center">
-							<div class="col-2">
-								<img class="product-cart-img img-fluid"
-									src="https://i.imgur.com/pHQ3xT3.jpg">
-							</div>
-							<div class="col">
-								<div class="row text-muted">Shirt</div>
-								<div class="row">Cotton T-shirt</div>
-							</div>
-							<div class="col">
-								<button type="button" class="btn" data-type="minus" data-field="quantity"
-										onclick="changeQuantity(this)">
-									<i class="bi bi-dash"></i>
-								</button>
-								<input type="text" name="quantity" id="quantity" class="form-control input-number"
-										style="width: 20%; display:inline-block" value="1" min="1" max="100">
-								<button type="button" class="btn" data-type="plus" data-field="quantity"
-										onclick="changeQuantity(this)">
-									<i class="bi bi-plus"></i>
-								</button>
-							</div>
-							<div class="col d-flex justify-content-between align-items-center">
-								$  44.00 <span class="close">&#10005;</span>
-							</div>
-						</div>
-					</div>
-					<div class="row border-top border-bottom">
-						<div class="row main align-items-center fw-bold">
-							<div class="col-2">
-								<h4>Total</h4>
-							</div>
-							<div class="col"></div>
-							<div class="col d-flex justify-content-center align-items-center">
-								<div id="totalQuantity"></div>
-							</div>
-							<div class="col">$ 132</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-6 nav-arrow">
-							<a href="/" class="link-primary text-decoration-none">
-								&leftarrow;
-								<span>Back to shop</span>
-							</a> 
-								
-						</div>
-						<div class="col-6 nav-arrow text-end">
-							<a href="#" class="link-primary text-decoration-none">
-								<span>Check out</span> 
-								&rightarrow;
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="shopping-cart-card mb-5" style="margin-top: 7rem">
+            <div class="row">
+                <div class="col-md-9 cart">
+                    <div class="cart-title">
+                        <div class="row">
+                            <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                            <div id="total-quantity" class="text-muted">(0 items)</div>
+                        </div>
+                    </div>    
+                    <div id="cart-items"></div>
+                    <div class="row" style="margin-top: 15px">
+                    	<div class="col back-to-shop">
+		                    <a href="/" class="text-decoration-none link-primary">
+		                    	<i class="bi bi-caret-left-fill"></i>
+		                    	<span class="text-muted">Back to shop</span>
+		                    </a>
+	                    </div>
+	                    <div class="col">
+	                    	<div class="d-flex justify-content-end">
+			                	<div>TOTAL PRICE: &euro; 137.00</div>
+	                    	</div>	                 
+		                    <div class="d-flex justify-content-end">
+	                    		<button class="btn btn-primary" style="margin-top:1rem">CHECKOUT</button>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+                <div class="col-md-3 summary">
+                	<div class="row">
+                		<div style="margin-top:60px"><h5><b>Summary</b></h5></div>
+                	</div>                                 
+                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                        <div class="col">TOTAL PRICE</div>
+                        <div class="col text-end">&euro; 137.00</div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top:1rem;width:100%">CHECKOUT</button>
+                </div>
+            </div>
+            
+        </div>
 
 	<!-- Footer -->
 	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>

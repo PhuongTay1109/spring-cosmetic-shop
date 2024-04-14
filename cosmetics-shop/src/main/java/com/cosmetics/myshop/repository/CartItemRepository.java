@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.cosmetics.myshop.dto.CartItemDTO;
 import com.cosmetics.myshop.model.CartItem;
@@ -23,14 +24,13 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
 	       "WHERE ss.id = :shoppingSessionId AND p.id = :productId")
 	void addToCart(Integer shoppingSessionId, Integer productId, Integer quantity, Date createdAt);
 
-	@Query("SELECT new com.cosmetics.myshop.dto.CartItemDTO(ci.product.id, ci.quantity) "
-			+ "FROM CartItem ci WHERE ci.shoppingSession.id = :shoppingSessionId")
-	List<CartItemDTO> findAllCartItems(Integer shoppingSessionId);
+	@Query("SELECT ci.product, ci.quantity FROM CartItem ci WHERE ci.shoppingSession.id = :shoppingSessionId")
+    List<Object[]> findProductsAndQuantitiesByShoppingSessionId(Integer shoppingSessionId);
 
 	@Query("SELECT ci "
 			+ "FROM CartItem ci WHERE ci.shoppingSession.id = :shoppingSessionId "
 			+ "and ci.product.id = :productId")
-	CartItem findExistingCartItem(Integer shoppingSessionId, Integer productId);
+	CartItem findCartItem(Integer shoppingSessionId, Integer productId);
 	
 	@Modifying
 	@Transactional
