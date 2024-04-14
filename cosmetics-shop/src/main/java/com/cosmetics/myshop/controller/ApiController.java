@@ -1,8 +1,11 @@
 package com.cosmetics.myshop.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.print.attribute.standard.JobKOctets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,9 +26,9 @@ import com.cosmetics.myshop.model.Product;
 import com.cosmetics.myshop.model.ShoppingSession;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.repository.ProductRepository;
-import com.cosmetics.myshop.service.CartItemService;
 import com.cosmetics.myshop.service.ProductService;
 import com.cosmetics.myshop.service.ShoppingSessionService;
+import com.cosmetics.myshop.service.impl.CartItemServiceImpl;
 
 @Controller
 @RequestMapping("/api")
@@ -66,7 +69,7 @@ public class ApiController {
 	@Autowired
 	ShoppingSessionService shoppingSessionService;
 	@Autowired
-	CartItemService cartItemService;
+	CartItemServiceImpl cartItemService;
 
 	@ResponseBody
 	@GetMapping("/cart")
@@ -76,9 +79,23 @@ public class ApiController {
 
 		ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
 
-		List<CartItemDTO> result = cartItemService.findAllCartItems(shoppingSession.getId());
+		List<Object[]> result = cartItemService.findProductsAndQuantitiesByShoppingSessionId(shoppingSession.getId());
+		List<CartItemDTO> productsWithQuantity = new ArrayList<>();
+        for (Object[] objects : result) {
+            Product product = (Product) objects[0];
+            int productId = product.getId();
+            int quantity = (int) objects[1];
 
-		return result;
+            CartItemDTO cartItemDTO = new CartItemDTO();
+            cartItemDTO.setProduct(product);
+            cartItemDTO.setProductId(productId);
+            cartItemDTO.setQuantity(quantity);
+
+            productsWithQuantity.add(cartItemDTO);
+        }
+
+
+		return productsWithQuantity;
 	}
 
 	@ResponseBody
@@ -97,11 +114,10 @@ public class ApiController {
 
 		// Check if the product is already in the cart
 		CartItem existingCartItem = 
-				cartItemService.findExistingCartItem(shoppingSession.getId(), addToCartDTO.getProductId());
+				cartItemService.findCartItem(shoppingSession.getId(), addToCartDTO.getProductId());
 		if (existingCartItem != null) {
 			// Update quantity if the product is already in the cart
 			existingCartItem.setQuantity(existingCartItem.getQuantity() + addToCartDTO.getQuantity());
-			System.out.println(existingCartItem.getQuantity());
 			cartItemService.updateCartItemQuantity(shoppingSession.getId(), 
 								addToCartDTO.getProductId(), existingCartItem.getQuantity());
 			return;
