@@ -43,46 +43,8 @@ public class ProfileController {
 	
 	@PutMapping("")
 	@ResponseBody
-	public Map<String, Object> getProfile(@RequestBody Map<String, String> body) {
-		Map<String, Object> response = new HashMap<>();
-//		boolean isPhoneValid = Pattern.compile("^[0-9]{10}$").matcher(body.getPhone()).matches();
-		boolean isValid = true;
-		System.out.println(body);
-		// Validate first name
-		Integer userId = Integer.parseInt(body.get("userId"));
-		String firstName = body.get("firstName");
-		String lastName = body.get("lastName");
-		String phone = body.get("phone");
-		response.put("firstName", firstName);
-		response.put("lastName", lastName);
-		response.put("phone", phone);
-		
-		boolean isFirstNameValid = Pattern.compile("^[A-ZÀ-Ỹ][a-yà-ỹ]*$").matcher(firstName).matches();
-		boolean isLastNameValid = Pattern.compile("^[A-ZÀ-Ỹ][a-yà-ỹ]*$").matcher(lastName).matches();
-		boolean isPhoneValid = Pattern.compile("^[0-9]{10}$").matcher(phone).matches();
-		if (isFirstNameValid == false) {
-			response.put("firstName", "The fist name must only contain letters and the first letter must be capitalized!");
-			isValid = false;
-		}
-		if (isLastNameValid == false) {
-			response.put("lastName", "The fist name must only contain letters and the first letter must be capitalized!");
-			isValid = false;
-		}
-		if (isPhoneValid == false) {
-			response.put("phone", "Phone must contain only 10 numbers!");
-			isValid = false;
-		}
-		response.put("isValid",isValid);
-		if (isValid) {
-			User existingUser = userService.findByUserId(userId).get();
-			existingUser.setFirstName(firstName);
-			existingUser.setLastName(lastName);
-			existingUser.setPhone(phone);
-			userService.saveUser(existingUser);
-			Authentication authentication = new UsernamePasswordAuthenticationToken((User)existingUser,null, existingUser.getAuthorities());
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		}
-		return response;
+	public Map<String, Object> processUpdateProfile(@RequestBody Map<String, String> body) {
+		return userService.updateProfile(body); //Pass @RequsetBody, return Response with Map
 	}
 	
 	@GetMapping("/password/change")
@@ -92,34 +54,9 @@ public class ProfileController {
 	
 	@ResponseBody
 	@PutMapping("/password/change")
-	public Map<String, Object> handlePasswordChange(@RequestBody Map<String, String> body, Authentication authentication) {
+	public Map<String, Object> processPasswordChange(@RequestBody Map<String, String> body, Authentication authentication) {
 		//TODO: process PUT request
-		Map <String, Object> response = new HashMap<>();
 		User user = (User)authentication.getPrincipal();
-		boolean isNewPasswordValid = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$").matcher(body.get("newPassword"))
-				.matches();
-		boolean isValid = true;
-		if (!passwordEncoder.matches(body.get("currentPassword"), user.getPassword())){
-			response.put("currentPassword", "Current password isn't correct!");
-			isValid = false;
-		}
-		if (body.get("newPassword").equals(body.get("currentPassword"))) { //New password is as the same as current password
-			response.put("newPassword", "New password must be different from current password!");
-			isValid = false;
-		} else if(!isNewPasswordValid) {
-			response.put("newPassword", "New password must contain at least 6 characters, including letters and numbers!");
-			isValid = false;
-		}
-		if (!body.get("confirmPassword").equals(body.get("newPassword"))) { //Confirm password doesn't match new password
-			response.put("confirmPassword","Confirm password must match new password!");
-			isValid = false;
-		}
-		response.put("isValid", isValid);
-		if (isValid) {
-			String encodedPassword = passwordEncoder.encode(body.get("confirmPassword"));
-			user.setPassword(encodedPassword);
-			userService.saveUser(user);
-		}
-		return response;
+		return userService.changePassword(body, user);
 	}
 }

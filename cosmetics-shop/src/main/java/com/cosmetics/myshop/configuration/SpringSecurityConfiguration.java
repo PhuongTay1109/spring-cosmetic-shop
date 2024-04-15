@@ -52,17 +52,15 @@ public class SpringSecurityConfiguration {
 
 	@Autowired
 	RSAKeyProperties keys;
-
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Bean
 	AuthenticationManager authenticationManager() {
 		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
 		daoProvider.setUserDetailsService(userDetailsService());
-		daoProvider.setPasswordEncoder(passwordEncoder());
+		daoProvider.setPasswordEncoder(passwordEncoder);
 		return new ProviderManager(daoProvider);
 	}
 
