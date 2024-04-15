@@ -1,12 +1,17 @@
 package com.cosmetics.myshop.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cosmetics.myshop.model.Category;
 import com.cosmetics.myshop.model.User;
@@ -37,4 +42,30 @@ public class AdminController {
 		model.addAttribute("categoryList", categoryList);
 		return "admin/categories";
 	}
+	
+	@GetMapping("/profile")
+	public String getProfile(Authentication authentication, Model model) {
+		User user = (User)authentication.getPrincipal();
+		model.addAttribute("user", user);
+		return "admin/profile";
+	}
+	@ResponseBody
+	@PutMapping("/profile") 
+	public Map<String, Object> processUpdateProfile(@RequestBody Map<String, String> body) {
+		return userService.updateProfile(body); //Pass @RequsetBody, return Response with Map
+	}
+	
+	@GetMapping("/profile/password/change")
+	public String getProfilePasswordChange(Authentication authentication, Model model) {
+		return "admin/password_change";
+	}
+	@ResponseBody
+	@PutMapping("/profile/password/change")
+	public Map<String, Object> processPasswordChange(@RequestBody Map<String, String> body, Authentication authentication) {
+		//TODO: process PUT request
+		User user = (User)authentication.getPrincipal();
+		return userService.changePassword(body, user);
+	}
+	
+	
 }
