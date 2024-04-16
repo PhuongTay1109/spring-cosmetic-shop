@@ -93,7 +93,7 @@ CREATE TABLE `product` (
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,
   PRIMARY KEY (`id`),
-  CONSTRAINT `FK_product_category` FOREIGN KEY(`category_name`) REFERENCES `category` (`category_name`)
+  CONSTRAINT `FK_product_category` FOREIGN KEY(`category_name`) REFERENCES `category` (`category_name`) on update cascade on delete cascade
 ) ENGINE=InnoDB AUTO_INCREMENT=878 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,7 +167,7 @@ CREATE TABLE `cart_item` (
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,
   PRIMARY KEY (`id`),
-  CONSTRAINT `FK_cartitme_shoppingsession` FOREIGN KEY (`shopping_session_id`) REFERENCES `shopping_session` (`id`),
+  CONSTRAINT `FK_cartitme_shoppingsession` FOREIGN KEY (`shopping_session_id`) REFERENCES `shopping_session` (`id`) on update cascade on delete cascade,
   CONSTRAINT `FK_cartitme_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;

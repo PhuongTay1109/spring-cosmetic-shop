@@ -8,10 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "category")
 public class Category {
 	@Id
@@ -29,5 +33,8 @@ public class Category {
     @Column(name = "modified_at")
     private Date modifiedAt;
 
+	
+
+    
 	
 }

@@ -131,12 +131,12 @@
     border-radius: 5px;
 }
 .admin-buttons {
-    z-index: 1;
+    z-index: 3;
     display: flex;
     justify-content: center;
     align-items: flex-start; /* Align items at the start of the cross axis (vertically) */
     position: absolute;
-    bottom: 5px; /* Adjust as needed */
+    bottom: 5px; 
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
