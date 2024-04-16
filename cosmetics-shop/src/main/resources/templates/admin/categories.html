@@ -26,28 +26,8 @@
                 <div class="container-fluid">
 
                     <div class="container mt-5">
-                        <div class="row">	
-                            <div class="col-md-3 mb-4" th:each="category : ${categoryList}">
-                                <div class="card position-relative shadow">
-                                    <a class="related-product-img" th:href="@{/products/{categoryName}(categoryName = ${category.categoryName})}">
-                                        <img th:src="${category.imageLink}" class="card-img-top rounded-top" style="height: 350px; object-fit: cover;" />
-                                        <div class="image-overlay">
-                                            <div class="text-overlay">
-                                                <h2 class="" th:text="${stringUtils.normalizeString(category.categoryName)}"></h2>	
-                                            </div>
-                                        </div>
-                                        <div class="admin-buttons">
-                                            <a href="#" class="btn btn-hover btn-primary btn-sm me-1"><i class="fa-solid fa-trash"></i></a>
-                                            <a href="#" class="btn btn-hover btn-primary btn-sm"><i class="fa-solid fa-pen"></i></a>
-                                        </div>
-                                    </a>
-                                    
-                                    <!-- Role-based buttons for administrators -->
-                                    
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-3 mb-4">
+                        <div class="row">
+                            <button class="btn col-md-3 mb-4"  data-bs-toggle="modal" data-bs-target="#create-category-modal">
                                 <div class="card p-3 position-relative shadow h-100 create-card">
                                     <div class="d-flex justify-content-center align-items-center h-100">
                                         <div>
@@ -55,71 +35,161 @@
                                         </div>
                                     </div>
                                 </div>
+                            </button>
+                            <!-- Each category -->
+                            <div class="col-md-3 mb-4" th:each="category : ${categoryList}">
+                                <div class="card position-relative shadow">
+                                    <a class="related-product-img"
+                                        th:href="@{/admin/products/{categoryName}(categoryName = ${category.categoryName})}">
+                                        <img th:src="${category.imageLink}" class="card-img-top rounded-top"
+                                            style="height: 350px; object-fit: cover;" />
+                                        <div class="image-overlay">
+                                            <div class="text-overlay">
+                                                <h2 class=""
+                                                    th:text="${stringUtils.normalizeString(category.categoryName)}">
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="admin-buttons">
+                                        <button type="button" th:data-categoryName="${category.categoryName}" class="btn btn-hover btn-primary btn-sm me-1"
+                                                data-bs-toggle="modal" data-bs-target="#delete-category-modal">
+                                                <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <button type="button" th:data-imageLink="${category.imageLink}" th:data-categoryName="${stringUtils.normalizeString(category.categoryName)}" class="btn btn-hover btn-primary btn-sm me-1"
+                                            data-bs-toggle="modal" data-bs-target="#update-category-modal">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Each category -->
+                            
                         </div>
                     </div>
 
-            </div>
-            <!-- End of Main Content -->
+                </div>
+                <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Cosmetics Shop</span>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Cosmetics Shop</span>
+                        </div>
                     </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+                </footer>
+                <!-- End of Footer -->
 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
             </div>
+            <!-- End of Content Wrapper -->
+
         </div>
-    </div>
+        <!-- End of Page Wrapper -->
 
-    <!-- Bootstrap core JavaScript-->
-    <script type="text/javascript" src="@{vendor/jquery/jquery.min.js}"></script>
-    <script type="text/javascript" src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Core plugin JavaScript-->
-    <script type="text/javascript" src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script type="text/javascript" src="@{js/admin/sb-admin-2.min.js}"></script>
-
-    <!-- Page level plugins -->
-    <script type="text/javascript" src="@{vendor/chart.js/Chart.min.js}"></script>
-
-    <!-- Page level custom scripts -->
-    <script type="text/javascript" src="@{js/demo/chart-area-demo.js}"></script>
-    <script type="text/javascript" src="@{js/demo/chart-pie-demo.js}"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script type="text/javascript" th:src="@{/js/admin/categories.js}"></script>
 
 </body>
+
+<!-- Modal for "Create category"  -->
+<div class="modal fade" id="create-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:method="post" action="/category" id="create-category-form" enctype="multipart/form-data" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row gy-3 overflow-hidden">
+                    <div class="col-12">
+                        <label for="image" class="form-label">Choose image</label>
+                        <div class="form-floating mb-1">
+                            <input type="file" id="image-input" name="image" accept="image/*" class="form-control-file" required>
+                            <div class="mt-1">
+                                <img id="image-preview" class="card-img-top rounded-top"
+                                style="height: 350px; object-fit: cover;" alt="" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="categoryName"
+                                id="categoryName" value="" placeholder="Enter category name" required>
+                            <label for="categoryName" class="form-label">Category name</label>
+                        <div class="categoryName-error text-danger"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="submit-btn" class="btn btn-hover btn-primary" >Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for "Update category" -->
+<div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="update-category-form" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row gy-3 overflow-hidden">
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="file" id="image-input" name="image" accept="image/*" class="form-control-file">
+                            <div class="">
+                                <img id="image-preview" class="card-img-top rounded-top" style="height: 350px; object-fit: cover;" alt="asd" src="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="categoryName"
+                                id="password" value="" placeholder="Password" required>
+                            <label for="password" class="form-label">Category name</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for "Delete category"  -->
+<div class="modal fade" id="delete-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:method="delete" action="/category" id="delete-category-form" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" name="categoryName">
+                Are you sure to delete this category?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="submit-btn" class="btn btn-primary">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 </html>

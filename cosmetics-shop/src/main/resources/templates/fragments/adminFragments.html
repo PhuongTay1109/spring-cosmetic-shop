@@ -83,11 +83,21 @@
 		</div> -->
 
 		<!-- Nav Item - Pages Collapse Menu -->
-		<li class="nav-item" id="products">
-			<a class="nav-link" href="/admin/products">
+		<!-- <li class="nav-item" id="products">
+			<button	type="button" class="nav-link" data-bs-target="#products-collapse" data-bs-toggle="collapse" aria-controls="products-collapse">
 				<i class="fa-brands fa-product-hunt fw-bold"></i>
-				<span class="fw-bold">Products</span></a>
+				<span class="fw-bold">Products</span>
+			</button>
+			
 		</li>
+		<li class="nav-item">
+			<ul class="collapse" style="list-style: none; margin: 0 !important" id="products-collapse">
+				<li th:each="category : ${categoryList}"><a class="nav-link" th:href="@{/admin/products/{categoryName}(categoryName = ${category.categoryName})}" 
+					th:text="${stringUtils.normalizeString(category.categoryName)}"></a>
+				</li>
+			</ul>
+		</li> -->
+		
 
 		<!-- Nav Item - Charts -->
 		<li class="nav-item">
@@ -112,7 +122,8 @@
 
 
 	<!-- Topbar -->
-	<nav th:fragment="topbar" style="background-color: #edb2b2;" class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+	<nav th:fragment="topbar" style="background-color: #edb2b2;"
+		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 		<!-- Sidebar Toggle (Topbar) -->
 		<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -203,7 +214,7 @@
 					</h6>
 					<a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
+							<img class="rounded-circle" src="" alt="...">
 							<div class="status-indicator bg-success"></div>
 						</div>
 						<div class="font-weight-bold">
@@ -221,11 +232,12 @@
 			<!-- Nav Item - User Information -->
 			<div class="dropdown align-items-center navbar-nav me-2">
 				<th:block th:if="${#authentication.principal != 'anonymousUser'}"></th:block>
-				<a class="nav-link dropdown-toggle header-link"  href="#" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+				<a class="nav-link dropdown-toggle header-link" href="#" type="button" id="dropdownMenuButton2"
+					data-bs-toggle="dropdown" aria-expanded="false">
 					<img th:src="${#authentication.principal.avatar}"
-					style="object-fit: contain; height: 30px; border-radius: 20px" alt="">
+						style="object-fit: contain; height: 30px; border-radius: 20px" alt="">
 					<th:block
-					th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}">
+						th:text="${#authentication.principal.firstName} + ' ' + ${#authentication.principal.lastName}">
 					</th:block>
 				</a>
 				<ul class="dropdown-menu" style="margin-top: -10px; margin-right: 10px;">
@@ -233,7 +245,7 @@
 					<li><a class="dropdown-item link-primary" href="/logout">Logout</a></li>
 				</ul>
 				</th:block>
-			  </div>
+			</div>
 
 		</ul>
 
