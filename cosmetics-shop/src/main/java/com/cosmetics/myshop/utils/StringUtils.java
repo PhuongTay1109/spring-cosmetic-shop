@@ -16,8 +16,7 @@ public class StringUtils {
 			result +=firstLetter;
 			String restOfWord = word.substring(1);
 			result +=restOfWord + " ";
-			
 		}
-		return result;		
+		return result.trim();		
 	}
 }

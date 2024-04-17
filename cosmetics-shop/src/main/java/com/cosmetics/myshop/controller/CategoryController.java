@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,13 +35,62 @@ public class CategoryController {
 	public static String IMAGE_UPLOAD_DIRECTORY = "src/main/resources/static";
 	@Autowired
 	CategoryService categoryService;
+	
+	private void handleUploadFile(MultipartFile file) throws Exception {
+		String originalFilename = file.getOriginalFilename();
+	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
+		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
+		String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
+		Path fileNameAndPath = Paths.get(filePath);
+		Files.write(fileNameAndPath,file.getBytes());
+	}
+	
 	@ResponseBody
-	@PostMapping("/category")
+	@PostMapping("/admin/category")
 	public  ResponseEntity<Category> processPostCategory(@RequestParam("image") MultipartFile file
 			,@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
 		String categoryName = (String)body.get("categoryName");
 		String originalFilename = file.getOriginalFilename();
-		System.out.println(file.getOriginalFilename());
+	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
+		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
+		String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
+		Path fileNameAndPath = Paths.get(filePath);
+		Files.write(fileNameAndPath,file.getBytes());
+		String imageLink = "/img/categories/" + milliseconds + "." + extension;
+		Date date = new Date();
+		categoryName = Arrays.stream(categoryName.split(" "))
+				.map(word -> word.toLowerCase())
+				.collect(Collectors.joining("_"));
+		Category category = new Category(categoryName, imageLink, date, date);
+		Category savedCategory = categoryService.saveCategory(category);
+		Thread.sleep(500);
+		response.sendRedirect("/admin/categories");
+		return new ResponseEntity<>(savedCategory, HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@DeleteMapping("/admin/category")
+	public ResponseEntity<Category> processDeleteCategory(@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
+		String categoryName = body.get("categoryName");
+		System.out.println(categoryName);
+		Optional<Category> findCategory = categoryService.findCategoryByName(categoryName);
+		if (findCategory.isPresent()) {
+			Category existingCategory = findCategory.get();
+			String filePath = IMAGE_UPLOAD_DIRECTORY + existingCategory.getImageLink();
+			Path fileNameAndPath = Paths.get(filePath);
+			Files.deleteIfExists(fileNameAndPath);
+			categoryService.deleteCategory(existingCategory);
+		}
+		response.sendRedirect("/admin/categories");
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@PutMapping("admin/category")
+	public ResponseEntity<Category> procoessPutCategory(@RequestParam("image") MultipartFile file
+			,@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
+		String categoryName = (String)body.get("categoryName");
+		String originalFilename = file.getOriginalFilename();
 	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
 		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
 		String imageLink = "/img/categories/" + milliseconds + "." + extension;
@@ -57,23 +107,4 @@ public class CategoryController {
 		response.sendRedirect("/admin/categories");
 		return new ResponseEntity<>(savedCategory, HttpStatus.OK);
 	}
-	
-	@ResponseBody
-	@DeleteMapping("/category")
-	public ResponseEntity<Category> processDeleteCategory(@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
-		String categoryName = body.get("categoryName");
-		System.out.println(categoryName);
-		Optional<Category> findCategory = categoryService.findCategoryByName(categoryName);
-		if (findCategory.isPresent()) {
-			Category existingCategory = findCategory.get();
-			String filePath = IMAGE_UPLOAD_DIRECTORY + existingCategory.getImageLink();
-			Path fileNameAndPath = Paths.get(filePath);
-			Files.deleteIfExists(fileNameAndPath);
-			categoryService.deleteCategory(existingCategory);
-		}
-		response.sendRedirect("/admin/categories");
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
-	
-	
 }

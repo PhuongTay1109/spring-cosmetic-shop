@@ -27,7 +27,8 @@
 
                     <div class="container mt-5">
                         <div class="row">
-                            <button class="btn col-md-3 mb-4"  data-bs-toggle="modal" data-bs-target="#create-category-modal">
+                            <button class="btn col-md-3 mb-4" data-bs-toggle="modal"
+                                data-bs-target="#create-category-modal">
                                 <div class="card p-3 position-relative shadow h-100 create-card">
                                     <div class="d-flex justify-content-center align-items-center h-100">
                                         <div>
@@ -52,19 +53,22 @@
                                         </div>
                                     </a>
                                     <div class="admin-buttons">
-                                        <button type="button" th:data-categoryName="${category.categoryName}" class="btn btn-hover btn-primary btn-sm me-1"
-                                                data-bs-toggle="modal" data-bs-target="#delete-category-modal">
-                                                <i class="fa-solid fa-trash"></i>
+                                        <button type="button" th:data-categoryName="${category.categoryName}"
+                                            class="btn btn-hover btn-primary btn-sm me-1" data-bs-toggle="modal"
+                                            data-bs-target="#delete-category-modal">
+                                            <i class="fa-solid fa-trash"></i>
                                         </button>
-                                        <button type="button" th:data-imageLink="${category.imageLink}" th:data-categoryName="${stringUtils.normalizeString(category.categoryName)}" class="btn btn-hover btn-primary btn-sm me-1"
-                                            data-bs-toggle="modal" data-bs-target="#update-category-modal">
+                                        <button type="button" th:data-imageLink="${category.imageLink}"
+                                            th:data-categoryName="${stringUtils.normalizeString(category.categoryName)}"
+                                            class="btn btn-hover btn-primary btn-sm me-1" data-bs-toggle="modal"
+                                            data-bs-target="#update-category-modal">
                                             <i class="fa-solid fa-pen"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <!-- Each category -->
-                            
+
                         </div>
                     </div>
 
@@ -100,7 +104,8 @@
 <!-- Modal for "Create category"  -->
 <div class="modal fade" id="create-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:method="post" action="/category" id="create-category-form" enctype="multipart/form-data" class="modal-content">
+        <form th:method="post" action="/admin/category" id="create-category-form" enctype="multipart/form-data"
+            class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -110,27 +115,29 @@
                     <div class="col-12">
                         <label for="image" class="form-label">Choose image</label>
                         <div class="form-floating mb-1">
-                            <input type="file" id="image-input" name="image" accept="image/*" class="form-control-file" required>
+                            <input type="file" id="image-input" name="image" accept="image/*" class="form-control-file"
+                                required>
                             <div class="mt-1">
                                 <img id="image-preview" class="card-img-top rounded-top"
-                                style="height: 350px; object-fit: cover;" alt="" src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg">
+                                    style="height: 350px; object-fit: cover;" alt=""
+                                    src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg">
                             </div>
 
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="categoryName"
-                                id="categoryName" value="" placeholder="Enter category name" required>
+                            <input type="text" class="form-control" name="categoryName" id="categoryName" value=""
+                                placeholder="Enter category name" required>
                             <label for="categoryName" class="form-label">Category name</label>
-                        <div class="categoryName-error text-danger"></div>
+                            <div class="categoryName-error text-danger"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" id="submit-btn" class="btn btn-hover btn-primary" >Create</button>
+                <button type="submit" id="submit-btn" class="btn btn-hover btn-primary">Create</button>
             </div>
         </form>
     </div>
@@ -139,7 +146,8 @@
 <!-- Modal for "Update category" -->
 <div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="update-category-form" class="modal-content">
+        <form id="update-category-form" th:method="put" class="modal-content">
+            <input type="hidden" name="_method" value="put">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -150,15 +158,17 @@
                         <div class="form-floating mb-3">
                             <input type="file" id="image-input" name="image" accept="image/*" class="form-control-file">
                             <div class="">
-                                <img id="image-preview" class="card-img-top rounded-top" style="height: 350px; object-fit: cover;" alt="asd" src="">
+                                <img id="image-preview" class="card-img-top rounded-top mt-2"
+                                    style="height: 350px; object-fit: cover;" alt="asd" src="">
                             </div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="categoryName"
-                                id="password" value="" placeholder="Password" required>
-                            <label for="password" class="form-label">Category name</label>
+                            <input type="text" class="form-control" name="categoryName" id="categoryName" value=""
+                                placeholder="categoryName" required>
+                            <label for="categoryName" class="form-label">Category name</label>
+                            <div class="categoryName-error text-danger"></div>
                         </div>
                     </div>
                 </div>
@@ -174,7 +184,7 @@
 <!-- Modal for "Delete category"  -->
 <div class="modal fade" id="delete-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:method="delete" action="/category" id="delete-category-form" class="modal-content">
+        <form th:method="delete" action="/admin/category" id="delete-category-form" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Delete category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

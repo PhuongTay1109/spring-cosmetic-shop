@@ -1,30 +1,36 @@
 document.addEventListener("DOMContentLoaded", async function () {
 	form = document.querySelector("#profile-form")
+	const imageForm = document.querySelector('#edit-image-form');
 	const imageInput = document.querySelector('#image-input');
 	const imagePreview = document.querySelector('#image-preview');
 	// Function to reset image preview to original avatar
-
+	const submitButton = imageForm.querySelector("button[type=submit]");
+	submitButton.disabled = true;
 	// Add event listener to clear file input when modal is closed
 	$('#edit-image').on('hidden.bs.modal', function () {
 		$('#image-input').val('');
 		imagePreview.src = originalAvatar;
+		console.log(submitButton)
+		submitButton.disabled = true;
 	});
 
 	imageInput.addEventListener('change', function () {
 		const file = this.files[0];
+		console.log(submitButton)
+
 		console.log(file)
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = function (e) {
 				// const img = new Image();
 				imagePreview.src = e.target.result;
-				console.log(e.target);
+				// console.log(e.target);
 				imagePreview.classList.add('rounded-circle', 'mt-2'); // Optional: Add Bootstrap img-fluid class for responsive images
 				imagePreview.style.width = '150px'
-				// imagePreview.innerHTML = ''; // Clear previous preview
-				// imagePreview.appendChild(img);
 			}
 			reader.readAsDataURL(file);
+			submitButton.disabled = false;
+
 		}
 	});
 
