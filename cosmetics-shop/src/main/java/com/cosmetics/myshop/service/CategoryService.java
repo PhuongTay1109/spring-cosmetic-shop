@@ -11,5 +11,5 @@ public interface CategoryService {
 	public Category saveCategory(Category category);
 	public Optional<Category> findCategoryByName(String categoryName);
 	public void deleteCategory(Category category);
-	public Category updateCategory(Category category, String oldCategoryName, boolean deleteOldAvatar) throws Exception;
+	public Category updateCategory(Category category, String oldCategoryName, boolean deleteOldAvatar, boolean changeName) throws Exception;
 }

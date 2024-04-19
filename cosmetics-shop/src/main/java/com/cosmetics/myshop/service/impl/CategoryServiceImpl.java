@@ -44,22 +44,31 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Category updateCategory(Category category, String oldCategoryName, boolean deleteOldAvatar) throws Exception {
+	public Category updateCategory(Category category, String oldCategoryName, boolean deleteOldAvatar, boolean changeName) throws Exception {
 		Date date = new Date();
-		List<Product> productList = productRepository.findByCategoryName(oldCategoryName);
-		for (Product product : productList) {
-			product.setCategoryName(category.getCategoryName());
-			productRepository.save(product);
-		}	
+		
 		Category oldCategory = categoryRepository.findByCategoryName(oldCategoryName).get();
 		if (!deleteOldAvatar) {
 			category.setImageLink(oldCategory.getImageLink());
 			System.out.println("change avatar " + category.getImageLink());
-		} else Files.deleteIfExists(Paths.get(Const.IMAGE_UPLOAD_DIRECTORY, oldCategory.getImageLink()));
+		} else {
+			Files.deleteIfExists(Paths.get(Const.IMAGE_UPLOAD_DIRECTORY, oldCategory.getImageLink()));
+		}
 		category.setCreatedAt(oldCategory.getCreatedAt());
 		category.setModifiedAt(date);
-		categoryRepository.delete(oldCategory);
-		return categoryRepository.save(category);
+		
+		Category updatedCategory = categoryRepository.save(category);
+		// Change category name of products first, then delete old category
+		if (changeName) {
+			List<Product> productList = productRepository.findByCategoryName(oldCategoryName);
+			for (Product product : productList) {
+				product.setCategoryName(category.getCategoryName());
+				productRepository.save(product);
+			}
+			categoryRepository.delete(oldCategory);
+		}
+		
+		return updatedCategory;
 	}
 
 

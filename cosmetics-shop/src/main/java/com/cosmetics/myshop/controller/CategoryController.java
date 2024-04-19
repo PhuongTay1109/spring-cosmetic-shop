@@ -82,16 +82,16 @@ public class CategoryController {
 			,@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
 		String newCategoryName = (String)body.get("newCategoryName");
 		String oldCategoryName = (String)body.get("oldCategoryName");
-		System.out.println(newCategoryName + " asd");
-		System.out.println(oldCategoryName + " asd");
 		String originalFilename = file.getOriginalFilename();
+		
+		boolean changeName = !newCategoryName.equals(oldCategoryName);
+		System.out.println(changeName);
 		boolean deleteOldAvatar = false;
 	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
 		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
 		if (!file.isEmpty()) {
 			String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
 			System.out.println("write file");
-			System.out.println(Paths.get(filePath));
 			Files.write(Paths.get(filePath),file.getBytes()); 	  
 			deleteOldAvatar = true;
 		}
@@ -113,8 +113,8 @@ public class CategoryController {
 		Category updatedCategory = new Category();
 		updatedCategory.setCategoryName(newCategoryName);
 		updatedCategory.setImageLink(imageLink);
-		categoryService.updateCategory(updatedCategory, oldCategoryName, deleteOldAvatar);
-		Thread.sleep(800);
+		categoryService.updateCategory(updatedCategory, oldCategoryName, deleteOldAvatar, changeName);
+		Thread.sleep(1000);
 		response.sendRedirect("/admin/categories");
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
