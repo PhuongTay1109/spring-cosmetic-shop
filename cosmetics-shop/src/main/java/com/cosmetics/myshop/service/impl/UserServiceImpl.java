@@ -135,11 +135,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void editImage(String newAvatar, User user)  throws Exception {
+	public synchronized void editImage(String newAvatar, User user)  throws Exception {
 		final String IMAGE_UPLOAD_DIRECTORY = "src/main/resources/static";
-		if (!user.getAvatar().equals("/img/user/no_avatar.png")) { // If not default avatar, then delete it
+		if (!user.getAvatar().equals("/img/user/no_avatar.png") && user.getAvatar().contains("/img/user")) { // If not default avatar, then delete it
 			Path filePath = Paths.get(IMAGE_UPLOAD_DIRECTORY, user.getAvatar());
-			Files.delete(filePath);
+			Files.deleteIfExists(filePath);
 			
 		}
 		user.setAvatar(newAvatar);

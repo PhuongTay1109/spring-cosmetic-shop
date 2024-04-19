@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,19 +35,19 @@ public class CategoryController {
 	public static String IMAGE_UPLOAD_DIRECTORY = "src/main/resources/static";
 	@Autowired
 	CategoryService categoryService;
+	
 	@ResponseBody
-	@PostMapping("/category")
+	@PostMapping("/admin/category")
 	public  ResponseEntity<Category> processPostCategory(@RequestParam("image") MultipartFile file
 			,@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
 		String categoryName = (String)body.get("categoryName");
 		String originalFilename = file.getOriginalFilename();
-		System.out.println(file.getOriginalFilename());
 	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
 		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
-		String imageLink = "/img/categories/" + milliseconds + "." + extension;
 		String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
 		Path fileNameAndPath = Paths.get(filePath);
 		Files.write(fileNameAndPath,file.getBytes());
+		String imageLink = "/img/categories/" + milliseconds + "." + extension;
 		Date date = new Date();
 		categoryName = Arrays.stream(categoryName.split(" "))
 				.map(word -> word.toLowerCase())
@@ -59,7 +60,7 @@ public class CategoryController {
 	}
 	
 	@ResponseBody
-	@DeleteMapping("/category")
+	@DeleteMapping("/admin/category")
 	public ResponseEntity<Category> processDeleteCategory(@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
 		String categoryName = body.get("categoryName");
 		System.out.println(categoryName);
@@ -75,5 +76,46 @@ public class CategoryController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
-	
+	@ResponseBody
+	@PutMapping("admin/category")
+	public ResponseEntity<Category> procoessPutCategory(@RequestParam("image") MultipartFile file
+			,@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
+		String newCategoryName = (String)body.get("newCategoryName");
+		String oldCategoryName = (String)body.get("oldCategoryName");
+		String originalFilename = file.getOriginalFilename();
+		
+		boolean changeName = !newCategoryName.equals(oldCategoryName);
+		System.out.println(changeName);
+		boolean deleteOldAvatar = false;
+	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
+		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
+		if (!file.isEmpty()) {
+			String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
+			System.out.println("write file");
+			Files.write(Paths.get(filePath),file.getBytes()); 	  
+			deleteOldAvatar = true;
+		}
+		// If delete old avatar, change imageLink
+		String imageLink = deleteOldAvatar ? "/img/categories/" + milliseconds + "." + extension : null;
+		newCategoryName = Arrays.stream(newCategoryName.split(" "))
+				.map(word -> word.toLowerCase())
+				.collect(Collectors.joining("_"));
+		oldCategoryName = Arrays.stream(oldCategoryName.split(" "))
+				.map(word -> word.toLowerCase())
+				.collect(Collectors.joining("_"));
+		Optional<Category> existingCategory = categoryService.findCategoryByName(newCategoryName);
+		// There is an existing category
+		if (existingCategory.isPresent() && !newCategoryName.equals(oldCategoryName)) {
+			System.out.println("run");
+			response.sendRedirect("/admin/categories?uniqueCategoryError");
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		Category updatedCategory = new Category();
+		updatedCategory.setCategoryName(newCategoryName);
+		updatedCategory.setImageLink(imageLink);
+		categoryService.updateCategory(updatedCategory, oldCategoryName, deleteOldAvatar, changeName);
+		Thread.sleep(1000);
+		response.sendRedirect("/admin/categories");
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
 }

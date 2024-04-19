@@ -1,5 +1,6 @@
 package com.cosmetics.myshop.controller;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,6 +9,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -92,13 +94,16 @@ public class HomeController {
 			avatar +="/user/"; // Store in database
 			redirect = "/profile";
 		}
-		
+		final String REDIRECT = redirect;
 		filePath += milliseconds + '.' + extension;
 		avatar += milliseconds + '.' + extension;
 		Path fileNameAndPath = Paths.get(IMAGE_UPLOAD_DIRECTORY, filePath);
 		Files.write(fileNameAndPath,file.getBytes());
+//		CompletableFuture<Void> editImageFuture = new CompletableFuture<>();
+
 		userService.editImage(avatar, user);
-		response.sendRedirect(redirect);
+		Thread.sleep(1000);
+		response.sendRedirect(REDIRECT);
 		
 	}
 

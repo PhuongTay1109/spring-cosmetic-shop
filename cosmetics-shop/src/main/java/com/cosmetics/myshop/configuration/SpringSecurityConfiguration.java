@@ -1,8 +1,11 @@
 package com.cosmetics.myshop.configuration;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,10 +13,16 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import com.cosmetics.myshop.model.User;
@@ -28,6 +37,9 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -80,8 +92,11 @@ public class SpringSecurityConfiguration {
 				.oauth2Login(oauth2 -> oauth2.loginPage("/login").successHandler(oauth2AuthenticationSuccessHandler))
 				.formLogin(form -> form.loginPage("/login")
 						.successHandler(formAuthenticationSuccessHandler))
+//				.addFilterAfter(new RoleFilter(), UsernamePasswordAuthenticationFilter.class)
+				//addFIlterAfter(Filter filterOne, Class filterTwo) filterOne after filterTwo
 				.requestCache(cache -> cache.requestCache(requestCache))
-				.logout(logout -> logout.permitAll()).build();
+				.logout(logout -> logout.permitAll())
+				.build();
 	}
 	
 //	@Bean
