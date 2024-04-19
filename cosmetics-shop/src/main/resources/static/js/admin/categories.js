@@ -23,10 +23,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
         const form = document.querySelector('#update-category-form');
         const imagePreview = form.querySelector('#image-preview');
         const imageInput = form.querySelector('input[name="image"]');
-        const categoryNameInput = form.querySelector('input[name="categoryName"]');
+        const newCategoryNameInput = form.querySelector('input[name="newCategoryName"]');
+        const oldCategoryNameInput = form.querySelector('input[name="oldCategoryName"]');
         const categoryName = button.getAttribute('data-categoryName');
+        oldCategoryNameInput.value = categoryName;
+        const oldCategoryName = categoryName;
         const originalImageLink = button.getAttribute('data-imageLink');
-        categoryNameInput.value = categoryName;
+        newCategoryNameInput.value = categoryName;
         imagePreview.src = originalImageLink;
         // console.log(orginialImageLink
         const submitButton = form.querySelector("button[type=submit]");
@@ -40,14 +43,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
             imagePreview.src = originalImageLink;
         });
 
-        categoryNameInput.addEventListener('input', function (e) {
+
+
+        newCategoryNameInput.addEventListener('input', function (e) {
 
             form.querySelector('.categoryName-error').innerHTML = '';
             // document.querySelector('.submit-btn').classList.remove('disabled');
             const categoryName = e.target.value;
             const regex = /^[A-Z][a-z]*( [a-z]+)*$/;
-            if (!regex.test(categoryName)) {
-                form.querySelector('.categoryName-error').innerHTML = 'The category name must only contain letters, and the first word must be capitalized!';
+            if (!regex.test(categoryName) || categoryName == oldCategoryName ) {
+                form.querySelector('.categoryName-error').innerHTML = !regex.test(categoryName) ? 'The category name must only contain letters, and the first word must be capitalized!' : '';
                 submitButton.disabled = true;
                 
             } else {

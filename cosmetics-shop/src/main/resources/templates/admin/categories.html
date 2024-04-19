@@ -146,7 +146,7 @@
 <!-- Modal for "Update category" -->
 <div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="update-category-form" th:method="put" class="modal-content">
+        <form id="update-category-form" action="/admin/category" enctype="multipart/form-data" th:method="put" class="modal-content">
             <input type="hidden" name="_method" value="put">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update category</h5>
@@ -164,11 +164,15 @@
                         </div>
                     </div>
                     <div class="col-12">
+                        <input type="hidden" class="form-control" name="oldCategoryName" id="oldCategoryName" value=""
+                                placeholder="">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="categoryName" id="categoryName" value=""
-                                placeholder="categoryName" required>
+                            
+                            <input type="text" class="form-control" name="newCategoryName" id="newCategoryName" value=""
+                                placeholder="newCategoryName" required>
                             <label for="categoryName" class="form-label">Category name</label>
                             <div class="categoryName-error text-danger"></div>
+                            <div th:if="${param.uniqueCategoryError}" class="categoryName-error text-danger">Category name must be unique!</div>
                         </div>
                     </div>
                 </div>

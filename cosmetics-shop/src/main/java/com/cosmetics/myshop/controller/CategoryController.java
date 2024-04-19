@@ -36,15 +36,6 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 	
-	private void handleUploadFile(MultipartFile file) throws Exception {
-		String originalFilename = file.getOriginalFilename();
-	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
-		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
-		String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
-		Path fileNameAndPath = Paths.get(filePath);
-		Files.write(fileNameAndPath,file.getBytes());
-	}
-	
 	@ResponseBody
 	@PostMapping("/admin/category")
 	public  ResponseEntity<Category> processPostCategory(@RequestParam("image") MultipartFile file
@@ -89,22 +80,42 @@ public class CategoryController {
 	@PutMapping("admin/category")
 	public ResponseEntity<Category> procoessPutCategory(@RequestParam("image") MultipartFile file
 			,@RequestParam Map<String, String> body, HttpServletResponse response) throws Exception {
-		String categoryName = (String)body.get("categoryName");
+		String newCategoryName = (String)body.get("newCategoryName");
+		String oldCategoryName = (String)body.get("oldCategoryName");
+		System.out.println(newCategoryName + " asd");
+		System.out.println(oldCategoryName + " asd");
 		String originalFilename = file.getOriginalFilename();
+		boolean deleteOldAvatar = false;
 	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
 		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
-		String imageLink = "/img/categories/" + milliseconds + "." + extension;
-		String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
-		Path fileNameAndPath = Paths.get(filePath);
-		Files.write(fileNameAndPath,file.getBytes());
-		Date date = new Date();
-		categoryName = Arrays.stream(categoryName.split(" "))
+		if (!file.isEmpty()) {
+			String filePath = IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
+			System.out.println("write file");
+			System.out.println(Paths.get(filePath));
+			Files.write(Paths.get(filePath),file.getBytes()); 	  
+			deleteOldAvatar = true;
+		}
+		// If delete old avatar, change imageLink
+		String imageLink = deleteOldAvatar ? "/img/categories/" + milliseconds + "." + extension : null;
+		newCategoryName = Arrays.stream(newCategoryName.split(" "))
 				.map(word -> word.toLowerCase())
 				.collect(Collectors.joining("_"));
-		Category category = new Category(categoryName, imageLink, date, date);
-		Category savedCategory = categoryService.saveCategory(category);
-		Thread.sleep(500);
+		oldCategoryName = Arrays.stream(oldCategoryName.split(" "))
+				.map(word -> word.toLowerCase())
+				.collect(Collectors.joining("_"));
+		Optional<Category> existingCategory = categoryService.findCategoryByName(newCategoryName);
+		// There is an existing category
+		if (existingCategory.isPresent() && !newCategoryName.equals(oldCategoryName)) {
+			System.out.println("run");
+			response.sendRedirect("/admin/categories?uniqueCategoryError");
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		Category updatedCategory = new Category();
+		updatedCategory.setCategoryName(newCategoryName);
+		updatedCategory.setImageLink(imageLink);
+		categoryService.updateCategory(updatedCategory, oldCategoryName, deleteOldAvatar);
+		Thread.sleep(800);
 		response.sendRedirect("/admin/categories");
-		return new ResponseEntity<>(savedCategory, HttpStatus.OK);
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 }
