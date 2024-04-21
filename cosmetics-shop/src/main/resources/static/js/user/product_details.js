@@ -199,35 +199,5 @@ function changeQuantity(btn) {
 // **************************************
 */
 
-document.querySelector('.add-to-cart-btn').addEventListener("click", async () => {
-	var input = document.getElementById('quantity');
-	var quantity = parseInt(input.value);
-	
-	var data = {
-        productId: productId,
-        quantity: quantity
-    };
-
-	try {
-        const response = await fetch('/api/cart/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        
-        if (!response.ok) {
-            throw new Error('An error occurred while adding the product to cart.');
-        }
-        
-        alert('Product added to cart successfully!');
-        await updateCartNumber();
-    } 
-    catch (error) {
-        console.error(error);
-    }
-});
-
 
 

@@ -75,5 +75,10 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findNewArrivalProducts() {
 		return productRepository.findNewArrivals();
 	}
+
+	@Override
+	public Product saveProduct(Product product) {
+		return productRepository.save(product);
+	}
 	
 }

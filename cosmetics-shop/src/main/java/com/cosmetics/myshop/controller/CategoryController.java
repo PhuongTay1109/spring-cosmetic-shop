@@ -52,7 +52,7 @@ public class CategoryController {
 		categoryName = Arrays.stream(categoryName.split(" "))
 				.map(word -> word.toLowerCase())
 				.collect(Collectors.joining("_"));
-		Category category = new Category(categoryName, imageLink, date, date);
+		Category category = new Category(categoryName, imageLink, date, null);
 		Category savedCategory = categoryService.saveCategory(category);
 		Thread.sleep(500);
 		response.sendRedirect("/admin/categories");
@@ -85,7 +85,6 @@ public class CategoryController {
 		String originalFilename = file.getOriginalFilename();
 		
 		boolean changeName = !newCategoryName.equals(oldCategoryName);
-		System.out.println(changeName);
 		boolean deleteOldAvatar = false;
 	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
 		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name

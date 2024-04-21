@@ -20,4 +20,5 @@ public interface ProductService {
 	public List <Product> searchProductsByKeyword(String keyword);
 	public List<Product> findTopRatingProducts();
 	public List<Product> findNewArrivalProducts();
+	public Product saveProduct(Product product);
 }
