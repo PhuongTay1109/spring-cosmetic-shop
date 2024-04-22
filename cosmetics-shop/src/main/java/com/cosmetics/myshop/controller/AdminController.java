@@ -8,14 +8,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cosmetics.myshop.model.Category;
+import com.cosmetics.myshop.model.Product;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.CategoryService;
+import com.cosmetics.myshop.service.ProductService;
 import com.cosmetics.myshop.service.UserService;
 
 @Controller
@@ -25,6 +28,8 @@ public class AdminController {
 	UserService userService;
 	@Autowired
 	CategoryService categoryService;
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping("/dashboard")
 	public String getAdminDashboard() {
@@ -41,6 +46,17 @@ public class AdminController {
 		List<Category> categoryList = categoryService.findAllCategories();
 		model.addAttribute("categoryList", categoryList);
 		return "admin/categories";
+	}
+	@GetMapping("/products/{categoryName}")
+	public String getProducts(@PathVariable(name = "categoryName") String categoryName, Model model) {
+		List<String> brandList = productService.findBrandsByCategory(categoryName);
+		List<String> typeList = productService.findProductTypesByCategory(categoryName);
+		long totalProductsByCategory = productService.countProductsByCategoryName(categoryName);
+		model.addAttribute("brandList", brandList);
+		model.addAttribute("typeList", typeList);
+		model.addAttribute("totalProductsByCategory", totalProductsByCategory);
+		model.addAttribute("categoryName", categoryName);
+		return "admin/products";
 	}
 	
 	@GetMapping("/profile")

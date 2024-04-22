@@ -14,12 +14,32 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "product")
 public class Product {
+	
+	
+	public Product(String brand, String name, Double price, String currency, String imageLink, String description,
+			Double rating, String productType, String categoryName, String tagList) {
+		super();
+		this.brand = brand;
+		this.name = name;
+		this.price = price;
+		this.currency = currency;
+		this.imageLink = imageLink;
+		this.description = description;
+		this.rating = rating;
+		this.productType = productType;
+		this.categoryName = categoryName;
+		this.tagList = tagList;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
