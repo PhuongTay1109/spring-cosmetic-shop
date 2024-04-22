@@ -198,7 +198,6 @@ function changeQuantity(btn) {
 // CART HANDLER
 // **************************************
 */
-
 document.querySelector('.add-to-cart-btn').addEventListener("click", async () => {
 	var input = document.getElementById('quantity');
 	var quantity = parseInt(input.value);
@@ -232,6 +231,5 @@ document.querySelector('.add-to-cart-btn').addEventListener("click", async () =>
         console.error(error);
     }
 });
-
 
 

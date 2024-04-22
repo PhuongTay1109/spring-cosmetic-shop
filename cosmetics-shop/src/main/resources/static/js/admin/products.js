@@ -39,14 +39,14 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 	// but if there is any change (filter, sort)
 	// i need to store the new product list
 	productListToShow = fetchedProducts;
-    console.log(productListToShow)
 	
 	if (sortParam != null) {
 		sortBy = sortParam;
 		sortProducts(sortBy);
 	}	
+    handlePagination(currentPage, totalPage, pageList, productListToShow, sortBy);
+    
 
-	handlePagination(currentPage, totalPage, pageList, productListToShow, sortBy);
 });
 
 // Fetch data from server
@@ -80,7 +80,7 @@ function handlePageClick(currentPage, totalPage, pageList, productList, sortBy) 
 
 	let html = "";
 	for (let product of productsOnPage) {
-		html += `<div class="col-6 col-md-6 col-lg-3 mb-3">
+		html += `<div class="col-6 col-md-6 col-lg-4 mb-3">
                             <div class="card position-relative">
                                 <a class="card-product-img" href="/product/${product.id}">
 									<img src="${product.imageLink}" class="card-img-top" />
@@ -94,9 +94,22 @@ function handlePageClick(currentPage, totalPage, pageList, productList, sortBy) 
                                         ${product.description}
                                     </p>
                                     <p class="card-text">$${product.price}</p>
-                                    <div class="rating">
+                                    <div class="rating d-flex justify-content-around">
 					                    ${generateStars(product.rating)}
+                                        <div class="">
+                                        <button type="button" data-id="${product.id}"
+                                            class="btn btn-hover btn-primary btn-sm me-1" data-bs-toggle="modal"
+                                            data-bs-target="#delete-product-modal">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <button type="button" data-id="${product.id}"
+                                            class="btn btn-hover btn-primary btn-sm me-1" data-bs-toggle="modal"
+                                            data-bs-target="#update-product-modal">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                    </div>
 					                </div>
+                                    
                                 </div>
                             </div>
                         </div>`

@@ -445,8 +445,12 @@ SET product_type = category_name
 WHERE product_type is null;
 
 UPDATE product
+SET currency = 'USD';
+
+UPDATE product
 SET rating = round((RAND() * 4) + 1,1)
 WHERE rating IS NULL;
+
 
 
 DROP PROCEDURE IF EXISTS delete_user;
@@ -462,7 +466,7 @@ END//
 DELIMITER ;
 
 
-
+updat
 
 
 
