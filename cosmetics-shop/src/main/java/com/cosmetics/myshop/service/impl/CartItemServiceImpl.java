@@ -37,4 +37,9 @@ public class CartItemServiceImpl implements CartItemService {
 	public void updateCartItemQuantity(Integer shoppingSessionId, Integer productId, Integer quantity) {
 		cartItemRepository.updateCartItemQuantity(shoppingSessionId, productId, quantity);
 	}
+
+	@Override
+	public int countTotalQuantitByShoppingSession(Integer shoppingSessionId) {
+		return cartItemRepository.countTotalQuantitByShoppingSession(shoppingSessionId);
+	}
 }

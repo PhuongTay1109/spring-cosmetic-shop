@@ -217,13 +217,17 @@ document.querySelector('.add-to-cart-btn').addEventListener("click", async () =>
             body: JSON.stringify(data)
         });
         
-        if (!response.ok) {
-            throw new Error('An error occurred while adding the product to cart.');
-        }
+        console.log(response);
         
-        alert('Product added to cart successfully!');
-        await updateCartNumber();
-    } 
+        if (response.status == 401) {
+            alert('Please login first to continue shopping!');
+        }      
+        else if(response.status === 200) {
+			alert('Product added to cart successfully!');
+       		await updateCartNumber();
+        } 
+	}
+        
     catch (error) {
         console.error(error);
     }

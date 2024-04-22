@@ -44,4 +44,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     		+ "WHERE ci.shoppingSession.id = :shoppingSessionId "
     		+ "AND ci.product.id = :productId")
     void updateCartItemQuantity(Integer shoppingSessionId, Integer productId, Integer quantity);
+	
+	@Query("select sum(ci.quantity) as totalQuantity from CartItem ci where ci.shoppingSession.id = :shoppingSessionId")
+	int countTotalQuantitByShoppingSession(Integer shoppingSessionId);
 }

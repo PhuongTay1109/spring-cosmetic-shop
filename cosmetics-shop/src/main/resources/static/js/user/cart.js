@@ -3,7 +3,7 @@
  */
 
 let fetchedData;
-let totalQuantity = 0;
+let totalPrice = 0;
 
 document.addEventListener("DOMContentLoaded", async function() {
 	fetchedData = await fetchData();
@@ -11,7 +11,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 	fetchedData.forEach(item => {
 		const product = item.product;
 		const quantity = item.quantity;
-		totalQuantity += quantity;
+		
+		totalPrice += item.quantity*item.product.price;
+		
+		thisProductPrice = item.quantity*item.product.price;
+		
 		// Limit the length of description
         const truncatedDescription = truncateDescription(product.description);
         
@@ -48,9 +52,9 @@ document.addEventListener("DOMContentLoaded", async function() {
                             </div>
                             <div class="col">
                             	<div class="d-flex justify-content-between">
-                            		$ ${item.product.price}
+                            		$ ${thisProductPrice}
                             		<a class="trash text-decoration-none text-dark">
-                            			<i class="bi bi-trash-fill"></i>
+                            			<i data-product-id="${item.product.id}" class="bi bi-trash-fill"></i>
                             		</a>
                             	</div>
                             </div>
@@ -60,8 +64,36 @@ document.addEventListener("DOMContentLoaded", async function() {
 		document.getElementById('cart-items').appendChild(productElement);
 	})
 	
-	document.getElementById('total-quantity').textContent = "(" + totalQuantity+ " items)";
+	document.getElementById('total-price').textContent = "TOTAL PRICE: $ "+ totalPrice ;
+	document.getElementById('total-price-summary').textContent = "$ "+ totalPrice ;
 	console.log(fetchedData);
+	
+	// DELETE BUTTONS
+	const trashIcons = document.getElementsByClassName("trash"); // live DOM => HTMLCollection	
+	
+	for(let i = 0; i < trashIcons.length; i++) {
+		trashIcons[i].addEventListener('click', async () => {
+			const trashIcon = trashIcons[i];
+			const productId = trashIcon.querySelector('i').getAttribute("data-product-id");
+			console.log(productId);
+			try {
+				const response = await fetch(`/api/cart/delete/${productId}`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json'
+					}					
+				});
+				
+				if(!response.ok) 
+					throw new Error("An error occurred while deleting the product.")
+				
+				window.location.reload();
+			}
+			catch(error) {
+				console.log(error);				
+			}
+		})
+	}
 });
 
 function truncateDescription(description) {
@@ -77,3 +109,4 @@ async function fetchData() {
 	const data = await response.json();
 	return data;
 }
+
