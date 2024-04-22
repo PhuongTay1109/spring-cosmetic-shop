@@ -1,5 +1,9 @@
 package com.cosmetics.myshop.service.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.cosmetics.myshop.model.Const;
 import com.cosmetics.myshop.model.Product;
 import com.cosmetics.myshop.repository.ProductRepository;
 import com.cosmetics.myshop.service.ProductService;
@@ -80,5 +85,14 @@ public class ProductServiceImpl implements ProductService {
 	public Product saveProduct(Product product) {
 		return productRepository.save(product);
 	}
+
+	@Override
+	public void deleteProduct(Product product) throws Exception {
+		Path filePath = Paths.get(Const.IMAGE_UPLOAD_DIRECTORY, product.getImageLink());
+		Files.deleteIfExists(filePath);
+		productRepository.delete(product);
+		
+	}
+
 	
 }

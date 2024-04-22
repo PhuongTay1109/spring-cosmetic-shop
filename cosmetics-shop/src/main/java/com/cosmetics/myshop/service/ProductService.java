@@ -1,6 +1,7 @@
 package com.cosmetics.myshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 
@@ -21,4 +22,5 @@ public interface ProductService {
 	public List<Product> findTopRatingProducts();
 	public List<Product> findNewArrivalProducts();
 	public Product saveProduct(Product product);
+	public void deleteProduct(Product product) throws Exception;
 }

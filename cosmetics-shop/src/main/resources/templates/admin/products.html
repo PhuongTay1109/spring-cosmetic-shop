@@ -68,8 +68,8 @@
                                     <div class="row">
                                         <div class="row">
                                             <div class="col-6 col-md-6 col-lg-4 mb-3">
-                                                <button data-bs-toggle="modal"
-                                                data-bs-target="#create-product-modal" title="Add product" class="btn btn-secondary">
+                                                <button data-bs-toggle="modal" data-bs-target="#create-product-modal"
+                                                    title="Add product" class="btn btn-secondary">
                                                     <span class="">+</span>
                                                 </button>
                                             </div>
@@ -167,8 +167,8 @@
             </div>
             <div class="modal-body">
                 <div class="row gy-3 overflow-hidden">
-                    <input type="hidden" class="form-control" name="categoryName" id="categoryName" th:value="${categoryName}"
-                    placeholder="Enter name" required>
+                    <input type="hidden" class="form-control" name="categoryName" id="categoryName"
+                        th:value="${categoryName}" placeholder="Enter name" required>
                     <div class="col-12">
                         <label for="image" class="form-label">Choose image</label>
                         <div class="form-floating mb-1">
@@ -248,37 +248,85 @@
 </div>
 
 <!-- Modal for "Update category" -->
-<div class="modal fade" id="update-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="update-product-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="update-category-form" action="/admin/category" enctype="multipart/form-data" th:method="put"
+        <form id="update-product-form" action="/admin/product" enctype="multipart/form-data" th:method="put"
             class="modal-content">
             <input type="hidden" name="_method" value="put">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update category</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="id" name="id">
+                <input type="hidden" id="categoryName" name="categoryName">
+                <input type="hidden" id="imageLink" name="imageLink" value="">
                 <div class="row gy-3 overflow-hidden">
                     <div class="col-12">
-                        <div class="form-floating mb-3">
+                        <label for="image" class="form-label">Choose image</label>
+                        <div class="form-floating mb-1">
                             <input type="file" id="image-input" name="image" accept="image/*" class="form-control-file">
-                            <div class="">
-                                <img id="image-preview" class="card-img-top rounded-top mt-2"
-                                    style="height: 350px; object-fit: cover;" alt="asd" src="">
+                            <div class="mt-1">
+                                <img id="image-preview" class="card-img-top rounded-top"
+                                    style="height: 350px; object-fit: cover;" alt=""
+                                    src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg">
                             </div>
+
                         </div>
                     </div>
                     <div class="col-12">
-                        <input type="hidden" class="form-control" name="oldCategoryName" id="oldCategoryName" value=""
-                            placeholder="">
                         <div class="form-floating mb-3">
-
-                            <input type="text" class="form-control" name="newCategoryName" id="newCategoryName" value=""
-                                placeholder="newCategoryName" required>
-                            <label for="categoryName" class="form-label">Category name</label>
-                            <div class="categoryName-error text-danger"></div>
-                            <div th:if="${param.uniqueCategoryError}" class="categoryName-error text-danger">Category
-                                name must be unique!</div>
+                            <input type="text" class="form-control" name="name" id="name" value=""
+                                placeholder="Enter name" required>
+                            <label for="name" class="form-label">Name</label>
+                            <div class="name-error text-danger"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="brand" id="brand" value=""
+                                placeholder="Enter brand" required>
+                            <label for="brand" class="form-label">Brand</label>
+                            <div class="brand-error text-danger"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" name="price" id="price" value=""
+                                placeholder="Enter price" required>
+                            <label for="price" class="form-label">Price</label>
+                            <div class="price-error text-danger"></div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" name="rating" id="rating" value=""
+                                placeholder="Enter rating" required>
+                            <label for="rating" class="form-label">Rating</label>
+                            <div class="rating-error text-danger"></div>
+                        </div>
+                    </div> -->
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="productType" id="productType" value=""
+                                placeholder="Enter productType" required>
+                            <label for="productType" class="form-label">Product type</label>
+                            <div class="productType-error text-danger"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="tagList" id="tagList" value=""
+                                placeholder="Enter tagList" required>
+                            <label for="tagList" class="form-label">Tag list</label>
+                            <div class="tagList-error text-danger"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group mb-3">
+                            <label for="tagList" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" id="description" required>
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -292,17 +340,19 @@
 </div>
 
 <!-- Modal for "Delete category"  -->
-<div class="modal fade" id="delete-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:method="delete" action="/admin/category" id="delete-category-form" class="modal-content">
+        <form th:method="delete" action="/admin/product" id="delete-product-form" class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete category</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Delete product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Add <input> to map DELETE method -->
                 <input type="hidden" name="_method" value="delete">
-                <input type="hidden" name="categoryName">
-                Are you sure to delete this category?
+                <!-- Product Id -->
+                <input type="hidden" name="id">
+                Are you sure to delete this product?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -1,5 +1,7 @@
 package com.cosmetics.myshop.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,9 +32,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,20 +87,54 @@ public class ProductController {
 		String originalFilename = file.getOriginalFilename();
 	    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
 		String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
-		String filePath = Const.IMAGE_UPLOAD_DIRECTORY + "/img/categories/" + milliseconds + "." + extension;
+		String filePath = Const.IMAGE_UPLOAD_DIRECTORY + "/img/products/" + milliseconds + "." + extension;
 		Path fileNameAndPath = Paths.get(filePath);
 		Files.write(fileNameAndPath,file.getBytes());
-		String imageLink = "/img/categories/" + milliseconds + "." + extension;
+		String imageLink = "/img/products/" + milliseconds + "." + extension;
 		product.setImageLink(imageLink);
 		product.setCreatedAt(new Date());
-		productService.saveProduct(product);
+		Product savedProduct = productService.saveProduct(product);
 		Thread.sleep(1000);
 		response.sendRedirect("/admin/products/" + product.getCategoryName());
+		return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+	}
+	@ResponseBody
+	@DeleteMapping("/admin/product")
+	ResponseEntity<Product> processDeleteProduct( @RequestParam Map<String, Object> body, HttpServletResponse response) throws Exception {
+		Integer id = Integer.parseInt((String) body.get("id")) ;
+		Product product = productService.findProductByid(id);
+		String categoryName = product.getCategoryName();
+		if (product != null) {
+			productService.deleteProduct(product);
+		}
+		response.sendRedirect("/admin/products/" + categoryName);
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
+	@ResponseBody
+	@PutMapping("/admin/product")
+	ResponseEntity<Product> processPutProduct(@RequestParam("image") MultipartFile file, @RequestParam Map<String, Object> body, HttpServletResponse response) throws Exception {
+		Integer id = Integer.parseInt((String) body.get("id"));
+		Product product = extractAttributesFromBody(body);
+		product.setId(id);
+		String categoryName = product.getCategoryName();
+		if (!file.isEmpty()) {
+			String originalFilename = file.getOriginalFilename();
+		    String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // Get extension of file
+			String milliseconds = String.valueOf(new Date().getTime()); // Get milliseconds for unique image name
+			Path fileWritePath = Paths.get(Const.IMAGE_UPLOAD_DIRECTORY + "/img/products/" + milliseconds + "." + extension);
+			Path fileDeletePath = Paths.get(Const.IMAGE_UPLOAD_DIRECTORY + "/img/products/" + product.getImageLink());
+			Files.deleteIfExists(fileDeletePath);
+			Files.write(fileWritePath,file.getBytes());
+			product.setImageLink("/img/products/" + milliseconds + "." + extension);
+		}
+		Product updatedProduct = productService.saveProduct(product);
+		response.sendRedirect("/admin/products/" + categoryName);
+		return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+	}
+	
 	private Product extractAttributesFromBody(Map<String, Object> body) {
-		System.out.println(body.toString());
+		String imageLink = (String)body.get("imageLink");
 		String categoryName = (String)body.get("categoryName");
 		String name = (String)body.get("name");
 		String brand = (String)body.get("brand");
@@ -104,6 +143,9 @@ public class ProductController {
 		String tagList = (String)body.get("tagList");
 		String description = (String)body.get("description");
 		Double rating = new Random().nextDouble() + 4;
+		BigDecimal bd = new BigDecimal(rating);
+		bd = bd.setScale(1, RoundingMode.HALF_UP);
+		rating = bd.doubleValue();
 		String[] tagListArray = tagList.split(", "); // cruelty, free => [cruelty, free]
 		for (int i = 0; i < tagListArray.length; i++) {
 			tagListArray[i] = "\"" + tagListArray[i] + "\""; // "cruelty", "free"
@@ -112,7 +154,7 @@ public class ProductController {
 		tagList = tagListStream.map(tag -> tag)
 				.collect(Collectors.joining(","));
 		tagList = "[" + tagList + "]";
-		Product product = new Product(brand, name, price, "USD", "", description, rating, productType, categoryName, tagList);
+		Product product = new Product(brand, name, price, "USD", imageLink, description, rating, productType, categoryName, tagList);
 		return product;
 	}
 	

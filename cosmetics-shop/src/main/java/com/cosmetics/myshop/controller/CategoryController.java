@@ -105,7 +105,6 @@ public class CategoryController {
 		Optional<Category> existingCategory = categoryService.findCategoryByName(newCategoryName);
 		// There is an existing category
 		if (existingCategory.isPresent() && !newCategoryName.equals(oldCategoryName)) {
-			System.out.println("run");
 			response.sendRedirect("/admin/categories?uniqueCategoryError");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}

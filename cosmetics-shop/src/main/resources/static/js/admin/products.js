@@ -44,8 +44,9 @@ document.addEventListener("DOMContentLoaded", async function(event) {
 		sortBy = sortParam;
 		sortProducts(sortBy);
 	}	
+    handlePagination(currentPage, totalPage, pageList, productListToShow, sortBy);
+    
 
-	handlePagination(currentPage, totalPage, pageList, productListToShow, sortBy);
 });
 
 // Fetch data from server
@@ -96,15 +97,14 @@ function handlePageClick(currentPage, totalPage, pageList, productList, sortBy) 
                                     <div class="rating d-flex justify-content-around">
 					                    ${generateStars(product.rating)}
                                         <div class="">
-                                        <button type="button" th:data-categoryName=""
+                                        <button type="button" data-id="${product.id}"
                                             class="btn btn-hover btn-primary btn-sm me-1" data-bs-toggle="modal"
-                                            data-bs-target="#delete-category-modal">
+                                            data-bs-target="#delete-product-modal">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
-                                        <button type="button" th:data-imageLink=""
-                                            th:data-categoryName=""
+                                        <button type="button" data-id="${product.id}"
                                             class="btn btn-hover btn-primary btn-sm me-1" data-bs-toggle="modal"
-                                            data-bs-target="#update-category-modal">
+                                            data-bs-target="#update-product-modal">
                                             <i class="fa-solid fa-pen"></i>
                                         </button>
                                     </div>
