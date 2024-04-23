@@ -95,7 +95,7 @@ async function updateDOM() {
 				});
 				
 				if(!response.ok)
-					throw new Error("An error occurred while deleting product.");			
+					throw new Error("An error occured while deleting product.");			
 				
 				await updateDOM();
 				await updateCartNumber();					
@@ -151,7 +151,7 @@ async function updateQuantity(action, productId) {
 			});
 			
 			if(!response.ok)
-				throw new Error("An error occurred while changing quantity.");
+				throw new Error("An error occured while changing quantity.");
 				
 			await updateDOM();
 			await updateCartNumber();	
@@ -170,7 +170,7 @@ async function updateQuantity(action, productId) {
 			});
 			
 			if(!response.ok)
-				throw new Error("An error occurred while changing quantity.");
+				throw new Error("An error occured while changing quantity.");
 				
 			await updateDOM();
 			await updateCartNumber();	
@@ -194,4 +194,3 @@ async function fetchData() {
 	const data = await response.json();
 	return data;
 }
-

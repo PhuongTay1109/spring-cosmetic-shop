@@ -3,13 +3,12 @@
  */
 async function updateCartNumber() {
 	try {
-		const response = await $.ajax({
-			type: 'GET',
-			url: '/api/cart'
-		});
+		const response = await fetch(`/api/cart`);
+		const data = await response.json();
 
 		let cartNumber = 0;
-			response.forEach(function(cartItem) {
+		
+		data.forEach(function(cartItem) {
 	        cartNumber += cartItem.quantity;
 	    });
 	

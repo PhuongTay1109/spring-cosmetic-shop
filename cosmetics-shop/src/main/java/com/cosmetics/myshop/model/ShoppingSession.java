@@ -29,7 +29,7 @@ public class ShoppingSession {
     private int id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
     private User user;
     private Double total;
 

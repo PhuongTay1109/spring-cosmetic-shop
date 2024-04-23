@@ -218,13 +218,13 @@ document.querySelector('.add-to-cart-btn').addEventListener("click", async () =>
         
         console.log(response);
         
-        if (response.status == 401) {
+        /*if (response.status == 401) {
             alert('Please login first to continue shopping!');
         }      
-        else if(response.status === 200) {
-			alert('Product added to cart successfully!');
-       		await updateCartNumber();
-        } 
+        else if(response.status === 200) {*/
+        
+		alert('Product added to cart successfully!');
+       	await updateCartNumber();   
 	}
         
     catch (error) {
