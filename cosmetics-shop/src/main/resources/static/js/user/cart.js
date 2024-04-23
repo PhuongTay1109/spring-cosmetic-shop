@@ -3,16 +3,26 @@
  */
 
 let fetchedData;
-let totalPrice = 0;
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async () => {
+    await updateDOM();
+});
+
+async function updateDOM() {
+	// Delete previous rendered-products
+    document.getElementById('cart-items').innerHTML = '';
+    
 	fetchedData = await fetchData();
+
+	var totalPrice = 0;
+	var totalQuantity = 0;
 	
 	fetchedData.forEach(item => {
 		const product = item.product;
 		const quantity = item.quantity;
 		
 		totalPrice += item.quantity*item.product.price;
+		totalQuantity += item.quantity;
 		
 		thisProductPrice = item.quantity*item.product.price;
 		
@@ -43,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 									onclick="changeQuantity(this)">
 									<i class="bi bi-dash"></i>
 								</button>
-								<input type="text" name="quantity" id="quantity" class="form-control input-number"
+								<input type="text" name="quantity" input-product-id="${item.product.id}" class="form-control input-number"
 									style="width: 18%; display: inline-block" value="${item.quantity}" min="1" max="100">
 								<button type="button" class="btn" data-type="plus" data-field="quantity"
 									onclick="changeQuantity(this)">
@@ -66,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 	
 	document.getElementById('total-price').textContent = "TOTAL PRICE: $ "+ totalPrice ;
 	document.getElementById('total-price-summary').textContent = "$ "+ totalPrice ;
-	console.log(fetchedData);
+	document.getElementById('total-cart-items').textContent = totalQuantity + " items" ;
 	
 	// DELETE BUTTONS
 	const trashIcons = document.getElementsByClassName("trash"); // live DOM => HTMLCollection	
@@ -84,17 +94,92 @@ document.addEventListener("DOMContentLoaded", async function() {
 					}					
 				});
 				
-				if(!response.ok) 
-					throw new Error("An error occurred while deleting the product.")
+				if(!response.ok)
+					throw new Error("An error occurred while deleting product.");			
 				
-				window.location.reload();
+				await updateDOM();
+				await updateCartNumber();					
 			}
 			catch(error) {
 				console.log(error);				
 			}
 		})
 	}
-});
+}
+
+function changeQuantity(btn) {
+	const action = btn.getAttribute('data-type');
+    const productId = btn.parentElement.querySelector('.form-control.input-number').getAttribute('input-product-id');
+    const inputElement = document.querySelector(`.form-control.input-number[input-product-id="${productId}"]`);
+    
+    var currentValue = parseInt(inputElement.value);
+    var minValue = parseInt(inputElement.min);
+	var maxValue = parseInt(inputElement.max);
+
+    
+    if (action === 'minus') {
+		if(currentValue > minValue) {
+			currentValue--;
+			updateQuantity(action, productId);
+		}
+		else {
+			alert("Minimum quantity has been reached!");
+		}
+        
+        
+    } else if (action === 'plus') {
+		if(currentValue < maxValue) {
+			currentValue++;
+			updateQuantity(action, productId);
+		}
+		else {
+			alert("Maximum quantity has been reached!");
+		}        
+    }
+    
+    inputElement.value = currentValue;
+}
+
+async function updateQuantity(action, productId) {
+	if(action === 'minus') {
+		try {
+			const response = await fetch(`/api/cart/decrease/${productId}`, {
+		        method: 'POST',
+		        headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			
+			if(!response.ok)
+				throw new Error("An error occurred while changing quantity.");
+				
+			await updateDOM();
+			await updateCartNumber();	
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
+	if(action === 'plus') {
+		try {
+			const response = await fetch(`/api/cart/increase/${productId}`, {
+		        method: 'POST',
+		        headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			
+			if(!response.ok)
+				throw new Error("An error occurred while changing quantity.");
+				
+			await updateDOM();
+			await updateCartNumber();	
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
+}
 
 function truncateDescription(description) {
     const maxLength = 100; 

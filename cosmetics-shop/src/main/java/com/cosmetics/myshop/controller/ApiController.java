@@ -157,4 +157,42 @@ public class ApiController {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }		
 	}
+	
+	@ResponseBody
+	@PostMapping("/cart/increase/{productId}")
+	public ResponseEntity<Void> increaseQuantity(@PathVariable Integer productId, Authentication authentication) {
+	    if(authentication != null) {
+	        User user = (User) authentication.getPrincipal();
+	        int userId = user.getUserId();
+	        ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
+	        CartItem existingCartItem =
+	                cartItemService.findCartItem(shoppingSession.getId(), productId);
+	        existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
+	        cartItemService.updateCartItemQuantity(shoppingSession.getId(),
+	        		productId, existingCartItem.getQuantity());
+	        return ResponseEntity.ok().build();
+	    } 
+	    else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    }
+	}
+	
+	@ResponseBody
+	@PostMapping("/cart/decrease/{productId}")
+	public ResponseEntity<Void> decreaseQuantity(@PathVariable Integer productId, Authentication authentication) {
+	    if(authentication != null) {
+	        User user = (User) authentication.getPrincipal();
+	        int userId = user.getUserId();
+	        ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
+	        CartItem existingCartItem =
+	                cartItemService.findCartItem(shoppingSession.getId(), productId);
+	        existingCartItem.setQuantity(existingCartItem.getQuantity() - 1);
+	        cartItemService.updateCartItemQuantity(shoppingSession.getId(),
+	                   productId, existingCartItem.getQuantity());
+	        return ResponseEntity.ok().build();
+	    } 
+	    else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    }
+	}
 }
