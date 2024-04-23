@@ -40,6 +40,6 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Override
 	public int countTotalQuantitByShoppingSession(Integer shoppingSessionId) {
-		return cartItemRepository.countTotalQuantitByShoppingSession(shoppingSessionId);
+		return cartItemRepository.countTotalQuantityByShoppingSession(shoppingSessionId);
 	}
 }
