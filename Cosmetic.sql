@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `shopping_session`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `shopping_session` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int,
+  `user_id` int DEFAULT NULL,
   `total` decimal(10,0) DEFAULT NULL,
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,

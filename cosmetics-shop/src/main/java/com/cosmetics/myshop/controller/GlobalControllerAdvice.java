@@ -16,6 +16,9 @@ import com.cosmetics.myshop.service.CategoryService;
 import com.cosmetics.myshop.service.ShoppingSessionService;
 import com.cosmetics.myshop.utils.StringUtils;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+
 @ControllerAdvice(annotations = Controller.class)
 public class GlobalControllerAdvice {
 	@Autowired
@@ -38,20 +41,30 @@ public class GlobalControllerAdvice {
 	@Autowired ShoppingSessionService shoppingSessionService;
 	
 	@ModelAttribute("totalCartItems")
-	public int getTotalCartItems(Authentication authentication) {
-		// If user hasn't login, the total is 0
-		if(authentication == null)
-			return 0;
+	public int getTotalCartItems(Authentication authentication, HttpServletRequest request) {
+		// unauthorized user
+		if(authentication == null) {
+			Cookie[] cookies = request.getCookies();
+	    	if (cookies != null) {
+	    		for(Cookie cookie: cookies) {
+	    			if(cookie.getName().equals("shoppingSessionId")) {
+	    				int shoppingSessionId = Integer.parseInt(cookie.getValue());
+	    				return cartItemService.countTotalQuantityByShoppingSession(shoppingSessionId);
+	    			}
+	    		}
+	    	}
+	    	return 0;
+		}
 		
+		// authorized user
 		User user = (User) authentication.getPrincipal();		
 		int userId = user.getUserId();
 		ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
-		
-		
+
 		// If user hasn't added to cart any items, the total is 0
 		if(shoppingSession == null)
 			return 0;
 		
-		return cartItemService.countTotalQuantitByShoppingSession(shoppingSession.getId());
+		return cartItemService.countTotalQuantityByShoppingSession(shoppingSession.getId());
 	}
 }

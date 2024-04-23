@@ -12,6 +12,6 @@ public interface CartItemService {
 	public void deleteCartItem(Integer shoppingSessionId, Integer productId);
 	public void updateCartItemQuantity(Integer shoppingSessionId, Integer productId, Integer quantity);
 	
-	public int countTotalQuantitByShoppingSession(Integer shoppingSessionId);
+	public int countTotalQuantityByShoppingSession(Integer shoppingSessionId);
 
 }
