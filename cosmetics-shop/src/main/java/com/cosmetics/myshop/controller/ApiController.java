@@ -200,7 +200,7 @@ public class ApiController {
 
 	        // create a cookie to store shopping session id
 	        Cookie cookie = new Cookie("shoppingSessionId", String.valueOf(shoppingSession.getId()));
-	       // cookie.setMaxAge(24 * 60 * 60); 
+	        cookie.setMaxAge(48 * 60 * 60); 
 	        cookie.setPath("/"); // Ensure Cookie can be retrieved in every path
 	        response.addCookie(cookie);
 	        
