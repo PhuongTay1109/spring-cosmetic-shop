@@ -262,6 +262,7 @@ CREATE TABLE `order_details` (
   `total` decimal(10,0) default null,
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,
+  `status` boolean,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -318,7 +319,8 @@ CREATE TABLE `order_items` (
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,
   PRIMARY KEY (`id`),
-  CONSTRAINT `FK_orderitems_orderdetails` FOREIGN KEY (`order_details_id`) REFERENCES `order_details` (`id`)
+  CONSTRAINT `FK_orderitems_orderdetails` FOREIGN KEY (`order_details_id`) REFERENCES `order_details` (`id`),
+  CONSTRAINT `FK_orderitems_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -361,29 +363,30 @@ UNLOCK TABLES;
 -- Table structure for table `payment_details`
 --
 
-DROP TABLE IF EXISTS `payment_details`;
+DROP TABLE IF EXISTS `payment_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `payment_details` (
+CREATE TABLE `payment_methods` (
   `id` int NOT NULL auto_increment,
-  `order_details_id` int,
-  `status` varchar(255) default null,
-  `provider` varchar(255) default null,
-  `amount` int default null,
-  `created_at` timestamp default current_timestamp,
-  `modified_at` timestamp default current_timestamp on update current_timestamp,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_paymentdetails_orderdetails` FOREIGN KEY (`order_details_id`) REFERENCES `order_details` (`id`)
+  `name` varchar(255) default null,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+ALTER TABLE `order_details`
+ADD COLUMN `payment_method_id` INT,
+ADD CONSTRAINT `fk_order_details_payment_methods`
+FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods`(`id`);
+
+insert into payment_methods values (0, 'cash'), (1, 'bank');
 
 --
 -- Dumping data for table `category`
 --
 
-LOCK TABLES `payment_details` WRITE;
-/*!40000 ALTER TABLE `payment_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payment_details` ENABLE KEYS */;
+LOCK TABLES `payment_methods` WRITE;
+/*!40000 ALTER TABLE `payment_methods` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment_methods` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -466,7 +469,7 @@ END//
 DELIMITER ;
 
 
-updat
+
 
 
 
