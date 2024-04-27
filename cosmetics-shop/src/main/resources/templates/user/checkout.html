@@ -29,20 +29,21 @@
 						<form class="needs-validation" novalidate>
 							<div class="row g-3">
 								<div class="col-sm-6">
-									<label for="firstName" class="form-label">First name</label> <input
-										type="text" class="form-control" id="firstName" placeholder=""
+									<label for="firstName" class="form-label">Recipient name</label> <input
+										type="text" class="form-control" id="recipientName" placeholder=""
 										value="" required>
-									<div class="invalid-feedback">Valid first name is
+									<div class="invalid-feedback">Valid recipient name is
 										required.</div>
 								</div>
-
+								
 								<div class="col-sm-6">
-									<label for="lastName" class="form-label">Last name</label> <input
-										type="text" class="form-control" id="lastName" placeholder=""
+									<label for="firstName" class="form-label">Phone number</label> <input
+										type="text" class="form-control" id="phoneNumber" placeholder=""
 										value="" required>
-									<div class="invalid-feedback">Valid last name is
+									<div class="invalid-feedback">Phone number is
 										required.</div>
-								</div>
+								</div>						
+								
 
 								<div class="col-12">
 									<label for="email" class="form-label">Email <span
@@ -62,12 +63,12 @@
 								</div>
 
 								<div class="col-md-5">
-									<label for="country" class="form-label">City</label> <select
+									<label for="country" class="form-label">Province/City</label> <select
 										class="form-select" id="city" required>
 										<option value="">Choose...</option>
 										<option>United States</option>
 									</select>
-									<div class="invalid-feedback">Please select a valid city.</div>
+									<div class="invalid-feedback">Please select a valid province/city.</div>
 								</div>
 
 								<div class="col-md-4">
@@ -96,13 +97,13 @@
 
 							<div class="my-3">
 								<div class="form-check">
-									<input id="credit" name="paymentMethod" type="radio"
+									<input id="cash" name="paymentMethod" type="radio"
 										class="form-check-input" checked required> <label
 										class="form-check-label" for="credit">Payment on
 										delivery</label>
 								</div>
 								<div class="form-check">
-									<input id="debit" name="paymentMethod" type="radio"
+									<input id="bank" name="paymentMethod" type="radio"
 										class="form-check-input" required> <label
 										class="form-check-label" for="debit">VNPAY payment
 										gateway</label>
