@@ -262,7 +262,9 @@ CREATE TABLE `order_details` (
   `total` decimal(10,0) default null,
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,
-  `status` boolean,
+  `name` varchar (255) default null,
+  `address` varchar(255),
+  `phone` varchar(255),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -315,7 +317,6 @@ CREATE TABLE `order_items` (
   `order_details_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int default null,
-  `total` decimal(10,2) default null,
   `created_at` timestamp default current_timestamp,
   `modified_at` timestamp default current_timestamp on update current_timestamp,
   PRIMARY KEY (`id`),
