@@ -42,7 +42,9 @@ public class OrderDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedAt;
     
-    private boolean status;
+    private String name;
+    private String address;
+    private String phone;
 
     // Constructors, getters, and setters
 }
