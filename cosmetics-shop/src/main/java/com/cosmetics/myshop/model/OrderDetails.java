@@ -47,4 +47,5 @@ public class OrderDetails {
     private String phone;
 
     // Constructors, getters, and setters
+    
 }

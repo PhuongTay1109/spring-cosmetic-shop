@@ -25,7 +25,7 @@ let orderList;
 const orderListElement = document.getElementById('order-list');
 let html = '';
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {    
 	orderList = await fetchData();
 
 	var totalPrice = 0;
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		data.phone = phone.value;
 		data.paymentMethodId = paymentMethodId;
 		data.orderList = orderList;
+		data.address = "";
 
 		let jsonData = JSON.stringify(data); 
 		
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 		let encodedData = btoa(unescape(encodeURIComponent(jsonData))); 
 
-		//window.location.href = '/order?cost=' + totalPrice + '&data=' + encodedData;
+		window.location.href = '/order?cost=' + totalPrice + '&data=' + encodedData;
 	});
 });
 

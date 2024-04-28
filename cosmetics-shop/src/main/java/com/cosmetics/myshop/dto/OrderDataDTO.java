@@ -14,5 +14,6 @@ public class OrderDataDTO {
 	int paymentMethodId;
 	String name;
 	String phone;
+	String address;
 
 }
