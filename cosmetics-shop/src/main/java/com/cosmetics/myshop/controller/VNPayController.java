@@ -23,13 +23,18 @@ import com.cosmetics.myshop.configuration.VNPayConfig;
 
 
 @Controller
-@RequestMapping("api/payment")
+@RequestMapping("vnpayment")
 public class VNPayController {
-
-	public static String dataOrder; 
+	private Long totalPrice;
+	private String encodedData;
 	
 	@GetMapping("/create_payment")
 	public String createPayment(@RequestParam("cost") Long cost, @RequestParam("data") String data) throws UnsupportedEncodingException {
+		totalPrice = cost;
+		encodedData = data;
+		
+		System.out.println(String.valueOf(cost*25000*100));
+		
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
@@ -41,7 +46,7 @@ public class VNPayController {
 		vnp_Params.put("vnp_Version", vnp_Version);
 		vnp_Params.put("vnp_Command", vnp_Command);
 		vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-		vnp_Params.put("vnp_Amount", String.valueOf(cost * 100));
+		vnp_Params.put("vnp_Amount", String.valueOf(cost * 25000 * 100));
 		vnp_Params.put("vnp_CurrCode", "VND");
 
 		vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
@@ -52,7 +57,6 @@ public class VNPayController {
 		vnp_Params.put("vnp_Locale", locate);
 
 		String urlReturn = VNPayConfig.vnp_ReturnUrl;
-		dataOrder = encodeData(data);
 		
 		vnp_Params.put("vnp_ReturnUrl", urlReturn);
 		vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
@@ -106,21 +110,13 @@ public class VNPayController {
 		if(responseCode.equals("00"))
 		{
 			//Giao dịch thành công, lưu thông tin đơn hàng
-			//return "redirect:http://localhost:8989/payment/order?data=" + dataOrder;
-		System.out.println("Giao dich thanh cong");
-			return "";
+			 return "redirect:/order?cost=" + totalPrice + "&data=" + encodedData;
 		}
 		else
 		{
-			//Giao dịch không thành công, chuyển về trang cart
-			model.addAttribute("message", "Thanh toán không thành công!");
-			model.addAttribute("status", "fail");
-			// Viết dùm thông báo hiển thị cartMessage ở cart.jsp
+			model.addAttribute("message", "Payment failed");
+			model.addAttribute("status", "error");
 			return "user/cart";
 		}
-	}
-
-	private static String encodeData(String data) throws UnsupportedEncodingException {
-		return URLEncoder.encode(data, StandardCharsets.UTF_8.toString());
 	}
 }

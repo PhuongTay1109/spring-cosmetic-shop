@@ -7,6 +7,24 @@
 
 <body class="bg-primary">
 	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
+	
+	<div th:if="${message != null and status == 'error' }">
+	    <div id="toast">
+	        <div class="toast toast--error">
+	            <div class="toast__icon">
+	                <i class="fas fa-exclamation-circle"></i>
+	            </div>
+	            <div class="toast__body">
+	                <h3 class="toast__title">Error</h3>
+	                <p class="toast__msg" th:text="${message}"></p>
+	            </div>
+	            <div class="toast__close">
+	                <i class="fas fa-times"></i>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
 	<div class="shopping-cart-card mb-5" style="margin-top: 7rem">
             <div class="row">
                 <div class="col-md-9 cart">
