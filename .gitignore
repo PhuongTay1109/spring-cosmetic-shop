@@ -1,3 +1,6 @@
 /.metadata/
-application.properties
+**/application.properties
+**/application.yml
 *.jpg
+cosmetics-shop/src/main/resources/application.yml
+cosmetics-shop/src/main/resources/application.yml

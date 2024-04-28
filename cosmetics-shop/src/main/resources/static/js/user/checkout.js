@@ -1,6 +1,9 @@
-/**
- * 
- */
+import { fetchProvince, fetchDistrict, fetchWard } from "../common/VietnamProvincesAPI.js";
+
+// fetchProvince()
+fetchDistrict(1)
+fetchWard(1,1)
+
 let orderList;
 
 (() => {
