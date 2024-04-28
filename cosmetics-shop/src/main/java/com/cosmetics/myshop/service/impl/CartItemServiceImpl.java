@@ -42,4 +42,9 @@ public class CartItemServiceImpl implements CartItemService {
 	public int countTotalQuantityByShoppingSession(Integer shoppingSessionId) {
 		return cartItemRepository.countTotalQuantityByShoppingSession(shoppingSessionId);
 	}
+
+	@Override
+	public void deleteCart(Integer shoppingSessionId) {
+		cartItemRepository.deleteCart(shoppingSessionId);
+	}
 }

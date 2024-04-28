@@ -111,6 +111,9 @@ public class ApiController {
 		int userId = user.getUserId();
 		ShoppingSession shoppingSession = shoppingSessionService.findShoppingSessionByUserId(userId);
 		
+		if(shoppingSession == null) 
+			return null;
+		
 		List<Object[]> result = cartItemService.findProductsAndQuantitiesByShoppingSessionId(shoppingSession.getId());
 		List<CartItemDTO> productsWithQuantity = new ArrayList<>();
 		

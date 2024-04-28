@@ -13,5 +13,7 @@ public interface CartItemService {
 	public void updateCartItemQuantity(Integer shoppingSessionId, Integer productId, Integer quantity);
 	
 	public int countTotalQuantityByShoppingSession(Integer shoppingSessionId);
+	
+	void deleteCart(Integer shoppingSessionId);
 
 }

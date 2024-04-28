@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="~{fragments/commonFragments :: commonHead('Order')}">
+<title>Home page</title>
+</head>
+
+<body class="bg-primary">
+	<header th:replace="~{fragments/userFragments :: userHeader}"></header>
+	<div class="shopping-cart-card mb-5" style="margin-top: 7rem">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="d-flex justify-content-center text-primary" style="margin-top: 4rem">
+					<h3><strong>YOU HAVE PLACED YOUR ORDER SUCCESSFULLY.</strong></h3>
+					<br>
+					<h3>
+						<strong>
+							<i class="bi bi-emoji-laughing"></i>
+							<i class="bi bi-emoji-laughing"></i>
+							<i class="bi bi-emoji-laughing"></i>
+						</strong>
+					</h3>
+				</div>
+				<div class="row" style="margin-top: 15px">
+					<div class="col back-to-shop" style="margin-bottom: 1rem; margin-left: 1rem">
+						<a href="/" class="text-decoration-none link-primary"> <i
+							class="bi bi-caret-left-fill"></i> <span class="text-muted">Back
+								to shop</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer th:replace="~{fragments/commonFragments :: footer}"></footer>
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {  
+			document.getElementById("cart-number").innerText = 0;
+		});
+	</script>
+</body>
+
+</html>
