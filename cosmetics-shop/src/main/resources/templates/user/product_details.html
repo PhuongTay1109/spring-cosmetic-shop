@@ -36,7 +36,7 @@
 						<p class="card-text fst-italic lead" th:text="${product.description}"></p>
 						<p class="card-text">
 							<strong>Brand:</strong>
-							<th:block th:text="${stringUtils.normalizeString(product.brand)}"></th:block>
+							<th:block th:if="${product.brand}" th:text="${stringUtils.normalizeString(product.brand)}"></th:block>
 						</p>
 						<p class="card-text">
 							<strong>Price:</strong> $
@@ -44,16 +44,15 @@
 						</p>
 						<p class="card-text">
 							<strong>Category: </strong>
-							<th:block th:text="${stringUtils.normalizeString(product.categoryName)}"></th:block>
+							<th:block th:if="product.categoryName" th:text="${stringUtils.normalizeString(product.categoryName)}"></th:block>
 						</p>
 						<p class="card-text">
-							<strong>Product type: </strong>
-							<th:block th:if="${product.productType}"
-								th:text="${stringUtils.normalizeString(product.productType)}"></th:block>
+							<strong>Product type: </strong>	
+							<th:block th:if="${product.productType}"	th:text="${stringUtils.normalizeString(product.productType)}"></th:block>
 						</p>
 						<p class="card-text">
 							<strong>Tags:</strong> <span class="badge badge-primary" th:each="tag : ${tagList}">
-								<th:block th:text="${stringUtils.normalizeString(tag)}">
+								<th:block th:if="${tag}" th:text="${stringUtils.normalizeString(tag)}">
 								</th:block>
 							</span> &nbsp;
 						</p>

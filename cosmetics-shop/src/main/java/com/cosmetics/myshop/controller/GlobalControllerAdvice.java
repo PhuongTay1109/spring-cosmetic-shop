@@ -38,7 +38,8 @@ public class GlobalControllerAdvice {
 	
 	@Autowired
 	CartItemService cartItemService;
-	@Autowired ShoppingSessionService shoppingSessionService;
+	@Autowired 
+	ShoppingSessionService shoppingSessionService;
 	
 	@ModelAttribute("totalCartItems")
 	public int getTotalCartItems(Authentication authentication, HttpServletRequest request) {

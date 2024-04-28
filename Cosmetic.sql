@@ -404,6 +404,8 @@ UPDATE product
 SET price = round(price/19999,2)
 WHERE true;
 
+
+
 UPDATE product
 SET description = "Blush adds a flush of color to the cheeks, enhancing the complexion and providing a healthy glow."
 WHERE category_name = "blush" AND description = "";
@@ -447,6 +449,10 @@ WHERE category_name = "nail_polish" AND description = "";
 UPDATE product
 SET product_type = category_name
 WHERE product_type is null;
+
+UPDATE product
+SET brand = 'colourpop'
+WHERE brand is null;
 
 UPDATE product
 SET currency = 'USD';
