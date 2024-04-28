@@ -107,8 +107,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 		console.log(jsonData);
 
 		let encodedData = btoa(unescape(encodeURIComponent(jsonData))); 
-
-		window.location.href = '/order?cost=' + totalPrice + '&data=' + encodedData;
+		if (data.paymentMethodId == 0)
+			window.location.href = '/order?cost=' + totalPrice + '&data=' + encodedData;
+		if (data.paymentMethodId == 1)
+			window.location.href = '/vnpayment/create_payment?cost=' + totalPrice + '&data=' + encodedData;
 	});
 });
 
