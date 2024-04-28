@@ -1,10 +1,10 @@
-import { fetchProvince, fetchDistrict, fetchWard } from "../common/VietnamProvincesAPI.js";
+/*import { fetchProvince, fetchDistrict, fetchWard } from "../common/VietnamProvincesAPI.js";
 
 // fetchProvince()
 fetchDistrict(1)
-fetchWard(1,1)
+fetchWard(1,1) */
 
-let orderList;
+
 
 (() => {
 	'use strict'
@@ -25,6 +25,7 @@ let orderList;
 	})
 })()
 
+let orderList;
 const orderListElement = document.getElementById('order-list');
 let html = '';
 
@@ -33,6 +34,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	var totalPrice = 0;
 	var totalQuantity = 0;
+	
+	console.log(orderList);
 
 	orderList.forEach(item => {
 		const product = item.product;
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		totalPrice += item.quantity * item.product.price;
 		totalQuantity += item.quantity;
 
-		thisProductPrice = item.quantity * item.product.price;
+		var thisProductPrice = item.quantity * item.product.price;
 
 		// Limit the length of description
 		const truncatedDescription = truncateDescription(product.description);
@@ -106,8 +109,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 		data.address = "";
 
 		let jsonData = JSON.stringify(data); 
-		
-		console.log(jsonData);
 
 		let encodedData = btoa(unescape(encodeURIComponent(jsonData))); 
 		if (data.paymentMethodId == 0)
