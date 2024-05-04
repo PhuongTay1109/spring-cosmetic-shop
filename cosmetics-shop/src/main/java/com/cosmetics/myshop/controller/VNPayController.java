@@ -21,27 +21,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cosmetics.myshop.configuration.VNPayConfig;
 
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("vnpayment")
 public class VNPayController {
 	private Long totalPrice;
 	private String encodedData;
-	
+
 	@GetMapping("/create_payment")
-	public String createPayment(@RequestParam("cost") Long cost, @RequestParam("data") String data) throws UnsupportedEncodingException {
+	public String createPayment(@RequestParam("cost") Long cost, @RequestParam("data") String data,
+			@RequestParam("orderType") String orderType) throws UnsupportedEncodingException {
 		totalPrice = cost;
 		encodedData = data;
-		
-		System.out.println(String.valueOf(cost*25000*100));
-		
+
+		System.out.println(String.valueOf(cost * 25000 * 100));
+
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
 		String vnp_IpAddr = "127.0.0.1";
 		String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
-		String orderType = "order-type";
-		
+
 		Map<String, String> vnp_Params = new HashMap<>();
 		vnp_Params.put("vnp_Version", vnp_Version);
 		vnp_Params.put("vnp_Command", vnp_Command);
@@ -56,8 +57,7 @@ public class VNPayController {
 		String locate = "vn";
 		vnp_Params.put("vnp_Locale", locate);
 
-		String urlReturn = VNPayConfig.vnp_ReturnUrl;
-		
+		String urlReturn = orderType.equals("cart") ? VNPayConfig.vnp_ReturnCartUrl : VNPayConfig.vnp_ReturnBuyNowUrl; 
 		vnp_Params.put("vnp_ReturnUrl", urlReturn);
 		vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -71,6 +71,7 @@ public class VNPayController {
 
 		List fieldNames = new ArrayList(vnp_Params.keySet());
 		Collections.sort(fieldNames);
+		System.out.println(fieldNames);
 		StringBuilder hashData = new StringBuilder();
 		StringBuilder query = new StringBuilder();
 		Iterator itr = fieldNames.iterator();
@@ -96,27 +97,28 @@ public class VNPayController {
 				}
 			}
 		}
-		
+
 		String queryUrl = query.toString();
+		System.out.println(queryUrl);
 		String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
 		queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
 		String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
+		System.out.println(paymentUrl);
 		return "redirect:" + paymentUrl;
 	}
 	
-	@GetMapping("/transaction")
-	public String checkTransaction(ModelMap model, @RequestParam("vnp_ResponseCode") String responseCode)
-	{
-		if(responseCode.equals("00"))
-		{
-			//Giao dịch thành công, lưu thông tin đơn hàng
-			 return "redirect:/order?cost=" + totalPrice + "&data=" + encodedData;
-		}
-		else
-		{
-			model.addAttribute("message", "Payment failed");
-			model.addAttribute("status", "error");
-			return "user/cart";
-		}
+	@GetMapping({"/cart/transaction", "/buynow/transaction"})
+	public String checkCartTransaction(ModelMap model, @RequestParam("vnp_ResponseCode") String responseCode, HttpServletRequest request) {
+		String url = request.getServletPath();
+	    if (responseCode.equals("00")) {
+	    	if (url.equals("/cart/transaction"))
+	    		return "redirect:/order?cost=" + totalPrice + "&data=" + encodedData;	 
+	    	else 
+	    		return "redirect:/buynow/order?cost=" + totalPrice + "&data=" + encodedData;	        
+	    } else {
+	        model.addAttribute("message", "Payment failed");
+	        model.addAttribute("status", "error");
+	        return "user/cart";
+	    }
 	}
 }
