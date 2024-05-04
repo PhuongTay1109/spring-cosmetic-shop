@@ -64,6 +64,12 @@ public class ApiController {
 	
 		return productService.findProductsByCategoryName(categoryName);
 	}
+	
+	@ResponseBody
+	@GetMapping("/product/{id}")
+	public Product findProduct(@PathVariable Integer id) {
+		return productService.findProductByid(id);
+	}
 
 /*
 // **************************************

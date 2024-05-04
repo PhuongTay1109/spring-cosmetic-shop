@@ -4,6 +4,11 @@
 fetchDistrict(1)
 fetchWard(1,1) */
 
+const productIdElement = document.getElementById("product-buynow");
+const productIdBuyNow = productIdElement.getAttribute("data-product-buynow");
+const productQuantityBuyNowElement = document.getElementById("quantity-buynow");
+const quantityBuyNow = productQuantityBuyNowElement.getAttribute("data-quantity-buynow");
+
 
 
 (() => {
@@ -28,28 +33,58 @@ fetchWard(1,1) */
 let orderList;
 const orderListElement = document.getElementById('order-list');
 let html = '';
+let productBuyNow = null;
+let totalPrice = 0;
+let totalQuantity = 0;
+document.addEventListener("DOMContentLoaded", async () => {
+	if (productIdBuyNow != null) {
 
-document.addEventListener("DOMContentLoaded", async () => {    
-	orderList = await fetchData();
-
-	var totalPrice = 0;
-	var totalQuantity = 0;
-	
-	console.log(orderList);
-
-	orderList.forEach(item => {
-		const product = item.product;
-		const quantity = item.quantity;
-
-		totalPrice += item.quantity * item.product.price;
-		totalQuantity += item.quantity;
-
-		var thisProductPrice = item.quantity * item.product.price;
-
-		// Limit the length of description
-		const truncatedDescription = truncateDescription(product.description);
-
+		productBuyNow = await fetchProduct();
+		totalPrice = productBuyNow.price * quantityBuyNow;
+		totalQuantity = quantityBuyNow;
+		const truncatedDescription = truncateDescription(productBuyNow.description);
 		html += `
+				    <li class="list-group-item d-flex justify-content-between lh-sm">
+				        <div class="d-flex align-items-center">
+				            <a href="/product/${productBuyNow.id}">
+				                <img class="order-product-image" src="${productBuyNow.imageLink}">
+				            </a>                                    
+				            <div>
+				                <a class="text-decoration-none link-primary p-0" 
+				                    href="/product/${productBuyNow.id}">
+				                    <h6 class="my-0">${productBuyNow.name}</h6>
+				                </a>
+				                <small class="text-body-secondary">${truncatedDescription}</small>
+				            </div>
+				        </div>
+				        <span class="text-body-secondary align-self-center" style="justify-self: flex-end;">
+				            ${totalQuantity} x $${productBuyNow.price} = $${totalPrice}
+				        </span>
+				    </li>
+		   			<li class="list-group-item d-flex justify-content-between">				    
+		              <span style="font-size:20px"><strong>Total (USD)</strong></span>
+		              <strong style="font-size:20px">$${totalPrice}</strong>
+		            </li>`
+
+		orderListElement.innerHTML = html;
+		document.getElementById('order-list-quantity').innerText = totalQuantity;
+	}
+	else {
+		orderList = await fetchData();
+
+		orderList.forEach(item => {
+			const product = item.product;
+			const quantity = item.quantity;
+
+			totalPrice += item.quantity * item.product.price;
+			totalQuantity += item.quantity;
+
+			var thisProductPrice = item.quantity * item.product.price;
+
+			// Limit the length of description
+			const truncatedDescription = truncateDescription(product.description);
+
+			html += `
 				    <li class="list-group-item d-flex justify-content-between lh-sm">
 				        <div class="d-flex align-items-center">
 				            <a href="/product/${item.product.id}">
@@ -68,16 +103,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 				        </span>
 				    </li>`;
 
-	});
+		});
 
-	html += `<li class="list-group-item d-flex justify-content-between">
+		html += `<li class="list-group-item d-flex justify-content-between">
               <span style="font-size:20px"><strong>Total (USD)</strong></span>
               <strong style="font-size:20px">$${totalPrice}</strong>
             </li>`
 
-	orderListElement.innerHTML = html;
-
-	document.getElementById('order-list-quantity').innerText = totalQuantity;
+		orderListElement.innerHTML = html;
+		document.getElementById('order-list-quantity').innerText = totalQuantity;
+	}
 
 	// ORDER BUTTON CLICK
 	var orderButton = document.querySelector('button[type="submit"]');
@@ -100,21 +135,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 			}
 		});
 
-
 		let data = {};
-		data.name = name.value;
-		data.phone = phone.value;
-		data.paymentMethodId = paymentMethodId;
-		data.orderList = orderList;
-		data.address = "";
+		if (productBuyNow != null) {
+			data.name = name.value;
+			data.phone = phone.value;
+			data.paymentMethodId = paymentMethodId;
+			data.orderList = [{ product: productBuyNow, productId: productIdBuyNow, quantity: quantityBuyNow }];
+			data.address = "";
 
-		let jsonData = JSON.stringify(data); 
+			console.log(data);
 
-		let encodedData = btoa(unescape(encodeURIComponent(jsonData))); 
-		if (data.paymentMethodId == 0)
-			window.location.href = '/order?cost=' + totalPrice + '&data=' + encodedData;
-		if (data.paymentMethodId == 1)
-			window.location.href = '/vnpayment/create_payment?cost=' + totalPrice + '&data=' + encodedData;
+			let jsonData = JSON.stringify(data);
+			let encodedData = btoa(unescape(encodeURIComponent(jsonData)));
+			
+			if (data.paymentMethodId == 0)
+				window.location.href = '/buynow/order?cost=' + totalPrice + '&data=' + encodedData;
+			if (data.paymentMethodId == 1)
+				window.location.href = '/vnpayment/create_payment?cost=' + totalPrice + '&data=' + encodedData +'&orderType=buynow';
+		}
+		else {
+			data.name = name.value;
+			data.phone = phone.value;
+			data.paymentMethodId = paymentMethodId;
+			data.orderList = orderList;
+			data.address = "";
+
+			let jsonData = JSON.stringify(data);
+			let encodedData = btoa(unescape(encodeURIComponent(jsonData)));
+
+			if (data.paymentMethodId == 0)
+				window.location.href = '/order?cost=' + totalPrice + '&data=' + encodedData;
+			if (data.paymentMethodId == 1)
+				window.location.href = '/vnpayment/create_payment?cost=' + totalPrice + '&data=' + encodedData + '&orderType=cart';
+		}
 	});
 });
 
@@ -129,6 +182,12 @@ function truncateDescription(description) {
 
 async function fetchData() {
 	const response = await fetch(`/api/cart`);
+	const data = await response.json();
+	return data;
+}
+
+async function fetchProduct() {
+	const response = await fetch(`/api/product/${productIdBuyNow}`);
 	const data = await response.json();
 	return data;
 }

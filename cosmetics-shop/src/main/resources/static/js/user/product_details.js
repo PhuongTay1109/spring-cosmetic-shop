@@ -30,6 +30,15 @@ document.addEventListener("DOMContentLoaded", async function (event) {
 	}
 	handlePagination()
 	console.log(totalRelatedProducts)
+	
+	// BUY NOW HANDLER
+	var buyNowBtn = document.querySelector('.buy-now-btn');
+	buyNowBtn.addEventListener("click", (event) => {
+		event.preventDefault();
+		var input = document.getElementById('quantity');
+		var quantity = parseInt(input.value);
+		window.location.href = '/checkout/buynow?product=' + productId + "&quantity=" + quantity;
+	});
 
 })
 function generatePageButtons(total, perPage) {
