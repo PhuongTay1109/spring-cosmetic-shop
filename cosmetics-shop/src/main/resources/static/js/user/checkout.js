@@ -1,14 +1,9 @@
-/*import { fetchProvince, fetchDistrict, fetchWard } from "../common/VietnamProvincesAPI.js";
-
-// fetchProvince()
-fetchDistrict(1)
-fetchWard(1,1) */
+import { fetchProvince, fetchDistrict, fetchWard } from "../common/VietnamProvincesAPI.js";
 
 const productIdElement = document.getElementById("product-buynow");
 const productIdBuyNow = productIdElement.getAttribute("data-product-buynow");
 const productQuantityBuyNowElement = document.getElementById("quantity-buynow");
 const quantityBuyNow = productQuantityBuyNowElement.getAttribute("data-quantity-buynow");
-
 
 
 (() => {
@@ -37,6 +32,8 @@ let productBuyNow = null;
 let totalPrice = 0;
 let totalQuantity = 0;
 document.addEventListener("DOMContentLoaded", async () => {
+	populateProvinceDropdown();
+
 	if (productIdBuyNow != null) {
 
 		productBuyNow = await fetchProduct();
@@ -119,10 +116,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 	var paymentMethodRadio = document.querySelectorAll('input[name="paymentMethod"]');
 	var name = document.getElementById('recipientName');
 	var phone = document.getElementById('phoneNumber');
+	var address = document.getElementById('address');
+	const provinceDropdown = document.getElementById('province');
+	const districtDropdown = document.getElementById('district');
+	const wardDropdown = document.getElementById('ward');
 
 
 	orderButton.addEventListener("click", (event) => {
 		event.preventDefault();
+
+		const selectedProvince = provinceDropdown.options[provinceDropdown.selectedIndex].text;
+		const selectedDistrict = districtDropdown.options[districtDropdown.selectedIndex].text;
+		const selectedWard = wardDropdown.options[wardDropdown.selectedIndex].text;
 
 		let paymentMethodId;
 		paymentMethodRadio.forEach((radio) => {
@@ -141,24 +146,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 			data.phone = phone.value;
 			data.paymentMethodId = paymentMethodId;
 			data.orderList = [{ product: productBuyNow, productId: productIdBuyNow, quantity: quantityBuyNow }];
-			data.address = "";
+			data.address = `${address.value}, ${selectedWard}, ${selectedDistrict}, ${selectedProvince}`;
 
 			console.log(data);
 
 			let jsonData = JSON.stringify(data);
 			let encodedData = btoa(unescape(encodeURIComponent(jsonData)));
-			
+
 			if (data.paymentMethodId == 0)
 				window.location.href = '/buynow/order?cost=' + totalPrice + '&data=' + encodedData;
 			if (data.paymentMethodId == 1)
-				window.location.href = '/vnpayment/create_payment?cost=' + totalPrice + '&data=' + encodedData +'&orderType=buynow';
+				window.location.href = '/vnpayment/create_payment?cost=' + totalPrice + '&data=' + encodedData + '&orderType=buynow'; 
 		}
 		else {
 			data.name = name.value;
 			data.phone = phone.value;
 			data.paymentMethodId = paymentMethodId;
 			data.orderList = orderList;
-			data.address = "";
+			data.address = `${address.value}, ${selectedWard}, ${selectedDistrict}, ${selectedProvince}`;
 
 			let jsonData = JSON.stringify(data);
 			let encodedData = btoa(unescape(encodeURIComponent(jsonData)));
@@ -191,3 +196,83 @@ async function fetchProduct() {
 	const data = await response.json();
 	return data;
 }
+
+// Function to populate dropdown with provinces
+async function populateProvinceDropdown() {
+	const provinceDropdown = document.getElementById('province');
+
+	// Fetch provinces
+	const provinces = await fetchProvince();
+
+	// Add fetched provinces as options
+	provinces.forEach(province => {
+		const option = document.createElement('option');
+		option.textContent = province.PROVINCE_NAME;
+		option.value = province.PROVINCE_ID;
+		provinceDropdown.appendChild(option);
+	});
+}
+
+// Function to populate district dropdown based on selected province
+async function populateDistrictDropdown(provinceId) {
+	const districtDropdown = document.getElementById('district');
+
+	// Fetch districts based on province ID
+	const districts = await fetchDistrict(provinceId);
+
+	districtDropdown.innerHTML = '';
+
+	const defaultOption = document.createElement('option');
+	defaultOption.value = '';
+	defaultOption.textContent = 'Choose...';
+	districtDropdown.appendChild(defaultOption);
+
+	// Add fetched districts as options
+	districts.forEach(district => {
+		const option = document.createElement('option');
+		option.value = district.DISTRICT_ID;
+		option.textContent = district.DISTRICT_NAME;
+		districtDropdown.appendChild(option);
+	});
+}
+
+// Function to populate ward dropdown based on selected province and district
+async function populateWardDropdown(districtId) {
+	const wardDropdown = document.getElementById('ward');
+
+	// Fetch wards based on province ID and district ID
+	const wards = await fetchWard(districtId);
+
+	wardDropdown.innerHTML = '';
+
+	const defaultOption = document.createElement('option');
+	defaultOption.value = '';
+	defaultOption.textContent = 'Choose...';
+	wardDropdown.appendChild(defaultOption);
+
+	// Add fetched wards as options
+	wards.forEach(ward => {
+		const option = document.createElement('option');
+		option.textContent = ward.WARDS_NAME;
+		wardDropdown.appendChild(option);
+	});
+}
+
+function handleProvinceChange() {
+	const provinceDropdown = document.getElementById('province');
+	const selectedProvinceId = provinceDropdown.value;
+
+	populateDistrictDropdown(selectedProvinceId);
+}
+
+// Function to handle province or district selection change
+function handleDistrictChange() {
+	const districtDropdown = document.getElementById('district');
+	const selectedDistrictId = districtDropdown.value;
+
+	// Call populateWardDropdown with selected province ID and district ID
+	populateWardDropdown(selectedDistrictId);
+}
+
+document.getElementById('province').addEventListener('change', handleProvinceChange);
+document.getElementById('district').addEventListener('change', handleDistrictChange);
