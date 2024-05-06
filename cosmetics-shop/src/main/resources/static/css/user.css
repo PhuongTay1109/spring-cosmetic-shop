@@ -190,3 +190,24 @@
     height: auto; 
     margin-right: 10px;
 }
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-product-image {
+    width: 50px; /* Điều chỉnh kích thước của hình ảnh sản phẩm */
+    height: 50px; /* Điều chỉnh kích thước của hình ảnh sản phẩm */
+}
+
+.item-details {
+    display: inline-block;
+    margin-left: 10px; /* Khoảng cách giữa hình ảnh và thông tin sản phẩm */
+}
+
+.item-price {
+    display: inline-block;
+    margin-left: auto; /* Căn phải */
+}

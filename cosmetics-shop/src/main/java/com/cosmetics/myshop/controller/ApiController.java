@@ -1,6 +1,7 @@
 package com.cosmetics.myshop.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cosmetics.myshop.dto.CartItemDTO;
+import com.cosmetics.myshop.dto.OrderDetailsDTO;
+import com.cosmetics.myshop.dto.OrderItemsDTO;
 import com.cosmetics.myshop.model.CartItem;
+import com.cosmetics.myshop.model.OrderDetails;
+import com.cosmetics.myshop.model.OrderItems;
 import com.cosmetics.myshop.model.Product;
 import com.cosmetics.myshop.model.ShoppingSession;
 import com.cosmetics.myshop.model.User;
 import com.cosmetics.myshop.service.ProductService;
 import com.cosmetics.myshop.service.ShoppingSessionService;
 import com.cosmetics.myshop.service.impl.CartItemServiceImpl;
+import com.cosmetics.myshop.service.impl.OrderDetailsServiceImpl;
+import com.cosmetics.myshop.service.impl.OrderItemsServiceImpl;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -339,4 +346,35 @@ public class ApiController {
 	        return ResponseEntity.ok().build();
 	    }
 	}
+	
+/*
+//**************************************
+//ORDER API
+//**************************************
+*/
+	@Autowired
+	OrderDetailsServiceImpl orderDetailsServiceImpl;
+	
+	@ResponseBody
+	@GetMapping("/orders")
+    public List<OrderDetailsDTO> getOrderDetailsByUser(Authentication authentication) {
+        if (authentication == null) {
+            return Collections.emptyList(); // or return null if you prefer
+        }
+
+        User user = (User) authentication.getPrincipal();
+        return orderDetailsServiceImpl.findByUserId(user.getUserId());
+    }
+	
+	@Autowired
+	OrderItemsServiceImpl orderItemsServiceImpl;
+	@ResponseBody
+	@GetMapping("/order/{orderId}")
+    public List<OrderItemsDTO> getOrderItems(@PathVariable("orderId") Integer orderId) {
+
+        return orderItemsServiceImpl.findByOrderId(orderId);
+    }
+		
 }
+
+

@@ -106,5 +106,10 @@ public class HomeController {
 		response.sendRedirect(REDIRECT);
 		
 	}
+	
+	@GetMapping("/order-history")
+	public String getOrderHistory() {
+		return "/user/order_history";
+	}
 
 }

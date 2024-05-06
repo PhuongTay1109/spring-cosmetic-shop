@@ -14,7 +14,6 @@ export async function fetchDistrict(provinceId) {
     const response = await fetch(DISTRICT_API);
     let districts = await response.json();
     districts  = districts.filter(district => district.PROVINCE_ID == provinceId)
-    console.log(districts)
     return districts
 }
 
@@ -23,7 +22,6 @@ export async function fetchWard(districtId) {
     const response = await fetch(WARD_API);
     let wards = await response.json();
     wards  = wards.filter(ward => ward.DISTRICT_ID == districtId)
-    console.log(wards)
     return wards
 }
 
