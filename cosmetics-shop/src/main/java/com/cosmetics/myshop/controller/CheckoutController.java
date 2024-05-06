@@ -95,8 +95,6 @@ public class CheckoutController {
 				}
 			}
 
-			System.out.println(shoppingSessionId);
-
 			// create order_details
 			OrderDetails orderDetails = new OrderDetails();
 			orderDetails.setUser(user);
@@ -160,8 +158,6 @@ public class CheckoutController {
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			OrderDataDTO dataDTO = objectMapper.readValue(data, OrderDataDTO.class);
-			
-			System.out.println(dataDTO);
 
 			User user = null;
 
