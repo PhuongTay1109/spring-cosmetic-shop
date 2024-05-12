@@ -80,15 +80,15 @@ function handlePageClick(currentPage, totalPage, pageList, productList, sortBy) 
 
 	let html = "";
 	for (let product of productsOnPage) {
-		html += `<div class="col-6 col-md-6 col-lg-4 mb-3">
+		html += `<div class="col-6 col-md-6 col-lg-3 mb-3">
                             <div class="card position-relative">
-                                <a class="card-product-img" href="/product/${product.id}">
+                                <div class="card-product-img">
 									<img src="${product.imageLink}" class="card-img-top" />
-								</a>
+								</div>
                                 <div class="card-body">
-                                	<a class="link-primary text-decoration-none" href="/product/${product.id}">
+                                	<p class="link-primary text-decoration-none">
                                     	<h5 class="card-title text-nowrap text-overflow-ellipsis">${product.name}</h5>
-                                    </a>
+                                    </p>
                                     <p class="card-text fst-italic lead text-nowrap text-overflow-ellipsis"
                                         style="font-size: 16px" >
                                         ${product.description}
