@@ -27,7 +27,7 @@
 
                     <div class="container mt-5">
                         <div class="row">
-                            <div class="col-md-8 order-md-2 col-lg-9">
+                            <div class="col-md-12 order-md-2 col-lg-12">
                                 <div class="container-fluid">
                                     <div class="row mb-3">
                                         <div class="row col-12">
@@ -38,40 +38,24 @@
                                                     th:href="@{/products/{categoryName}(categoryName=${categoryName})}"
                                                     th:text="${stringUtils.normalizeString(categoryName)}"></a>
                                             </div> -->
-                                            <h1 id="category-name"
-                                                class="text-primary-color text-uppercase font-weight-bold mb-3 col-6"
-                                                th:text=${stringUtils.normalizeString(categoryName)}
-                                                th:data-categoryName="${categoryName}"
-                                                th:data-totalProductsByCategory=${totalProductsByCategory}></h1>
-                                            <div
-                                                class="dropdown text-md-left float-md-left mb-3 mt-3 mt-md-0 mb-md-0 col-6">
-                                                <label class="mr-2">Sort by:</label>
-                                                <button class="btn btn-lg btn-light dropdown-toggle sort-text"
-                                                    type="button" id="sortButton" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</button>
-                                                <ul class="dropdown-menu sort-menu" aria-labelledby="sortMenuButton">
-                                                    <li><a class="dropdown-item sort-item"
-                                                            data-sort-method="top-rating">Top rating</a></li>
-                                                    <li><a class="dropdown-item sort-item"
-                                                            data-sort-method="price-descending">Price Descending</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item sort-item"
-                                                            data-sort-method="price-ascending">Price Ascending</a></li>
-                                                    <li><a class="dropdown-item sort-item"
-                                                            data-sort-method="name-ascending">Name A-Z</a></li>
-                                                    <li><a class="dropdown-item sort-item"
-                                                            data-sort-method="name-descending">Name Z-A</a></li>
-                                                </ul>
+                                            <div class="header col-6 d-flex align-items-center">
+                                                <span style="font-size: 35px;" id="category-name"
+                                                    class="text-primary-color text-uppercase font-weight-bold"
+                                                    th:text=${stringUtils.normalizeString(categoryName)}
+                                                    th:data-categoryName="${categoryName}"
+                                                    th:data-totalProductsByCategory=${totalProductsByCategory}></span>
+                                                <button data-bs-toggle="modal" data-bs-target="#create-product-modal"
+                                                    title="Add product" class="ms-1 btn btn-secondary col-1">
+                                                    <span class="">+</span>
+                                                </button>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="row">
                                             <div class="col-6 col-md-6 col-lg-4 mb-3">
-                                                <button data-bs-toggle="modal" data-bs-target="#create-product-modal"
-                                                    title="Add product" class="btn btn-secondary">
-                                                    <span class="">+</span>
-                                                </button>
+
                                             </div>
                                         </div>
                                         <div class="row" id="products-container">
@@ -96,31 +80,6 @@
                                         <!-- End: Page number -->
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 order-md-1 col-lg-3 sidebar-filter">
-                                <h3 class="text-uppercase mt-2 mb-3 font-weight-bold">Type</h3>
-                                <div class="mt-2 mb-2 pl-2" th:each="type : ${typeList}">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="type"
-                                            th:value="${type}">
-                                        <label class="custom-control-label"
-                                            th:text=${stringUtils.normalizeString(type)}></label>
-                                    </div>
-                                </div>
-
-                                <div class="divider mt-icon mb-5 border-bottom border-secondary"></div>
-                                <h3 class="text-uppercase mt-2 mb-3 font-weight-bold">Brand</h3>
-                                <div class="mt-2 mb-2 pl-2" th:each="brand : ${brandList}">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="brand"
-                                            th:value="${brand}">
-                                        <label class="custom-control-label"
-                                            th:text=${stringUtils.normalizeString(brand)}></label>
-                                    </div>
-                                </div>
-
-                                <a class="btn btn-primary clear-btn mt-4" th:onclick="clearAllFiltersAndSort()">Clear
-                                    all</a>
                             </div>
                         </div>
                     </div>
