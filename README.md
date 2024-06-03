@@ -6,12 +6,10 @@
 </head>
 <body>
     <h1>Cosmetic Management</h1>
-    
     <h2>Description</h2>
     <p>
         Cosmetic Management is a web application built using Spring Boot, Bootstrap, Thymeleaf, JPA, and MySQL. It serves as an online platform for a cosmetics shop, allowing users to browse, search, and purchase cosmetic products.
-    </p>
-    
+    </p>    
     <h2>Features</h2>
     <ul>
         <li>User authentication and authorization</li>
