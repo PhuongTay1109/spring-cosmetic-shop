@@ -66,7 +66,7 @@ public class HomeController {
 		model.addAttribute("topRatingProducts", topRatingProducts);
 		model.addAttribute("newArrivalProducts", newArrivalProducts);
 		
-		return "/user/homepage";
+		return "user/homepage";
 	}
 	
 	@ResponseBody
@@ -109,7 +109,7 @@ public class HomeController {
 	
 	@GetMapping("/order-history")
 	public String getOrderHistory() {
-		return "/user/order_history";
+		return "user/order_history";
 	}
 
 }

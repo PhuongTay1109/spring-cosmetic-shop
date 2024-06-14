@@ -159,6 +159,7 @@ public class ApiController {
 	            shoppingSession = new ShoppingSession();
 	            shoppingSession.setUser(user);
 	            shoppingSession.setCreatedAt(new Date());
+				shoppingSession.setModifiedAt(new Date());
 	            shoppingSessionService.saveShoppingSession(shoppingSession);
 	        }
 
@@ -212,6 +213,7 @@ public class ApiController {
 	        ShoppingSession shoppingSession = new ShoppingSession();
 	        shoppingSession.setUser(null);
 	        shoppingSession.setCreatedAt(new Date());
+			shoppingSession.setModifiedAt(new Date());
 	        shoppingSessionService.saveShoppingSession(shoppingSession);
 
 	        // create a cookie to store shopping session id
