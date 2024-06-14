@@ -12,14 +12,14 @@
     </p>    
     <h2>Features</h2>
     <ul>
-        <li>User authentication and authorization</li>
-        <li>Login with Google or Facebook</li>
-        <li>Forgot password functionality</li>
-        <li>Product browsing and searching</li>
-        <li>Shopping cart functionality</li>
+         <li>User authentication and authorization with Spring Security</li>
+        <li>Login with google or facebook</li>
+        <li>Forget password (send an email link to reset)</li>
+        <li>Product browsing and searching (pagination, filtering and sorting)</li>
+        <li>Shopping cart functionality (for both non-logged in and logged in users)</li>
         <li>Checkout and payment processing (online payment with VNPay)</li>
         <li>User profile management</li>
-        <li>Admin panel for managing categories, products, and users</li>
+        <li>Admin panel for managing categories, products, users</li>
     </ul>
     <h2>Installation</h2>
     <h3>Prerequisites</h3>

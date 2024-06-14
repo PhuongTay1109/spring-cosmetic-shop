@@ -9,11 +9,20 @@ server:
 spring:          
   application:
     name: cosmetics-shop
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: Tuantruong131203
     url: jdbc:mysql://localhost:3306/cosmetic?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
+# for docker
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    password: PhuongTay110903
+#    url: jdbc:mysql://mysql:3307/cosmetic
+#    username: root
+
   jpa:
     hibernate:
       ddl-auto: update

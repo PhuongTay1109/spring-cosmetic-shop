@@ -1,0 +1,34 @@
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-cosmetic
+    environment:
+      - MYSQL_ROOT_PASSWORD=PhuongTay110903
+      - MYSQL_DATABASE=cosmetic
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./cosmetic_dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - spring-cosmetic-network
+
+  app:
+    image: spring/cosmetic-shop
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cosmetic
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: PhuongTay110903
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cosmetic-network
+
+volumes:
+  mysql:
+
+networks:
+  spring-cosmetic-network:
+    driver: bridge
