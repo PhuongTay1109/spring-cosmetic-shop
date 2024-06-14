@@ -62,7 +62,7 @@ public class ProductController {
 		model.addAttribute("productId", id);
 		model.addAttribute("stringUtils", stringUtils);
 		model.addAttribute("totalRelatedProducts", totalRelatedProducts);
-		return "/user/product_details";
+		return "user/product_details";
 	}
 
 	@GetMapping("/products/{categoryName}")
@@ -76,7 +76,7 @@ public class ProductController {
 		model.addAttribute("totalProductsByCategory", totalProductsByCategory);
 		model.addAttribute("categoryName", categoryName);
 		
-		return "/user/products";
+		return "user/products";
 	}
 	
 	@ResponseBody

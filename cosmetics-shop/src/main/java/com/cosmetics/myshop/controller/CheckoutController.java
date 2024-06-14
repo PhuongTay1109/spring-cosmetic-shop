@@ -36,7 +36,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CheckoutController {
 	@GetMapping("/checkout")
 	public String checkout() {
-		return "/user/checkout";
+		return "user/checkout";
 	}
 
 	@Autowired
@@ -48,7 +48,7 @@ public class CheckoutController {
 		model.addAttribute("productId", productId);
 		model.addAttribute("quantity", quantity);
 
-		return "/user/checkout";
+		return "user/checkout";
 	}
 
 	@Autowired
@@ -143,10 +143,10 @@ public class CheckoutController {
 			e.printStackTrace();
 			model.addAttribute("message", "Payment failed");
 			model.addAttribute("status", "error");
-			return "/user/cart";
+			return "user/cart";
 		}
 
-		return "/user/order_success";
+		return "user/order_success";
 	}
 
 	@GetMapping("/buynow/order")
@@ -202,9 +202,9 @@ public class CheckoutController {
 			e.printStackTrace();
 			model.addAttribute("message", "Payment failed");
 			model.addAttribute("status", "error");
-			return "/user/cart";
+			return "user/cart";
 		}
 
-		return "/user/order_success";
+		return "user/order_success";
 	}
 }
